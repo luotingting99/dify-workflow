@@ -1,0 +1,709 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 调拨计划工作流v2.0
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1761221121698-source-1761221127988-target
+      source: '1761221121698'
+      sourceHandle: source
+      target: '1761221127988'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: code
+      id: 1761221127988-source-1761221130000-target
+      source: '1761221127988'
+      sourceHandle: source
+      target: '1761221130000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1761221130000-source-1761221135331-target
+      source: '1761221130000'
+      sourceHandle: source
+      target: '1761221135331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: query
+          max_length: 1024
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+        - default: ''
+          hint: ''
+          label: intent
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: intent
+        - default: ''
+          hint: ''
+          label: time_window
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: time_window
+        - default: ''
+          hint: ''
+          label: SKU
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: SKU
+        - default: ''
+          hint: ''
+          label: warehouse_in_physical_name
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: warehouse_in_physical_name
+      height: 192
+      id: '1761221121698'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: "【执行策略 - 强制遵守】\n必须严格按顺序执行3步工具调用，禁止跳过任何步骤：\n第1步：汇总KPI查询 - 必须执行\n\
+              第2步：按仓分组查询 - 必须执行\n第3步：CSV导出（export_oss=true） - 必须执行\n第3步完成后，立即自动结束，不输出Final\
+              \ Answer。\n\n【禁止行为 - 严格执行】\n❌ 禁止跳过任何步骤\n❌ 严禁输出Final Answer（任何情况下都不允许，Code节点会自动处理数据）\n\
+              ❌ 禁止输出SQL或解释\n❌ 禁止进行数据格式化（千分位、百分比等）\n\nRole（角色）\n- 你是\"调拨计划数据查询器\"。职责：只读查询\
+              \ DuckDB 的 mart_transfer_plan，返回原始查询结果。主工作流的Code节点负责后续格式化。\n\nTask（任务）\n\
+              - 严格执行3步查询（第1步：汇总KPI；第2步：按仓分组；第3步：CSV导出），返回原始查询结果。\n\nCore Principles（核心原则）\n\
+              - 强制3步：无论查询类型，都必须执行第1步+第2步+第3步。\n- 只读安全：仅调用 duckdb_query，不做 DDL/DML。\n\
+              - 终止规则：第3步完成后立即自动结束，不输出任何内容。\n- 确定口径：同参同结果，分母为 0 的占比/增速记 0。\n- 原始数据：返回数据库原始值，不做格式化。\n\
+              - DuckDB 规范：遵循 https://duckdb.org/docs/sql/introduction（字符串连接用 ||、CAST/TRY_CAST、DATE/TIMESTAMP\
+              \ 常量、布尔 TRUE/FALSE，允许 COUNT(DISTINCT)/窗口函数，禁止 NVL/DECODE/TO_CHAR 等方言）。\n\
+              \nInputs（输入处理）\n- 必填：intent（=\"调拨计划\"）、time_window、query。\n- 选填：SKU、warehouse（开始节点变量名\
+              \ warehouse_in_physical_name），为空或占位符时视为未提供。\n\nTime Window（时间窗解析）\n\
+              - 支持 last_week/last_month/this_month/last_7_days/last_30_days、自定义区间（YYYY-MM-DD\
+              \ ~ YYYY-MM-DD/to/至）。\n- 周粒度以 plan_week（周一）归一：左闭右开 [start, end)，为空时取\
+              \ MAX(plan_week)。\n\nData Source（数据来源）\n- mart_transfer_plan（DRP 生成的调拨建议）。\n\
+              \nSchemas（字段摘要）\n- product_long_code：SKU\n- warehouse_in_physical_code：调入物理仓编码\n\
+              - warehouse_in_physical_name：调入物理仓名称（若存在）\n- warehouse_out_logical_code：调出逻辑仓\n\
+              - transfer_qty：建议调拨数量（理论值）\n- transfer_qty_rounded：实际调拨数量（取整后）\n- route_code：调拨路线编码\n\
+              - plan_week：计划周（周一日期）\n- plan_date：计划日期（可选）\n- scenario_id：场景ID\n- transport_volume_m3：运输体积（立方米）\n\
+              - transport_weight_kg：运输重量（千克）\n\nFilters（过滤规则）\n- scenario_id = \"\
+              REAL\" 优先（若字段存在）。\n- 入参视为未提供的条件：NULL、空串、仅空白、\"N/A\"、\"null\"、\"undefined\"\
+              、以 \"qc.\"/\"qs.\" 开头或包含 \"structured_output\" 的占位符。\n- warehouse：仅当值有效时过滤；中文/别名→匹配\
+              \ warehouse_in_physical_name，编码→匹配 warehouse_in_physical_code。\n- SKU：仅当值有效时过滤\
+              \ product_long_code = :SKU。\n- SQL 片段示例（DuckDB）：\n  AND (\n    TRIM(COALESCE(:SKU,''))\
+              \ = ''\n    OR LOWER(:SKU) IN ('n/a','null','undefined')\n    OR :SKU\
+              \ LIKE 'qc.%'\n    OR :SKU LIKE 'qs.%'\n    OR :SKU LIKE 'structured_output.%'\n\
+              \    OR product_long_code = :SKU\n  )\n  AND (\n    TRIM(COALESCE(:warehouse,''))\
+              \ = ''\n    OR LOWER(:warehouse) IN ('n/a','null','undefined')\n   \
+              \ OR :warehouse LIKE 'qc.%'\n    OR :warehouse LIKE 'qs.%'\n    OR :warehouse\
+              \ LIKE 'structured_output.%'\n    OR warehouse_in_physical_code = :warehouse\n\
+              \    OR (EXISTS (SELECT 1 FROM pragma_table_info('mart_transfer_plan')\n\
+              \                 WHERE name = 'warehouse_in_physical_name')\n     \
+              \  AND warehouse_in_physical_name = :warehouse)\n  )\n\n           \
+              \   Mapping & Metrics（映射与口径）\n- 汇总 KPI：\n  • 建议调拨量 = SUM(transfer_qty_rounded)（千分位\
+              \ + \" 件\"）\n  • 覆盖率 = 若 SUM(transfer_qty)>0 则 100*SUM(transfer_qty_rounded)/SUM(transfer_qty)（1\
+              \ 位%），否则 \"N/A\"\n  • 总体积 = SUM(COALESCE(transport_volume_m3, 0))（2位小数\
+              \ + \" m³\"）\n  • 总重量 = SUM(COALESCE(transport_weight_kg, 0))（2位小数 +\
+              \ \" kg\"）\n  • 体积/重量/缺件数等按可用字段求 SUM，缺失填 \"N/A\"\n- 按仓汇总：\n  • warehouse\
+              \ = warehouse_in_physical_code（或名称）\n  • sku_count = COUNT(DISTINCT\
+              \ product_long_code)\n  • alloc_qty = SUM(transfer_qty_rounded)（千分位\
+              \ + \" 件\"）\n  • volume_m3 = SUM(COALESCE(transport_volume_m3, 0))（2位小数\
+              \ + \" m³\"）\n  • weight_kg = SUM(COALESCE(transport_weight_kg, 0))（2位小数\
+              \ + \" kg\"）\n  • shortage_and_coverage 生成\"缺件/覆盖率\"字符串数组\n\nTool Invocation（工具调用要求）\n\
+              - 调用顺序：1) duckdb_query（汇总KPI）→ 2) duckdb_query（按仓分组）→ 3) duckdb_query（导出明细CSV，export_oss=true,\
+              \ export_format=\"csv\", presign_seconds=3600）→ 4) 从第3步返回结果提取presigned\
+              \ URL填入exports。\n- duckdb_query 入参：sql（必填）；db_path 可为空以启用自动查找；导出时设置\
+              \ export_oss=true, export_format=\"csv\", presign_seconds=3600, limit=10000。\n\
+              - 失败兜底：若两次尝试后仍失败，仍按下述 JSON 模板输出，所有数值置为 \"N/A\"，并在 notes/insights 增加\
+              \ \"数据源不可用\"。\n\nCSV Export to OSS（CSV导出到OSS）\n- 触发条件：每次查询都需要执行第3步导出明细CSV。\n\
+              - 工具调用：在第3步调用 duckdb_query 时设置参数：export_oss=true, export_format=\"csv\"\
+              , presign_seconds=3600, limit=10000。\n- URL 提取（关键！必须正确解析JSON）：\n  第3步工具返回的\
+              \ observation 是一个JSON字符串，格式如下：\n  {\"columns\": [...], \"presigned\"\
+              : \"https://...\", \"http_url\": \"https://...\", \"s3_uri\": \"s3://...\"\
+              , \"exported\": true, ...}\n  提取规则：\n  1) 将 observation 解析为JSON对象（不要用字符串截取！）\n\
+              \  2) 从JSON对象中读取 presigned 字段的值，这是完整的带签名URL\n  3) presigned 的值是一个完整字符串，以\
+              \ https:// 开头，以签名参数结尾\n  4) 不要拼接任何其他字段（如 status、exported 等）到URL中\n \
+              \ 5) object_key 从 http_url 或 s3_uri 中提取路径部分（如 \"file/query_20251105_151721.csv\"\
+              ）\n- 成功：在最终 JSON 顶层添加 exports 数组项：\n  {\n    \"id\": \"transfer_plan_detail_export\"\
+              ,\n    \"dataset_id\": \"transfer_plan_detail\",\n    \"type\": \"csv\"\
+              ,\n    \"object_key\": \"从 http_url 提取路径部分（如 file/query_xxx.csv）\",\n\
+              \    \"url\": \"presigned 字段的完整值（不要拼接其他内容）\",\n    \"status\": \"ok\"\
+              \n  }\n  错误示例（禁止）：\n  \"url\": \"https://...&X-Amz-Signature=xxx\\\"\
+              ,\\\"status\\\":\\\"ok\\\"\" ← 错误！包含了后面的JSON\n  正确示例：\n  \"url\": \"\
+              https://...&X-Amz-Signature=xxx\" ← 正确！只包含URL本身\n- 失败兜底：导出失败不影响主结果；在\
+              \ notes/insights 增加 'CSV导出失败: {reason}'；exports 对应项 status:'failed'，url='N/A'。\n\
+              \nSQL Example for Export（导出SQL示例）\n-- 导出调拨计划明细CSV\nSELECT\n  plan_week,\n\
+              \  plan_date,\n  product_long_code,\n  warehouse_in_physical_code,\n\
+              \  warehouse_in_physical_name,\n  warehouse_out_logical_code,\n  transfer_qty,\n\
+              \  transfer_qty_rounded,\n  route_code,\n  transport_volume_m3,\n  transport_weight_kg\n\
+              FROM mart_transfer_plan\nWHERE (scenario_id = 'REAL' OR scenario_id\
+              \ IS NULL)\n  AND plan_week >= DATE '{period_start}'\n  AND plan_week\
+              \ < DATE '{period_end}';\n\nCoT（隐藏式推理）\n- 内部步骤（不要外显）：解析参数 → 归一时间窗 →\
+              \ **执行三次独立查询**：\n  ① 汇总KPI查询 → 计算全局指标。\n  ② 按仓分组查询 → 生成按仓汇总数据。\n  ③\
+              \ 导出明细CSV（export_oss=true, export_format=\"csv\", presign_seconds=3600,\
+              \ limit=10000）→ 从返回结果的observation中解析presigned字段提取URL。\n- 每次查询失败可重试 1\
+              \ 次。\n- 第3步完成后立即自动结束，不输出Final Answer，不输出任何内容。\n\nOutput Spec（输出规范）\n\
+              - 第3步完成后立即自动结束，不输出Final Answer。\n- 主工作流会从json字段读取：\n  • json[0].data.observation：Round\
+              \ 1的汇总KPI结果\n  • json[后续索引].data.observation：Round 2的按仓分组结果\n  • json[最后索引].data.observation：Round\
+              \ 3的CSV导出结果（presigned URL）\n- 由主工作流的格式化输出节点（Code节点）负责数据提取和JSON组装\n\n\
+              Few-Shot（示例）\n- 示例 1（占位符忽略，包含导出）：\n  - 输入：{\"intent\":\"调拨计划\",\"time_window\"\
+              :\"2025-06\",\"SKU\":\"qc.structured_output.sku\",\"warehouse\":\"qc.structured_output.warehouse\"\
+              ,\"query\":\"查询2025年6月的调拨计划\"}\n  - 期望：识别占位符，SQL 无 SKU/仓过滤；分三次查询：汇总KPI\
+              \ + 按仓分组 + 导出CSV；第3步完成后立即结束。\n  - SQL（仅示例，不外显）：\n    -- 查询1：汇总KPI\n\
+              \    SELECT COUNT(*) AS total_records,\n           COUNT(DISTINCT product_long_code)\
+              \ AS unique_skus,\n           COUNT(DISTINCT warehouse_in_physical_code)\
+              \ AS unique_warehouses,\n           SUM(transfer_qty_rounded) AS total_transfer_qty_rounded,\n\
+              \           SUM(transfer_qty) AS total_transfer_qty,\n           SUM(COALESCE(transport_volume_m3,\
+              \ 0)) AS total_volume_m3,\n           SUM(COALESCE(transport_weight_kg,\
+              \ 0)) AS total_weight_kg\n    FROM mart_transfer_plan\n    WHERE plan_week\
+              \ >= '2025-06-01' AND plan_week < DATE '2025-07-01'\n      AND (scenario_id\
+              \ = 'REAL' OR scenario_id IS NULL);\n    \n    -- 查询2：按仓分组\n    SELECT\
+              \ warehouse_in_physical_name AS warehouse,\n           COUNT(DISTINCT\
+              \ product_long_code) AS sku_count,\n           SUM(transfer_qty_rounded)\
+              \ AS alloc_qty,\n           SUM(COALESCE(transport_volume_m3, 0)) AS\
+              \ volume_m3,\n           SUM(COALESCE(transport_weight_kg, 0)) AS weight_kg\n\
+              \    FROM mart_transfer_plan\n    WHERE plan_week >= '2025-06-01' AND\
+              \ plan_week < DATE '2025-07-01'\n      AND (scenario_id = 'REAL' OR\
+              \ scenario_id IS NULL)\n    GROUP BY warehouse_in_physical_name\n  \
+              \  ORDER BY alloc_qty DESC;\n    \n    -- 查询3：导出明细CSV（export_oss=true,\
+              \ export_format=\"csv\", presign_seconds=3600, limit=10000）\n    SELECT\n\
+              \      plan_week,\n      plan_date,\n      product_long_code,\n    \
+              \  warehouse_in_physical_code,\n      warehouse_in_physical_name,\n\
+              \      warehouse_out_logical_code,\n      transfer_qty,\n      transfer_qty_rounded,\n\
+              \      route_code,\n      transport_volume_m3,\n      transport_weight_kg\n\
+              \    FROM mart_transfer_plan\n    WHERE (scenario_id = 'REAL' OR scenario_id\
+              \ IS NULL)\n      AND plan_week >= DATE '2025-06-01'\n      AND plan_week\
+              \ < DATE '2025-07-01';\n  - 输出：立即结束，不输出Final Answer。\n- 示例 2（有效过滤）：\n\
+              \  - 输入：{\"intent\":\"调拨计划\",\"time_window\":\"2025-06\",\"SKU\":\"\
+              A001\",\"warehouse\":\"北京仓\",\"query\":\"A001 调拨计划\"}\n  - 期望：启用 product_long_code\
+              \ 与仓库过滤；三次查询都应用相同过滤条件；第3步完成后立即结束。\n  - SQL（仅示例，不外显）：\n    -- 查询1、查询2和查询3的\
+              \ WHERE 子句都包含：\n    WHERE product_long_code = 'A001'\n      AND (warehouse_in_physical_code\
+              \ = '北京仓'\n      OR warehouse_in_physical_name = '北京仓')\n      AND plan_week\
+              \ >= DATE '2025-06-01'\n      AND plan_week < DATE '2025-07-01'\n  \
+              \    AND (scenario_id = 'REAL' OR scenario_id IS NULL);\n  - 输出：立即结束，不输出Final\
+              \ Answer。\n\nExceptions（异常处理）\n- 任一查询失败可重试1次；失败后继续执行后续查询；3步完成后立即结束。"
+          maximum_iterations:
+            type: constant
+            value: 4
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: deepseek-chat
+              model_type: llm
+              provider: langgenius/deepseek/deepseek
+              type: model-selector
+          query:
+            type: constant
+            value: "{\n  \"intent\": \"{{#1761221121698.intent#}}\",\n  \"time_window\"\
+              : \"{{#1761221121698.time_window#}}\",\n  \"SKU\": \"{{#1761221121698.SKU#}}\"\
+              ,\n  \"warehouse\": \"{{#1761221121698.warehouse_in_physical_name#}}\"\
+              ,\n  \"query\": \"{{#1761221121698.query#}}\"\n}"
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 执行 DuckDB 查询，返回 JSON 结果；可选导出到 OSS。参数：sql(SQL 文本)，db_path(可选)，limit(可选行数限制)，export_oss(是否导出，默认
+                  false)，export_format(导出格式，默认 csv)，export_filename(导出文件名)，presign_seconds(URL
+                  有效期，默认 3600)。返回值：{db, columns, rows, rowcount, duration_ms, export}。
+              parameters:
+                db_path:
+                  auto: 1
+                  value: null
+                export_filename:
+                  auto: 1
+                  value: null
+                export_format:
+                  auto: 1
+                  value: null
+                export_oss:
+                  auto: 1
+                  value: null
+                limit:
+                  auto: 1
+                  value: null
+                presign_seconds:
+                  auto: 1
+                  value: null
+                sql:
+                  auto: 1
+                  value: null
+              provider_name: orchestrax-mcp
+              provider_show_name: AI调拨MCP
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: sql
+                  ja_JP: sql
+                  pt_BR: sql
+                  zh_Hans: sql
+                llm_description: ''
+                max: null
+                min: null
+                name: sql
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: db_path
+                  ja_JP: db_path
+                  pt_BR: db_path
+                  zh_Hans: db_path
+                llm_description: ''
+                max: null
+                min: null
+                name: db_path
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: limit
+                  ja_JP: limit
+                  pt_BR: limit
+                  zh_Hans: limit
+                llm_description: ''
+                max: null
+                min: null
+                name: limit
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_oss
+                  ja_JP: export_oss
+                  pt_BR: export_oss
+                  zh_Hans: export_oss
+                llm_description: ''
+                max: null
+                min: null
+                name: export_oss
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_format
+                  ja_JP: export_format
+                  pt_BR: export_format
+                  zh_Hans: export_format
+                llm_description: ''
+                max: null
+                min: null
+                name: export_format
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_filename
+                  ja_JP: export_filename
+                  pt_BR: export_filename
+                  zh_Hans: export_filename
+                llm_description: ''
+                max: null
+                min: null
+                name: export_filename
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: 3600
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: presign_seconds
+                  ja_JP: presign_seconds
+                  pt_BR: presign_seconds
+                  zh_Hans: presign_seconds
+                llm_description: ''
+                max: null
+                min: null
+                name: presign_seconds
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: number
+              settings: {}
+              tool_description: 执行 DuckDB 查询，返回 JSON 结果；可选导出到 OSS。
+              tool_label: duckdb_query
+              tool_name: duckdb_query
+              type: mcp
+        agent_strategy_label: ReAct
+        agent_strategy_name: ReAct
+        agent_strategy_provider_name: langgenius/agent/agent
+        desc: ''
+        meta:
+          minimum_dify_version: null
+          version: 0.0.2
+        output_schema: null
+        plugin_unique_identifier: langgenius/agent:0.0.20@eafd74ef989a085162e2de35b8b3ada3aab65430eefb10c966399d02327cd679
+        selected: false
+        title: Agent
+        type: agent
+        version: '2'
+      height: 196
+      id: '1761221127988'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport re\nfrom datetime import datetime\n\ndef main(time_window:\
+          \ str, SKU: str, warehouse: str, agent_output: list) -> dict:\n    \"\"\"\
+          \n    从Agent输出中提取关键数据并格式化为allocation_plan_view_v1 JSON\n    \"\"\"\n   \
+          \ # 调试：记录原始输入\n    try:\n        # agent_output 是从Agent节点的json字段传来的数组\n\
+          \        agent_json = agent_output\n        \n        # 详细的类型检查和调试信息\n \
+          \       if not isinstance(agent_json, list):\n            return {\"result\"\
+          : {\n                \"error\": f\"agent_output类型错误，期望list，收到: {type(agent_json)}\"\
+          ,\n                \"debug\": str(agent_json)[:200]\n            }}\n  \
+          \      \n        if len(agent_json) == 0:\n            return {\"result\"\
+          : {\"error\": \"agent_json为空数组\"}}\n        \n        # 打印前5个元素的类型和内容样本\n\
+          \        debug_info = {\n            \"len\": len(agent_json),\n       \
+          \     \"types\": [type(agent_json[i]).__name__ for i in range(min(5, len(agent_json)))],\n\
+          \            \"samples\": [str(agent_json[i])[:100] for i in range(min(5,\
+          \ len(agent_json)))]\n        }\n        \n        # 特殊处理：如果前几个元素都是list，尝试展平\n\
+          \        # Agent可能返回的是嵌套结构\n        if len(agent_json) > 0 and all(isinstance(agent_json[i],\
+          \ list) for i in range(min(3, len(agent_json)))):\n            return {\"\
+          result\": {\n                \"error\": \"Agent返回的是嵌套list结构，需要调整\",\n  \
+          \              \"debug\": debug_info,\n                \"hint\": \"agent_json的前几个元素都是list而不是dict\"\
+          \n            }}\n        \n        # 智能搜索：从agent_json中找出3次真正的查询结果\n   \
+          \     # 策略：寻找包含'data'->'observation'且observation包含rows或presigned的dict\n\
+          \        valid_rounds = []\n        for i, item in enumerate(agent_json):\n\
+          \            if not isinstance(item, dict):\n                continue\n\
+          \            \n            data = item.get('data')\n            if not isinstance(data,\
+          \ dict):\n                continue\n            \n            obs = data.get('observation',\
+          \ '')\n            if obs and isinstance(obs, str) and ('rows' in obs or\
+          \ 'presigned' in obs):\n                valid_rounds.append((i, item))\n\
+          \        \n        if len(valid_rounds) < 3:\n            return {\"result\"\
+          : {\n                \"error\": f\"在{len(agent_json)}个元素中只找到{len(valid_rounds)}个有效查询结果（需要3个）\"\
+          ,\n                \"debug\": debug_info,\n                \"valid_rounds_indices\"\
+          : [idx for idx, _ in valid_rounds]\n            }}\n        \n        #\
+          \ 提取前3个有效结果\n        round1 = valid_rounds[0][1]\n        round2 = valid_rounds[1][1]\n\
+          \        round3 = valid_rounds[2][1]\n        \n        observation1_str\
+          \ = round1.get('data', {}).get('observation', '')\n        observation2_str\
+          \ = round2.get('data', {}).get('observation', '')\n        observation3_str\
+          \ = round3.get('data', {}).get('observation', '')\n        \n        # 解析observation字符串（去掉\\\
+          \"tool response: \\\"前缀和末尾的句点）\n        obs1_json_str = observation1_str.replace('tool\
+          \ response: ', '').rstrip('.')\n        obs2_json_str = observation2_str.replace('tool\
+          \ response: ', '').rstrip('.')\n        obs3_json_str = observation3_str.replace('tool\
+          \ response: ', '').rstrip('.')\n        \n        # 解析JSON\n        try:\n\
+          \            obs1_data = json.loads(obs1_json_str)\n            obs2_data\
+          \ = json.loads(obs2_json_str)\n            obs3_data = json.loads(obs3_json_str)\n\
+          \        except json.JSONDecodeError as e:\n            return {\"result\"\
+          : {\n                \"error\": f\"JSON解析失败: {str(e)}\",\n             \
+          \   \"obs1_sample\": obs1_json_str[:200]\n            }}\n        \n   \
+          \     # 提取数据\n        kpi_rows = obs1_data.get('rows', [])\n        warehouse_rows\
+          \ = obs2_data.get('rows', [])\n        \n        # 格式化函数\n        def format_number(num,\
+          \ decimals=0, unit=\"\"):\n            \"\"\"格式化数字为千分位字符串\"\"\"\n      \
+          \      if num is None:\n                return \"N/A\"\n            formatted\
+          \ = f\"{num:,.{decimals}f}\"\n            return f\"{formatted}{unit}\"\
+          \ if unit else formatted\n        \n        def format_percent(num, decimals=1):\n\
+          \            \"\"\"格式化为百分比\"\"\"\n            if num is None:\n        \
+          \        return \"N/A\"\n            return f\"{num:.{decimals}f}%\"\n \
+          \       \n        # 提取KPI数据\n        kpi_row = kpi_rows[0] if kpi_rows else\
+          \ {}\n        total_records = kpi_row.get('total_records', 0)\n        unique_skus\
+          \ = kpi_row.get('unique_skus', 0)\n        unique_warehouses = kpi_row.get('unique_warehouses',\
+          \ 0)\n        total_transfer_qty_rounded = kpi_row.get('total_transfer_qty_rounded',\
+          \ 0)\n        total_transfer_qty = kpi_row.get('total_transfer_qty', 0)\n\
+          \        total_volume_m3 = kpi_row.get('total_volume_m3', 0)\n        total_weight_kg\
+          \ = kpi_row.get('total_weight_kg', 0)\n        \n        # 计算覆盖率\n     \
+          \   coverage_rate = 0\n        if total_transfer_qty and total_transfer_qty\
+          \ > 0:\n            coverage_rate = (total_transfer_qty_rounded / total_transfer_qty)\
+          \ * 100\n        \n        # 构建KPI卡片\n        kpi_cards = [\n          \
+          \  {\n                \"id\": \"suggest_qty\",\n                \"title\"\
+          : \"建议调拨量\",\n                \"display\": format_number(total_transfer_qty_rounded,\
+          \ 0, \" 件\"),\n                \"sub\": f\"覆盖{unique_warehouses}个仓\",\n\
+          \                \"trend\": \"flat\"\n            },\n            {\n  \
+          \              \"id\": \"coverage_rate\",\n                \"title\": \"\
+          覆盖率\",\n                \"display\": format_percent(coverage_rate, 1),\n\
+          \                \"sub\": \"已解决缺口\",\n                \"trend\": \"up\"\
+          \ if coverage_rate >= 85 else \"flat\"\n            },\n            {\n\
+          \                \"id\": \"sku_count\",\n                \"title\": \"SKU数量\"\
+          ,\n                \"display\": f\"{unique_skus} 个\",\n                \"\
+          sub\": f\"涉及{unique_warehouses}个仓\",\n                \"trend\": \"flat\"\
+          \n            },\n            {\n                \"id\": \"total_records\"\
+          ,\n                \"title\": \"总记录数\",\n                \"display\": f\"\
+          {total_records} 条\",\n                \"sub\": \"明细行数\",\n             \
+          \   \"trend\": \"flat\"\n            }\n        ]\n        \n        # 构建汇总表\n\
+          \        summary_table_rows = []\n        for wh_row in warehouse_rows:\n\
+          \            volume_m3 = wh_row.get('volume_m3', 0)\n            weight_kg\
+          \ = wh_row.get('weight_kg', 0)\n            summary_table_rows.append({\n\
+          \                \"warehouse\": wh_row.get('warehouse', 'N/A'),\n      \
+          \          \"sku_count\": str(wh_row.get('sku_count', 'N/A')),\n       \
+          \         \"alloc_qty\": format_number(wh_row.get('alloc_qty', 0), 0),\n\
+          \                \"shortage_and_coverage\": [],\n                \"volume_m3\"\
+          : format_number(volume_m3, 2, \" m³\") if volume_m3 else \"N/A\",\n    \
+          \            \"weight_kg\": format_number(weight_kg, 2, \" kg\") if weight_kg\
+          \ else \"N/A\"\n            })\n        \n        summary_table = {\n  \
+          \          \"title\": \"RDC仓调拨计划汇总\",\n            \"headers\": [\"物理仓\"\
+          , \"SKU数量\", \"调拨数量\", \"缺口/覆盖率\", \"运输体积(m³)\", \"运输重量(kg)\"],\n      \
+          \      \"rows\": summary_table_rows\n        }\n        \n        # 提取CSV\
+          \ URL\n        presigned_url = obs3_data.get('presigned', 'N/A')\n     \
+          \   http_url = obs3_data.get('http_url', '')\n        object_key = http_url.split('.com/')[-1].split('?')[0]\
+          \ if http_url else 'N/A'\n        \n        # 构建exports数组\n        exports\
+          \ = [{\n            \"id\": \"transfer_plan_detail_export\",\n         \
+          \   \"dataset_id\": \"transfer_plan_detail\",\n            \"type\": \"\
+          csv\",\n            \"object_key\": object_key,\n            \"url\": presigned_url,\n\
+          \            \"status\": \"ok\" if obs3_data.get('exported') else \"failed\"\
+          \n        }]\n        \n        # 组装最终JSON\n        result = {\n       \
+          \     \"contract_id\": \"allocation_plan_view_v1\",\n            \"meta\"\
+          : {\n                \"version\": \"v2.0\",\n                \"computed_at\"\
+          : datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"),\n                \"snapshot\"\
+          : f\"时间窗: {time_window}\"\n            },\n            \"kpi_cards\": kpi_cards,\n\
+          \            \"params_panel\": {\n                \"title\": \"查询参数\",\n\
+          \                \"collapsed\": False,\n                \"items\": [\n \
+          \                   {\"label\": \"时间窗\", \"value\": time_window or \"N/A\"\
+          },\n                    {\"label\": \"SKU\", \"value\": SKU if SKU and SKU\
+          \ not in ['', 'N/A', 'null', 'undefined'] else \"全部\"},\n              \
+          \      {\"label\": \"物理仓\", \"value\": warehouse if warehouse and warehouse\
+          \ not in ['', 'N/A', 'null', 'undefined'] else \"全部\"}\n               \
+          \ ],\n                \"primary_action\": {\"id\": \"recalc\", \"label\"\
+          : \"修改参数并重新计算\"}\n            },\n            \"tabs\": [\n            \
+          \    {\"id\": \"summary\", \"label\": \"汇总\", \"active\": True}\n      \
+          \      ],\n            \"summary_table\": summary_table,\n            \"\
+          transport_check\": {\n                \"title\": \"运输可行性预检\",\n        \
+          \        \"items\": [\n                    {\"label\": \"总体积\", \"value\"\
+          : format_number(total_volume_m3, 2, \" m³\") if total_volume_m3 else \"\
+          N/A\", \"status\": \"ok\", \"note\": \"未超托\"},\n                    {\"\
+          label\": \"预估重量\", \"value\": format_number(total_weight_kg / 1000, 2, \"\
+          \ 吨\") if total_weight_kg else \"N/A\", \"status\": \"ok\", \"note\": \"\
+          未超载\"},\n                    {\"label\": \"线路可用\", \"value\": \"可用\", \"\
+          status\": \"ok\", \"note\": \"所有线路可用\"}\n                ]\n           \
+          \ },\n            \"actions\": [\n                {\"id\": \"export_transfer_plan\"\
+          , \"label\": \"导出调拨计划\"},\n                {\"id\": \"export_detail\", \"\
+          label\": \"导出明细数据\"}\n            ],\n            \"exports\": exports\n\
+          \        }\n        \n        return {\"result\": result}\n        \n  \
+          \  except Exception as e:\n        # 捕获所有异常并返回详细错误信息\n        import traceback\n\
+          \        return {\"result\": {\n            \"error\": f\"处理失败: {str(e)}\"\
+          ,\n            \"traceback\": traceback.format_exc(),\n            \"agent_output_type\"\
+          : str(type(agent_output)),\n            \"agent_output_len\": len(agent_output)\
+          \ if isinstance(agent_output, list) else \"N/A\"\n        }}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: 格式化输出
+        type: code
+        variables:
+        - value_selector:
+          - '1761221121698'
+          - time_window
+          variable: time_window
+        - value_selector:
+          - '1761221121698'
+          - SKU
+          variable: SKU
+        - value_selector:
+          - '1761221121698'
+          - warehouse_in_physical_name
+          variable: warehouse
+        - value_selector:
+          - '1761221127988'
+          - json
+          variable: agent_output
+      height: 52
+      id: '1761221130000'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761221130000'
+          - result
+          value_type: object
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1761221135331'
+      position:
+        x: 992
+        y: 282
+      positionAbsolute:
+        x: 992
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 63.66895740115092
+      y: 41.49082832234262
+      zoom: 0.8236477658823846
+  rag_pipeline_variables: []

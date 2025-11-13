@@ -1,0 +1,193 @@
+用例ID,模块,子场景,业务描述,输入,期望输出,校验点
+FCST-301,需求预测,生成需求预测,生成下周需求预测,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，时间窗为下周，信息完整。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-302,需求预测,生成需求预测,查询成都仓下周需求预测明细,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""warehouse"": ""成都仓"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，目标仓与时间窗清晰。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_chengdu\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 成都仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, warehouse, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-303,需求预测,生成需求预测,查询A001下周需求预测明细,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""sku"": ""A001"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，目标SKU与时间窗清晰。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_A001\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, sku, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-304,需求预测,生成需求预测,查询A001、成都仓下周需求预测明细,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""warehouse"": ""成都仓"",
+""sku"": ""A001"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，仓与SKU维度均明确，时间窗清晰。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_A001_chengdu\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 成都仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, warehouse, sku, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-305,需求预测,生成需求预测,查询北京/成都仓下周需求预测明细,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""warehouse_list"": [""北京仓"", ""成都仓""],
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，多仓列表与时间窗清晰。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_beijing_chengdu\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | — | — | — |\n| 成都仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓集合={北京仓, 成都仓}
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, warehouse_list, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-306,需求预测,生成需求预测,别名映射→标准仓，下周预测明细,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""warehouse"": ""北京仓"",
+""warehouse_alias"": ""帝都仓"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""识别到仓别名并正确映射至标准仓名，时间窗清晰。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_beijing\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, warehouse, warehouse_alias, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-307,需求预测,生成需求预测,修改下周预测（A001×成都仓=8000）,"{
+""intent"": ""需求预测"",
+""operation_type"": ""update"",
+""time_window"": ""next_week"",
+""warehouse"": ""成都仓"",
+""sku"": ""A001"",
+""value"": 8000,
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""修改目标、时间窗均清晰，信息完整。""
+}{""output"": ""# 需求预测变更确认\n\n> 操作：修改预测（update）\n> 时间窗：下周（自然周）\n> 目标：成都仓 × A001\n> 新值：8000\n> 生效周期：下周自然周（周一 ～ 周日）\n> 更新时间：2025-04-05T10:00:00+08:00\n\n已受理：将 下周 成都仓 A001 的需求预测值更新为 8000。\n\n备注：不校验数值，仅校验字段存在及时间语义一致。""}",,""[MUST] 意图=需求预测
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[MUST] 新值=8000
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, operation_type, time_window, warehouse, sku, value, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={操作、时间窗、目标（仓×SKU）、新值、生效周期、更新时间}
+[MUST] 时间一致性：time_window 与 生效周期 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-308,需求预测,生成需求预测,导出CSV，下周需求预测,"{
+""intent"": ""需求预测"",
+""time_window"": ""next_week"",
+""granularity"": ""week"",
+""export_format"": ""csv"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""导出格式与时间窗清晰，信息完整。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_next_week_export\n> 时间区间：下周自然周（周一 ～ 周日）\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n[下载预测明细（CSV）](fcst_detail_next_week.csv)\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | — 件 |\n| 覆盖 SKU 数 | — |\n| 覆盖仓数 | — |\n| 记录行数 | — |\n| 日均预测量（等分法） | — 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | — | — | — |\n\n洞察：按需补充。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",,""[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）
+[MUST] 解析结果JSON字段存在={intent, time_window, export_format, granularity, clarify_needed, confidence, confidence_level, confidence_reason}
+[MUST] 输出文本包含={合同版本, 报告 ID, 时间区间, 数据粒度, 生成时间}
+[MUST] 输出文本包含“下载预测明细（CSV）”，且链接后缀 .csv
+[MUST] 输出文本包含章节={1. 概览, 2. 仓维度汇总, 3. 方法与口径}
+[MUST] 时间一致性：time_window 与 时间区间 语义一致（下周=自然周7天）
+[MUST] clarify_needed='false'
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）" 
+FCST-309,需求预测,生成需求预测,查询需求预测,帮我查询2025年6月的需求预测,"{
+""intent"": ""需求预测"",
+""time_window"": ""2025-06"",
+""granularity"": ""week"",
+""clarify_needed"": ""false"",
+""confidence"": 0.95,
+""confidence_level"": ""high"",
+""confidence_reason"": ""意图触发词明确，时间窗清晰，信息完整。""
+}{""output"": ""# 需求预测\n\n> 合同版本：ForecastDetail.display_v1\n> 报告 ID：fcst_2025_06\n> 时间区间：2025-06-01 ～ 2025-06-28\n> 数据粒度：SKU × 物理仓 × 时间区间\n> 生成时间：2025-04-05T10:00:00+08:00\n\n下载预测明细（CSV）\n\n## 1. 概览\n\n| 指标 | 数值 |\n|---|---|\n| 总预测量 | 17006413.54 件 |\n| 覆盖 SKU 数 | 318 |\n| 覆盖仓数 | 5 |\n| 记录行数 | 67135 |\n| 日均预测量（等分法） | 607371.91 件/日 |\n\n备注：\n- 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。\n\n## 2. 仓维度汇总\n表格：\n\n| 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 |\n|---|---:|---:|---:|\n| 北京仓 | 6873737.95 | 40.42% | 242 |\n| 珠海仓 | 5497027.74 | 32.32% | 317 |\n| 昆山仓 | 2918525.40 | 17.16% | 219 |\n| 成都仓 | 1420619.60 | 8.35% | 179 |\n| 武汉仓 | 296502.85 | 1.74% | 182 |\n\n洞察：北京仓主导预测量，珠海仓覆盖 SKU 最广。\n\n## 3. 方法与口径\n\n| 项 | 取值 | 说明 |\n|---|---|---|\n| 预测算法 | hybrid_best_wmape | 根据历史 52 周自动选择 WMAPE 最优算法组合 |\n| 精度区间（经验） | WMAPE 15% ~ 25% | |\n| 总量口径 | Σ（SKU × 仓 × 时间区间 的预测量） | |\n| 占比口径 | 分子 / 总预测量 | |\n| 时间周 | 自然周（周一至周日），跨月建议按自然日拆分归属 | |""}",

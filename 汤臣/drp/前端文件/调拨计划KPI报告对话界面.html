@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrchestraX - KPI报告对话</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa; color: #333; line-height: 1.5;
+            height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .header { background: linear-gradient(135deg, #2c3e50, #34495e); color: #fff; padding: 0.6rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,.1); flex-shrink: 0; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { display: flex; align-items: center; gap: .5rem; font-size: 1.3rem; font-weight: 700; }
+        .logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, #6a11cb, #2575fc); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 14px; letter-spacing: -0.5px; }
+        .nav-tabs { display: flex; gap: 1rem; }
+        .nav-tab { padding: .5rem 1rem; background: rgba(255,255,255,.1); border-radius: 6px; cursor: pointer; }
+        .nav-tab.active { background: rgba(255,255,255,.2); border-bottom: 2px solid #3498db; }
+        .user-info { display: flex; align-items: center; gap: 1rem; }
+        .dropdown-btn { background: rgba(255,255,255,.1); border: none; color: #fff; padding: .5rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: .5rem; }
+        .avatar { width: 36px; height: 36px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+
+        /* 右上角账号角标 */
+        .account-badge { display: flex; align-items: center; gap: .5rem; }
+        .acc-avatar { position: relative; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #6a11cb, #2575fc); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .acc-dot { position: absolute; right: -2px; bottom: -2px; width: 10px; height: 10px; background: #27ae60; border: 2px solid #2c3e50; border-radius: 50%; }
+        .acc-name { color: #ecf0f1; font-size: .9rem; opacity: .95; }
+
+        .main-container { display: flex; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .sidebar { width: 280px; background: #fff; border-right: 1px solid #e1e8ed; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid #e1e8ed; }
+        .new-thread-btn { width: 100%; background: #3498db; color: #fff; border: none; padding: .75rem 1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: .5rem; }
+        .thread-list { flex: 1; overflow-y: auto; }
+        .thread-item { padding: 1rem 1.5rem; border-bottom: 1px solid #f1f3f4; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .thread-item.active { background: #e3f2fd; border-left: 3px solid #3498db; }
+        .thread-title { font-size: .9rem; color: #2c3e50; margin-bottom: .25rem; }
+        .thread-time { font-size: .8rem; color: #7f8c8d; }
+        .sidebar-footer { padding: 1.5rem; border-top: 1px solid #e1e8ed; }
+        .nav-link { display: flex; align-items: center; gap: .5rem; padding: .75rem 0; color: #7f8c8d; text-decoration: none; }
+
+        .chat-container { flex: 1; display: flex; flex-direction: column; background: #fff; }
+        .chat-header { padding: 1rem 1.25rem; border-bottom: 1px solid #e1e8ed; background: #f8f9fa; }
+        .chat-title { font-size: 1.2rem; color: #2c3e50; margin-bottom: .5rem; }
+        .chat-subtitle { color: #7f8c8d; font-size: .9rem; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 1.25rem; }
+        .message { margin-bottom: 1.25rem; display: flex; gap: 1rem; }
+        .message-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .user-avatar { background: #3498db; color: #fff; }
+        .agent-avatar { background: #27ae60; color: #fff; }
+        .message-content { flex: 1; }
+        .message-header { display: flex; align-items: center; gap: 1rem; margin-bottom: .5rem; }
+        .message-sender { font-weight: 600; color: #2c3e50; }
+        .message-time { font-size: .8rem; color: #7f8c8d; }
+        .message-text { background: #f8f9fa; padding: 1rem; border-radius: 12px; border: 1px solid #e1e8ed; }
+        .agent-message .message-text { background: #e8f5e8; border-color: #c8e6c9; }
+
+        .response-tabs { display: flex; gap: .5rem; margin: .5rem 0; }
+        .response-tab { padding: .5rem 1rem; border: 1px solid #e1e8ed; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: .5rem; }
+        .response-tab.active { background: #27ae60; color: #fff; border-color: #27ae60; }
+        .response-content { background: #fff; border: 1px solid #e1e8ed; border-radius: 8px; padding: 1rem; margin-top: .75rem; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .data-table th, .data-table td { padding: .6rem; text-align: left; border-bottom: 1px solid #e1e8ed; }
+        .data-table th { background: #f8f9fa; font-weight: 600; color: #2c3e50; }
+
+        .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; margin-top: .5rem; }
+        .kpi { background: #fff; border: 1px solid #e1e8ed; border-radius: 10px; padding: .9rem; }
+        .kpi .name { color: #6b7b8c; font-size: .85rem; margin-bottom: .2rem; }
+        .kpi .val { font-size: 1.3rem; font-weight: 700; }
+        .kpi .trend { font-size: .85rem; color: #7f8c8d; }
+
+        .action-buttons { display: flex; gap: 1rem; margin-top: 1rem; }
+        .action-btn { padding: .5rem 1rem; border: 1px solid #3498db; background: #fff; color: #3498db; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: .5rem; }
+        .action-btn:hover { background: #3498db; color: #fff; }
+        .action-btn.primary { background: #3498db; color: #fff; }
+
+        .context-info { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: .75rem; margin-top: 1rem; font-size: .9rem; color: #856404; }
+
+        .chat-input-container { padding: 1rem 1.25rem; border-top: 1px solid #e1e8ed; background: #f8f9fa; }
+        .chat-input-wrapper { display: flex; gap: 1rem; align-items: flex-end; }
+        .chat-input { flex: 1; min-height: 56px; max-height: 120px; padding: .9rem; border: 1px solid #e1e8ed; border-radius: 12px; resize: none; font-family: inherit; font-size: 1rem; line-height: 1.5; }
+        .chat-input:focus { outline: none; border-color: #3498db; box-shadow: 0 0 0 3px rgba(52,152,219,.1); }
+        .input-actions { display: flex; gap: .5rem; }
+        .input-btn { width: 40px; height: 40px; border: 1px solid #e1e8ed; background: #fff; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .input-btn.send-btn { background: #3498db; color: #fff; border-color: #3498db; }
+
+        .loading { display: flex; align-items: center; gap: .5rem; color: #7f8c8d; font-style: italic; }
+        .loading-dots::after { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: #7f8c8d; animation: loading 1.4s infinite ease-in-out both; }
+        @keyframes loading { 0%,80%,100%{transform:scale(0);} 40%{transform:scale(1);} }
+
+        @media (max-width: 1024px) { .grid-cards { grid-template-columns: repeat(2, 1fr); } .main-container { flex-direction: column; } .sidebar { width: 100%; } }
+    </style>
+    </head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">OX</div>
+                <span>OrchestraX</span>
+            </div>
+            <div class="account-badge" title="已登录">
+                <div class="acc-avatar">OX<span class="acc-dot"></span></div>
+                <span class="acc-name">账号</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- 左侧线程列表（占位） -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="new-thread-btn" onclick="startNewThread()">➕ 新建对话</button>
+            </div>
+            <div class="thread-list">
+                <div class="thread-item active">
+                    <div>
+                        <div class="thread-title">KPI报告 · 上月</div>
+                        <div class="thread-time">刚刚</div>
+                    </div>
+                    <div>⋯</div>
+                </div>
+                <div class="thread-item">
+                    <div>
+                        <div class="thread-title">KPI报告 · 上上月</div>
+                        <div class="thread-time">昨天</div>
+                    </div>
+                    <div>⋯</div>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <a class="nav-link" href="调拨计划初始化界面.html">← 返回首页</a>
+            </div>
+        </aside>
+
+        <!-- 右侧聊天区域 -->
+        <section class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">KPI报告 · 对话</div>
+                <div class="chat-subtitle">通过自然语言生成与解读履约KPI</div>
+            </div>
+
+            <div class="chat-messages">
+                <div class="message">
+                    <div class="message-avatar user-avatar">用</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">用户</span>
+                            <span class="message-time">刚刚</span>
+                        </div>
+                        <div class="message-text">请帮我生成上月的KPI报告，维度按仓，关注本地履约率、拆单率、旧批次占比。</div>
+                    </div>
+                </div>
+
+                <div class="message agent-message">
+                    <div class="message-avatar agent-avatar">AI</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">OrchestraX</span>
+                            <span class="message-time">刚刚</span>
+                        </div>
+                        <div class="message-text">
+                            好的，正在准备数据并计算核心指标：
+                            <ul style="margin: .5rem 0; padding-left: 1.5rem;">
+                                <li>✅ 设定区间 T=上月；T_rb=上一自然月；T_yoy=去年同月</li>
+                                <li>✅ 获取销售订单明细(T/T_rb/T_yoy)</li>
+                                <li>✅ 获取物流费明细(T/T_rb/T_yoy)</li>
+                                <li>✅ 统计本地履约率/拆单率/旧批次拆单占比等指标</li>
+                                <li>✅ 查询对应时段的即时库存快照（SKU×仓×OH/OO）</li>
+                                <li>✅ 统计物流成本指标：总运费、订单运费、调拨运费</li>
+                                <li>✅ 计算加权单位物流成本 = Σ费用 / Σ体积</li>
+                                <li>✅ 按省聚合单位物流成本，并与环比/同期比较</li>
+                            </ul>
+                            <br>
+                            KPI报告生成完成！以下为摘要与详细明细。
+                        </div>
+
+
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;">
+                            <span style="color: #7f8c8d; font-size: .9rem;">数据更新时间：2024-01-15 14:30</span>
+                        </div>
+
+                        <div class="response-content">
+                            <h4>上月履约KPI摘要</h4>
+                            <div class="grid-cards" id="kpiCards">
+                                <div class="kpi"><div class="name">本地履约率</div><div class="val">42.3%</div><div class="trend">↑ +1.2% 环比</div></div>
+                                <div class="kpi"><div class="name">拆单率</div><div class="val">44.1%</div><div class="trend">↓ -0.5% 环比</div></div>
+                                <div class="kpi"><div class="name">旧批次拆单占比</div><div class="val">32.9%</div><div class="trend">↑ +2.1% 环比</div></div>
+                                <div class="kpi"><div class="name">订单量</div><div class="val">1,284</div><div class="trend">— 0.0%</div></div>
+                            </div>
+
+                            <h5 style="margin-top:1rem;">核心指标表</h5>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>指标</th>
+                                        <th>上月</th>
+                                        <th>环比</th>
+                                        <th>同期</th>
+                                        <th>趋势</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>本地履约率</td><td>42.3%</td><td>+1.2%</td><td>+0.8%</td><td>📈 上升</td></tr>
+                                    <tr><td>拆单率</td><td>44.1%</td><td>-0.5%</td><td>-1.2%</td><td>📉 下降</td></tr>
+                                    <tr><td>旧批次拆单占比</td><td>32.9%</td><td>+2.1%</td><td>+3.8%</td><td>📈 上升</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h5>重点仓表现</h5>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>仓</th>
+                                        <th>本地履约率</th>
+                                        <th>拆单率</th>
+                                        <th>旧批次拆单占比</th>
+                                        <th>订单量</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>北京仓</td><td>45.6%</td><td>41.2%</td><td>26.3%</td><td>360</td></tr>
+                                    <tr><td>昆山仓</td><td>44.2%</td><td>42.7%</td><td>29.1%</td><td>410</td></tr>
+                                    <tr><td>成都仓</td><td>39.8%</td><td>46.9%</td><td>31.7%</td><td>290</td></tr>
+                                    <tr><td>武汉仓</td><td>38.5%</td><td>47.3%</td><td>28.0%</td><td>224</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h5 style="margin-top:1rem;">运输成本分析（上月）</h5>
+                            <div class="grid-cards" style="margin-top:.5rem; grid-template-columns: repeat(5, 1fr);">
+                                <div class="kpi"><div class="name">总运费</div><div class="val">¥1,838,646</div><div class="trend">↓ -4.7% 环比</div></div>
+                                <div class="kpi"><div class="name">订单运费</div><div class="val">¥1,449,851</div><div class="trend">↓ -5.9% 环比</div></div>
+                                <div class="kpi"><div class="name">调拨运费</div><div class="val">¥388,795</div><div class="trend">— 0.0% 环比</div></div>
+                                <div class="kpi"><div class="name">加权单位物流成本</div><div class="val">¥191.26/m³</div><div class="trend">↓ -3.9% 环比</div></div>
+                                <div class="kpi"><div class="name">拆单增量成本</div><div class="val">¥126,480</div><div class="trend">↑ +2.3% 环比</div></div>
+                            </div>
+
+                            <h5>省级物流成本明细（前10名）</h5>
+                            <table class="data-table" style="margin-top:.75rem;">
+                                <thead>
+                                    <tr>
+                                        <th>省份</th>
+                                        <th>单位物流成本（元/m³）</th>
+                                        <th>环比</th>
+                                        <th>同期</th>
+                                        <th>趋势</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>新疆维吾尔自治区</td><td>627.21</td><td>+0.7%</td><td>+0.5%</td><td>📈 上升</td></tr>
+                                    <tr><td>西藏自治区</td><td>516.95</td><td>+0.6%</td><td>+1.2%</td><td>📈 上升</td></tr>
+                                    <tr><td>黑龙江省</td><td>282.82</td><td>-0.9%</td><td>-1.5%</td><td>📉 下降</td></tr>
+                                    <tr><td>河南省</td><td>260.44</td><td>+0.7%</td><td>+1.1%</td><td>📈 上升</td></tr>
+                                    <tr><td>甘肃省</td><td>260.48</td><td>-1.5%</td><td>-3.0%</td><td>📉 下降</td></tr>
+                                    <tr><td>云南省</td><td>260.71</td><td>-0.3%</td><td>-0.1%</td><td>📉 下降</td></tr>
+                                    <tr><td>青海省</td><td>247.19</td><td>-0.8%</td><td>-1.2%</td><td>📉 下降</td></tr>
+                                    <tr><td>吉林省</td><td>242.42</td><td>-0.8%</td><td>-1.1%</td><td>📉 下降</td></tr>
+                                    <tr><td>海南省</td><td>240.83</td><td>-1.3%</td><td>-0.9%</td><td>📉 下降</td></tr>
+                                    <tr><td>宁夏回族自治区</td><td>220.84</td><td>+0.5%</td><td>+0.4%</td><td>📈 上升</td></tr>
+                                </tbody>
+                            </table>
+
+
+                            <h5>异常与建议</h5>
+                            <div class="context-info" style="margin-top:.5rem;">
+                                <ul style="margin: 0; padding-left: 1.5rem;">
+                                    <li><strong>异常：</strong>旧批次拆单占比持续上升，6月达到38.1%，需要重点关注批次管理策略</li>
+                                    <li><strong>建议：</strong>优化止拨策略，将止拨量调整为"周期内销售预测+安全库存+提前期库存"</li>
+                                    <li><strong>建议：</strong>实施FEFO策略，所有批次均参与调拨，按销量比例分布到各仓</li>
+                                    <li><strong>建议：</strong>建立ABC/XYZ分类裁剪策略，C类商品优先裁剪</li>
+                                </ul>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="action-btn"><span>📤</span> 下载报告</button>
+                            </div>
+
+                            <div class="context-info" style="margin-top:1rem;">
+                                <strong>说明：</strong>本报告基于调拨计划蓝图-V3设计，包含履约/拆单/旧批次、运输成本指标与省级明细、库存快照对比等核心数据。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <textarea class="chat-input" placeholder="继续提问：例如"对比上月趋势、只看成都仓、生成调拨计划"" rows="1" onkeydown="handleKeyDown(event)"></textarea>
+                    <div class="input-actions">
+                        <button class="input-btn" title="添加附件">+</button>
+                        <button class="input-btn" title="语音输入">🎤</button>
+                        <button class="input-btn send-btn" onclick="sendMessage()" title="发送">➤</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function startNewThread(){ alert('创建新对话线程'); }
+        function sendMessage(){ const input=document.querySelector('.chat-input'); const msg=input.value.trim(); if(!msg) return; addUserMessage(msg); input.value=''; setTimeout(()=>addAgentMessage('好的，我会基于当前上下文更新KPI视图（示例占位）。'), 800); }
+        function addUserMessage(t){ const c=document.querySelector('.chat-messages'); const e=document.createElement('div'); e.className='message'; e.innerHTML=`<div class="message-avatar user-avatar">用</div><div class="message-content"><div class="message-header"><span class="message-sender">用户</span><span class="message-time">刚刚</span></div><div class="message-text">${t}</div></div>`; c.appendChild(e); c.scrollTop=c.scrollHeight; }
+        function addAgentMessage(t){ const c=document.querySelector('.chat-messages'); const e=document.createElement('div'); e.className='message agent-message'; e.innerHTML=`<div class="message-avatar agent-avatar">AI</div><div class="message-content"><div class="message-header"><span class="message-sender">OrchestraX</span><span class="message-time">刚刚</span></div><div class="message-text">${t}</div></div>`; c.appendChild(e); c.scrollTop=c.scrollHeight; }
+        function handleKeyDown(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } }
+        
+
+        // 自动调整输入框高度
+        document.querySelector('.chat-input').addEventListener('input', function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,120)+'px'; });
+    </script>
+</body>
+</html>

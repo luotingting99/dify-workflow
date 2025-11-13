@@ -1,0 +1,2163 @@
+app:
+  description: 预测与补货/调拨（多节点：question-classifier + loader + 各功能 code）
+  icon: 🧭
+  icon_background: '#FFF3E0'
+  mode: advanced-chat
+  name: 预测与调拨v4.3-UAT
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.56@42a5fb7bc09b2f14f9d19f0ac79bec42c3c50dba07a52bf1b6d3abcd6906c739
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .XLSX
+      - .xlsx
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+      number_limits: 3
+    opening_statement: 🤖 多节点版：上传 dify_init_data.xlsx；输入 “出7月成都仓A001的周预测（MA8）/生成本周补货计划/做
+      MA7 与 MA8 对比”。
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: qc-source-1761026695495-target
+      source: qc
+      sourceHandle: source
+      target: '1761026695495'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1761026695495-8dd15a80-1023-477e-94e0-354d1e9d4a37-1761364406196-target
+      source: '1761026695495'
+      sourceHandle: 8dd15a80-1023-477e-94e0-354d1e9d4a37
+      target: '1761364406196'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1761026695495-false-1761364406196-target
+      source: '1761026695495'
+      sourceHandle: 'false'
+      target: '1761364406196'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1761535612402-source-1761362537072-target
+      source: '1761535612402'
+      sourceHandle: source
+      target: '1761362537072'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1761026695495-true-1761891022464-target
+      source: '1761026695495'
+      sourceHandle: 'true'
+      target: '1761891022464'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1761026695495-40acca03-bfdd-421f-b268-c1a91b239187-1761891053466-target
+      source: '1761026695495'
+      sourceHandle: 40acca03-bfdd-421f-b268-c1a91b239187
+      target: '1761891053466'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1761026695495-e1727413-5a3d-4bdf-975b-20bc83d86455-1761891115998-target
+      source: '1761026695495'
+      sourceHandle: e1727413-5a3d-4bdf-975b-20bc83d86455
+      target: '1761891115998'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1761891022464-source-1761891166982-target
+      source: '1761891022464'
+      sourceHandle: source
+      target: '1761891166982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1761891053466-source-1761891166982-target
+      source: '1761891053466'
+      sourceHandle: source
+      target: '1761891166982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1761891115998-source-1761891166982-target
+      source: '1761891115998'
+      sourceHandle: source
+      target: '1761891166982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1761891166982-source-1761535612402-target
+      source: '1761891166982'
+      sourceHandle: source
+      target: '1761535612402'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        isIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1761026695495-43c9a2e4-a72f-43fc-b940-3a9020b73bfb-1762157856136-target
+      source: '1761026695495'
+      sourceHandle: 43c9a2e4-a72f-43fc-b940-3a9020b73bfb
+      target: '1762157856136'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1762157856136-source-1761891166982-target
+      source: '1762157856136'
+      sourceHandle: source
+      target: '1761891166982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1761026695495-64a3227b-a3cd-4326-b561-2bd4372eeb18-1762400131414-target
+      source: '1761026695495'
+      sourceHandle: 64a3227b-a3cd-4326-b561-2bd4372eeb18
+      target: '1762400131414'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1762400131414-source-1761891166982-target
+      source: '1762400131414'
+      sourceHandle: source
+      target: '1761891166982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: start-source-1762858793142-target
+      source: start
+      sourceHandle: source
+      target: '1762858793142'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1762858793142-source-qc-target
+      source: '1762858793142'
+      sourceHandle: source
+      target: qc
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: is_test
+          max_length: 48
+          options:
+          - Y
+          - N
+          required: false
+          type: text-input
+          variable: is_test
+      height: 88
+      id: start
+      position:
+        x: -327.14503190694046
+        y: 286.0921966052166
+      positionAbsolute:
+        x: -327.14503190694046
+        y: 286.0921966052166
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 问题分析+参数抽取（输出标准JSON）
+        memory:
+          query_prompt_template: '## 用户输入：
+
+            {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 100
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: qwen-plus-latest
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: system-main-structured
+          role: system
+          text: |
+            角色/任务
+            - 角色：供应链意图识别工程师（QC）。
+            - 任务：根据用户输入进行意图识别与参数抽取；严格对齐 structured_output 的 JSON，禁止输出多余文本或代码块。
+
+            核心原则
+            - 不臆测：无法确定的字段不输出；缺关键值进入澄清流程。
+            - 允许意图：需求预测、补货计划、调拨计划、KPI报告、需求预测对比报告；否则判为 未识别意图。
+            - 触发词优先：命中对应触发词才落某意图。
+
+            上下文处理
+            - 获取当前时间：{{#1762858793142.text#}}
+
+            CoT（隐式）
+            - 步骤：意图判定 → 字段抽取 → 默认/校验 → 置信度与等级 → 澄清决策。
+            - 最终仅输出 JSON，不展示思考过程。
+
+            要求与限制
+            - 意图规范（按意图区分）
+
+              1) 需求预测
+
+              意图定义：用户要求查询需求预测。如用户表达"预测"、"需求预测"、"周预测"、"MA7预测"、"MA8预测"等意图时，属于此意图。
+
+              输出参数：
+              - intent: "需求预测"（必返）。
+              - time_window：支持 this_week/next_week/last_month；均需转换为 YYYY-MM-DD~YYYY-MM-DD 格式。
+
+              2) 补货计划
+
+              意图定义：用户要求查询补货计划。如用户表达"补货"、"补给"、"补库存"、"补货计划"等意图时，属于此意图。
+
+              输出参数：
+              - intent: "补货计划"（必返）。
+              - time_window：支持 today 或 YYYY-MM-DD；需归一化为 YYYY-MM-DD 格式。
+
+              3) 调拨计划
+
+              意图定义：用户要求查询调拨计划。如用户表达"调拨"、"配货"、"分货"、"转仓"、"调拨计划"等意图时，属于此意图。
+
+              输出参数：
+              - intent: "调拨计划"（必返）。
+              - time_window：支持 today 或 YYYY-MM-DD；需归一化为 YYYY-MM-DD 格式。
+
+              4) KPI报告
+
+              意图定义：用户要求查询KPI报告。如用户表达"KPI"、"绩效"、"指标"、"成本"、"费用"、"运费"、"物流费"、"配送费"、"调拨成本"、"本地履约率"、"拆单率"、"按仓"、"分仓"、"各仓"等意图时，属于此意图。
+
+              输出参数：
+              - intent: "KPI报告"（必返）。
+              - time_window：支持 last_month 或 YYYY-MM；"上月/上个月"统一映射为 last_month，并归一化为 YYYY-MM。
+
+              5) 需求预测对比报告
+
+              意图定义：用户要求查询需求预测对比报告。如用户表达"预测对比"、"需求预测对比"、"对比"、"比较"、"对照"、"误差"、"wMAPE"、"MASE"等意图时，属于此意图。
+
+              输出参数：
+              - intent: "需求预测对比报告"（必返）。
+              - time_window：支持 YYYY-MM 或 YYYY-MM~YYYY-MM；需按起止月顺序归一化。
+
+            评分与澄清规则
+            - 必返：confidence ∈[0,1]、confidence_level ∈{low,medium,high}、confidence_reason（12~50字）。
+            - 阈值：<0.60=low；0.60~0.85=medium；≥0.85=high；仅在关键信息完备且无不当推断时可到 1.00。
+            - clarify_needed：字符串 'true' 或 'false'。当关键参数缺失/歧义时置为 'true'，并返回 missing_fields、clarify_items、clarify_question（中文一句最佳澄清问法）。
+            - 未识别意图澄清：当 intent=未识别意图 时，clarify_question 固定输出：不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 查询 北京仓 2025-06月30日 的需求预测• 查询 成都仓 SKU001 今天的补货计划。
+
+            输出规范
+            - 仅输出识别到的字段；禁止空键、null、unknown、占位符；严格对齐 schema 字段名。
+            - 必须包含字段：intent、confidence、confidence_level、confidence_reason、clarify_needed（'true'/'false'）。
+
+            Few‑Shot（示例，稳定模型行为）
+            - 示例1：
+              用户：生成2025年7月预测对比报告
+
+              助手：{"intent":"需求预测对比报告","time_window":"2025-07","clarify_needed":"false","confidence":0.92,"confidence_level":"high","confidence_reason":"时间窗明确，对比意图清晰。"}
+
+            - 示例2：
+              用户：查询今天的调拨计划
+
+              助手：{"intent":"调拨计划","time_window":"today","clarify_needed":"false","confidence":0.88,"confidence_level":"high","confidence_reason":"意图与时间窗清晰，无需补充。"}
+
+            - 示例3（澄清）：
+              用户：生成需求预测
+
+              助手：{"intent":"需求预测","time_window":" ","clarify_needed":"true","missing_fields":["time_window"],"clarify_items":["请提供 time_window（YYYY-MM 或 YYYY-MM~YYYY-MM）"],"clarify_question":"要生成需求预测对比报告，请补充 time_window（YYYY-MM 或 YYYY-MM~YYYY-MM）。","confidence":0.65,"confidence_level":"medium","confidence_reason":"缺少时间窗，需澄清范围。"}
+
+            - 示例4：
+              用户：查询上个月的订单运费，按仓看
+
+              助手：{"intent":"KPI报告","time_window":"last_month","granularity":"month","aggregation_dimension":"物理仓","metric":"order_shipping_cost","clarify_needed":"false","confidence":0.90,"confidence_level":"high","confidence_reason":"时间窗明确（上月），指标诉求清晰。"}
+
+        - id: user-prompt
+          role: user
+          text: '## 用户输入：
+
+            {{#sys.query#}}'
+        selected: true
+        structured_output:
+          schema:
+            properties:
+              clarify_items:
+                items:
+                  type: string
+                type: array
+              clarify_needed:
+                description: ''
+                type: string
+              clarify_question:
+                type: string
+              confidence:
+                maximum: 1
+                minimum: 0
+                type: number
+              confidence_level:
+                enum:
+                - low
+                - medium
+                - high
+                type: string
+              confidence_reason:
+                type: string
+              intent:
+                enum:
+                - 需求预测
+                - 补货计划
+                - 调拨计划
+                - 需求预测对比报告
+                - KPI报告
+                - 未识别意图
+                type: string
+              missing_fields:
+                items:
+                  type: string
+                type: array
+              time_window:
+                type: string
+            required:
+            - intent
+            - clarify_needed
+            - confidence
+            - confidence_level
+            - confidence_reason
+            type: object
+        structured_output_enabled: true
+        title: 意图识别
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 116
+      id: qc
+      position:
+        x: 364.1126331103858
+        y: 286.0921966052166
+      positionAbsolute:
+        x: 364.1126331103858
+        y: 286.0921966052166
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 8dd15a80-1023-477e-94e0-354d1e9d4a37
+          conditions:
+          - comparison_operator: not empty
+            id: 1d73ab34-e532-490e-b071-1434f916ca84
+            value: Y
+            varType: string
+            variable_selector:
+            - start
+            - is_test
+          id: 8dd15a80-1023-477e-94e0-354d1e9d4a37
+          logical_operator: and
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 30078d4b-1d04-4400-a2d8-deb7c633e322
+            value: 需求预测对比报告
+            varType: string
+            variable_selector:
+            - qc
+            - structured_output
+            - intent
+          - comparison_operator: not empty
+            id: 71511e2e-9b39-428c-bbc8-1f61491041d2
+            value: ''
+            varType: object
+            variable_selector:
+            - qc
+            - structured_output
+            - time_window
+          id: 'true'
+          logical_operator: and
+        - case_id: 40acca03-bfdd-421f-b268-c1a91b239187
+          conditions:
+          - comparison_operator: is
+            id: 6624f640-6f9d-4f38-a69c-c326e10a1bd1
+            value: 调拨计划
+            varType: string
+            variable_selector:
+            - qc
+            - structured_output
+            - intent
+          - comparison_operator: not empty
+            id: 51900960-ecde-4a67-912d-9bf354965a76
+            value: ''
+            varType: object
+            variable_selector:
+            - qc
+            - structured_output
+            - time_window
+          id: 40acca03-bfdd-421f-b268-c1a91b239187
+          logical_operator: and
+        - case_id: 64a3227b-a3cd-4326-b561-2bd4372eeb18
+          conditions:
+          - comparison_operator: is
+            id: 110267e2-ff44-40a6-823e-2d804965d28d
+            value: 需求预测
+            varType: string
+            variable_selector:
+            - qc
+            - structured_output
+            - intent
+          - comparison_operator: not empty
+            id: c3e76c0c-7efa-49fc-b1dd-6430c0e29b8d
+            value: ''
+            varType: object
+            variable_selector:
+            - qc
+            - structured_output
+            - time_window
+          id: 64a3227b-a3cd-4326-b561-2bd4372eeb18
+          logical_operator: and
+        - case_id: e1727413-5a3d-4bdf-975b-20bc83d86455
+          conditions:
+          - comparison_operator: is
+            id: 8c30dcee-8f8e-42d5-92e4-881a51ab1e17
+            value: 补货计划
+            varType: string
+            variable_selector:
+            - qc
+            - structured_output
+            - intent
+          - comparison_operator: not empty
+            id: 741d6ec7-a47b-48f0-8c5b-be596e44210b
+            value: ''
+            varType: object
+            variable_selector:
+            - qc
+            - structured_output
+            - time_window
+          id: e1727413-5a3d-4bdf-975b-20bc83d86455
+          logical_operator: and
+        - case_id: 43c9a2e4-a72f-43fc-b940-3a9020b73bfb
+          conditions:
+          - comparison_operator: is
+            id: b7ace3fd-9fac-4937-bfe9-02867aa44a32
+            value: KPI报告
+            varType: string
+            variable_selector:
+            - qc
+            - structured_output
+            - intent
+          - comparison_operator: not empty
+            id: b066dea3-8d0c-42db-8e90-b68aa75932f5
+            value: ''
+            varType: object
+            variable_selector:
+            - qc
+            - structured_output
+            - time_window
+          id: 43c9a2e4-a72f-43fc-b940-3a9020b73bfb
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 494
+      id: '1761026695495'
+      position:
+        x: 791.3117695686723
+        y: 286.0921966052166
+      positionAbsolute:
+        x: 791.3117695686723
+        y: 286.0921966052166
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1761535612402.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 5
+        type: answer
+        variables: []
+      height: 103
+      id: '1761362537072'
+      position:
+        x: 2417.117652659053
+        y: 606.134246118365
+      positionAbsolute:
+        x: 2417.117652659053
+        y: 606.134246118365
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#qc.structured_output#}}{{#qc.structured_output.clarify_question#}}'
+        desc: ''
+        selected: false
+        title: 意图识别+澄清
+        type: answer
+        variables: []
+      height: 121
+      id: '1761364406196'
+      position:
+        x: 1295.0453332729671
+        y: 305.23143459281147
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 305.23143459281147
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 2d3d099b-2539-461e-b40d-56d75c6d432d
+          role: system
+          text: '角色/任务 - 角色：展示回显模板编排工程师（Echo Composer）。 - 任务：读取"这是JSON内容"（上游结构化结果）与"这是用户输入"，按统一模板渲染业务可读
+            Markdown；当需澄清时仅输出澄清提示。
+
+
+            核心原则 - 仅以 JSON 为事实来源；不要编造缺失字段。 - 只输出一个最终结果，不要输出思考过程、调试信息或多余前后缀。 - 中文输出；表格/列表对齐；单位与数值保持原样。
+
+
+            输入处理 - 输入包含两段：JSON 内容、用户输入。优先级：JSON > 用户输入。 - 兼容 JSON 外层 ```json 围栏；优先解析为对象。
+            - 当 intent 存在且 clarify_needed 为 "true"，或 intent 为 "未识别意图"：只输出 clarify_question（若缺则生成一句≤26字的澄清问法），不输出任何模板。
+            - 常见字段映射：time_window→时间区间；granularity→数据粒度；warehouse→物理仓；report_id→报告ID；generated_at→生成时间；metrics/metric→指标；params→参数设置。
+
+
+            生成流程（隐式） - 解析 → 澄清判断 → 确认 intent → 选择模板 → 字段映射与格式化 → 生成 → 自检（无多余文本，空数据按空态模板）。
+
+
+            输出规范 - 允许两类输出：1）Markdown 模板渲染结果；2）JSON 原样回显（仅当 JSON 已是最终 Markdown 或需回显原文时，使用
+            ```json 包裹）。 - contract_version 字段渲染规则（重要）：若 JSON 包含 contract_version
+            或 contract_id 字段（可能在顶层或meta中），在渲染时必须跳过该字段，不在元信息区显示，而是在报告最后添加技术注脚，格式："---
+            *数据格式：{{contract_version_value}}*"（使用Markdown水平分隔线+斜体）。 - exports 字段处理（关键）：若
+            JSON 包含 exports 数组，必须将其中的 url 渲染为 Markdown 链接格式。具体规则：① 若同时存在 actions 和
+            exports，优先将两者关联（如 export_transfer_plan 对应 transfer_plan_detail_export），渲染为
+            [action.label](export.url)；② 若无法关联或仅有 exports，则根据 export.id 或 dataset_id
+            生成默认文本并渲染链接；③ url 必须是完整的 presigned URL，不要截断或拼接其他内容。 - 参数设置渲染规则（重要）：检测并过滤占位符，若参数值包含以下任一特征，视为无效占位符，不显示该参数：①
+            "qc.structured_output"；② "qc." 开头；③ "structured"；④ "undefined"；⑤ "null"；⑥
+            空字符串。若参数对象中所有筛选参数（SKU、warehouse、仓库等）都被过滤，则显示"- 查询范围：全部仓库和SKU"或"- 无特定筛选条件"，仍保留时间窗等有效参数。只显示有实际业务意义的参数值（如真实的SKU编码A001、仓库名称北京仓等）。
+            - 空数据回显允许使用"N/A / 暂无 / 未指定 / *暂无数据*"。 - 字段缺失处理：若某个字段在 JSON 中不存在或值为 null/空字符串，该字段行可以省略（推荐）或显示"暂无"；特别是元信息中的可选字段（如
+            generated_at），若缺失则直接省略该行，不显示"未指定"。 - 数字/百分比：遵循 JSON 原格式；百分比必要时保留1位小数；千分位保持已有格式。
+
+
+            统一模板骨架（各 intent 共用结构，按需省略无数据段落） ## {{模块名称}}
+
+            > 时间区间：{{time_range}} > 数据粒度：{{granularity}} > 物理仓/区域：{{warehouse_or_area}}
+            > 报告ID：{{report_id}} > 合同/模型版本：{{contract_version}} > 生成时间：{{generated_at}}
+
+            ### 概览 {{overview}}
+
+            ### 核心指标 | 指标 | 数值 | 趋势 | |------|------|------| {{core_metrics_rows}}
+
+            ### 参数设置 {{params_block}}
+
+            ### 维度汇总 {{summary_tables}}
+
+            ### 校验/预警 {{checks_block}}
+
+            ### 关键洞察 {{insights_block}}
+
+            ### 操作 {{actions_and_exports}}
+
+            ### 术语释义 {{terms_block}}
+
+            ### 附件/下载 {{attachments_block}}
+
+            ### 备注 {{notes_block}}
+
+
+            模板库（按 intent 渲染与映射） - 需求预测：优先渲染"概览/仓维度汇总/操作"。字段名参考文件"需求预测明细展示输出.json /
+            预测对比报告展示输出.json"。典型映射：overview.total_forecast → 总预测量；overview.sku_cnt
+            → 覆盖SKU数；overview.warehouse_cnt → 覆盖仓数；overview.row_cnt → 记录行数；overview.avg_daily
+            → 日均预测量；table.warehouse_summary[] → 仓维度汇总。渲染顺序（强制）：元信息（从meta提取，跳过contract_version字段）→
+            概览 → 仓维度汇总 → 操作（下载链接）→ 技术注脚（contract_version值，格式："--- *数据格式：xxx*"，必须位于最后）。不渲染"方法与口径"章节。
+            - 需求预测对比报告：标题"需求预测算法评测摘要（核心指标：wMAPE）"，呈现 best_model、runner_up、overall_comment、recommendations；chart.items
+            可生成简要条形图描述；允许"术语释义"。 - 补货计划：标题"补货计划摘要"，渲染 meta、cards/core_metrics、run_params、warehouse_summary、actions；字段参考"补货计划展示输出.json"。参数设置渲染示例：①
+            有效参数："- 时间窗：2025-06\n- SKU：A001\n- 物理仓：北京仓"；② 含占位符（过滤后）："- 时间窗：2025-06\n-
+            查询范围：全部仓库和SKU"；③ 若 SKU 或 warehouse 值包含"qc.structured_output"等占位符，不显示该参数行。
+            - 调拨计划：标题"调拨计划"，渲染 meta、kpi_cards/core_metrics、summary_table（仓维度/SKU维度汇总）、transport_check、actions（必须关联
+            exports 渲染为链接）；字段参考"调拨计划展示输出.json"。操作区块渲染规则：① 若 actions 和 exports 同时存在，将第一个
+            action 与第一个 export 关联，渲染为 [action.label](export.url)；② export.url 必须是完整
+            URL，通常以 https:// 开头并包含签名参数；③ 示例："### 操作\n- [导出调拨计划](https://example.com/file.csv?X-Amz-Signature=xxx)"。参数设置渲染示例：①
+            有效参数："- 时间窗：2025-06\n- SKU：A001\n- 物理仓：北京仓"；② 含占位符（过滤后）："- 时间窗：2025-06\n-
+            查询范围：全部仓库和SKU"。 - KPI 报告：标题"KPI 报告"，渲染 summary_cards（核心指标）、core_table（指标表）、warehouse_highlights（仓维度表现/亮点）、insights、actions；字段参考"KPI报告展示输出.json"。
+
+
+            空数据回显（当 JSON 缺少必要字段或数组为空时，使用对应空态模板） - 调拨计划（空态）： ## 调拨计划
+
+            ### 核心指标 | 指标 | 数值 | 趋势 | |------|------|------| | 建议调拨量 | N/A | 持平 |
+            | 覆盖SKU数 | N/A | 持平 | | 涉及仓库数 | N/A | 持平 | | 调拨覆盖率 | N/A | 持平 |
+
+            ### 参数设置 - 时间窗口：2025-06-06 - 查询范围：全部仓库和SKU
+
+            ### 调拨计划概览 | 仓库 | SKU数量 | 建议调拨量 | 缺口/覆盖率 | |------|---------|------------|-------------|
+            | *暂无数据* | | | |
+
+            ### 运输检查 - 建议路线：暂无 - 运力预警：暂无
+
+            ### 方法与口径：覆盖率
+
+            ### 操作 - 导出数据：暂不可用 - 调整参数：可用
+
+            - 补货计划摘要（空态）： ## 补货计划摘要
+
+            > 时间区间：2025-06 > 数据粒度：日 > 生成时间：2025-01-21
+
+            ### 概览 2025年6月北京仓补货计划分析
+
+            北京仓在2025年6月期间共有2,877条补货计划记录，其中687行触发下单建议，涉及268个SKU。
+
+            ### 核心指标 | 指标 | 数值 | |------|------| | 建议补货量 | 75081 | | 理论缺口 | 1156030
+            | | 缺口覆盖率 | 6.5% | | 触发行数 | 687 |
+
+            ### 仓库汇总 | 物理仓 | 触发SKU数 | 理论缺口 | 建议补货量 | 缺口覆盖率 | 在途库存 | 当前库存 | |--------|-----------|----------|------------|------------|----------|----------|
+            | 北京仓 | 268 | 1156030 | 75081 | 6.5% | 0 | 11061554 |
+
+            ### 术语释义 - 建议补货量：按包装/MOQ等规则取整后的实际下单量 - 理论缺口：不考虑取整规则的理论补货需求量 - 缺口覆盖率：建议补货量占理论缺口的百分比
+            - 触发行数：触发下单条件的计划行数
+
+            ### 操作建议 - 下载详细数据 - 筛选特定SKU
+
+            - 需求预测（空态）： ## 需求预测
+
+            > 报告 ID：fcst_2025_06 > 时间区间：2025-06-01 ～ 2025-06-28 > 数据粒度：week
+
+            ### 1. 概览 | 指标 | 数值 | |---|---| | 总预测量 | 1,420,619.60 | | 覆盖 SKU 数 | 179
+            | | 覆盖仓数 | 1 | | 记录行数 | 17,495 | | 日均预测量（等分法） | 50,736.41 |
+
+            备注： - 如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。
+
+            ### 2. 仓维度汇总 | 物理仓 | 预测量 | 占比 | 覆盖 SKU 数 | |---|---:|:---:|:---:| | 成都仓
+            | 1,420,619.60 | 100.0% | 179 |
+
+            ### 操作 - [下载预测明细（CSV）]()
+
+            --- *数据格式：ForecastSummary.json_v1*
+
+            - KPI 报告（空态）： ## KPI 报告
+
+            > 时间区间：2025-06 > 物理仓：北京仓 > 生成时间：2025-01-15 10:30:00+08:00
+
+            ### 核心指标概览 | 指标 | 当前值 | 环比变化 | |------|--------|----------| | 本地履约率 |
+            31.28% | +15.00% | | 拆单率 | 58.97% | -18.45% | | 旧批次拆单占比 | 22.61% | +4.61%
+            | | 订单量 | 195 | -14.85% |
+
+            ### 仓维度表现 | 物理仓 | 本地履约率 | 拆单率 | 旧批次拆单占比 | 订单量 | |--------|------------|--------|----------------|--------|
+            | 北京仓 | 31.28% | 58.97% | 22.61% | 195 |
+
+            ### 关键洞察 - 北京仓2025年6月本地履约率31.28%，环比提升15个百分点，改善明显 - 拆单率58.97%，环比下降18.45个百分点，拆单效率有所提升
+            - 旧批次拆单占比22.61%，环比小幅上升4.61个百分点，需关注旧批次库存管理 - 订单量195单，环比下降14.85%，业务量有所减少
+
+            ### 行动建议 - 持续优化本地履约策略，保持履约率提升势头 - 分析拆单率下降原因，总结有效经验 - 加强旧批次库存管理，降低旧批次拆单比例
+            - 关注订单量下降趋势，制定业务增长措施
+
+
+            exports 渲染示例（调拨计划） - 输入 JSON 片段：
+
+            { "kpi_cards": [...], "summary_table": {...}, "transport_check": {...},
+            "actions": [ {"id": "export_transfer_plan", "label": "导出调拨计划"}, {"id":
+            "export_detail", "label": "导出明细数据"} ], "exports": [ { "id": "transfer_plan_detail_export",
+            "dataset_id": "transfer_plan_detail", "type": "csv", "url": "https://example-oss.com/file/query_20251107.csv?X-Amz-Signature=abc123def456",
+            "status": "ok" } ] }
+
+            - 期望输出（操作部分）：
+
+            ### 操作 - [导出调拨计划](https://example-oss.com/file/query_20251107.csv?X-Amz-Signature=abc123def456)
+
+            - 说明：将 actions[0] 与 exports[0] 关联，使用 action 的 label 作为链接文本，使用 export 的
+            url 作为链接地址。URL 必须完整，包含所有签名参数。
+
+
+            参数占位符过滤示例 - 输入 JSON 片段（含占位符）：
+
+            { "meta": { "time_window": "2025-06", "sku": "qc.structured_output.sku",
+            "warehouse": "qc.structured_output.warehouse" }, "kpi_cards": [...] }
+
+            - 错误输出（不要这样）：
+
+            ### 参数设置 - 时间窗：2025-06 - SKU：qc.structured_output.sku  ❌ - 物理仓：qc.structured_output.warehouse  ❌
+
+            - 正确输出（应该这样）：
+
+            ### 参数设置 - 时间窗：2025-06 - 查询范围：全部仓库和SKU  ✅
+
+            - 说明：检测到 SKU 和 warehouse 值包含占位符"qc.structured_output"，视为无效值，不显示这些参数行，改为显示"查询范围：全部仓库和SKU"或"无特定筛选条件"。
+
+
+            参数占位符过滤示例2（部分有效） - 输入 JSON 片段：
+
+            { "meta": { "time_window": "2025-06", "sku": "A001", "warehouse": "qc.structured_output.warehouse"
+            } }
+
+            - 正确输出：
+
+            ### 参数设置 - 时间窗：2025-06 - SKU：A001  ✅ - 查询范围：全部仓库  ✅
+
+            - 说明：SKU 是有效值，保留显示；warehouse 是占位符，过滤掉，改为说明"查询范围：全部仓库"。
+
+
+            contract_version 字段处理示例（需求预测） - 输入 JSON（contract_version 在顶层）：
+
+            { "contract_version": "ForecastDetail.display_v1", "meta": { "report_id":
+            "fcst_2025_07", "period": { "from": "2025-07-01", "to": "2025-07-28" },
+            "generated_at": "2025-09-27T00:00:00+08:00" }, "sections": [ { "id": "overview",
+            "kpis": [...] } ] }
+
+            - 错误输出（不要这样）：
+
+            ## 需求预测
+
+            > 合同版本：ForecastDetail.display_v1  ❌ > 报告 ID：fcst_2025_07 > 时间区间：2025-07-01
+            ～ 2025-07-28
+
+            - 正确输出（应该这样）：
+
+            ## 需求预测
+
+            > 报告 ID：fcst_2025_07  ✅ > 时间区间：2025-07-01 ～ 2025-07-28 > 生成时间：2025-09-27
+
+            ### 1. 概览 ...
+
+            ### 操作 - [下载预测明细]()
+
+            --- *数据格式：ForecastDetail.display_v1*  ✅
+
+            - 说明：渲染时跳过顶层的 contract_version 字段，从 meta 中提取业务信息渲染元信息，最后在报告末尾添加技术注脚显示
+            contract_version 的值。
+
+
+            字段缺失处理示例 - 输入 JSON（generated_at 字段缺失）：
+
+            { "meta": { "report_id": "fcst_2025_07", "period": { "from": "2025-07-01",
+            "to": "2025-07-28" } } }
+
+            - 错误输出（不要这样）：
+
+            ## 需求预测
+
+            > 报告 ID：fcst_2025_07 > 时间区间：2025-07-01 ～ 2025-07-28 > 生成时间：未指定  ❌
+
+            - 正确输出（应该这样）：
+
+            ## 需求预测
+
+            > 报告 ID：fcst_2025_07 > 时间区间：2025-07-01 ～ 2025-07-28  ✅（省略 generated_at
+            行）
+
+            - 说明：当字段不存在或为 null 时，直接省略该行，不显示"未指定"等占位文本。
+
+
+            透传规则 - 若 JSON 已是完整 Markdown（例如已按上述模板生成），则原样输出，不再改写。 - 若 JSON 不是对象或无法解析（例如普通文本），则使用
+            ```json 包裹原文回显。'
+        - id: 9f97af92-663f-4c39-a6a5-f934599f6d9f
+          role: user
+          text: '## 这是JSON内容：
+
+            {{#1761891166982.result#}}
+
+            ## 这是用户输入：
+
+            {{#sys.query#}}'
+        selected: false
+        title: 回显
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761535612402'
+      position:
+        x: 2002.1230023902024
+        y: 606.134246118365
+      positionAbsolute:
+        x: 2002.1230023902024
+        y: 606.134246118365
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: query
+            ja_JP: query
+            pt_BR: query
+            zh_Hans: query
+          llm_description: ''
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: intent
+            ja_JP: intent
+            pt_BR: intent
+            zh_Hans: intent
+          llm_description: ''
+          max: null
+          min: null
+          name: intent
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: time_window
+            ja_JP: time_window
+            pt_BR: time_window
+            zh_Hans: time_window
+          llm_description: ''
+          max: null
+          min: null
+          name: time_window
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: warehouse
+            ja_JP: warehouse
+            pt_BR: warehouse
+            zh_Hans: warehouse
+          llm_description: ''
+          max: null
+          min: null
+          name: warehouse
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: SKU
+            ja_JP: SKU
+            pt_BR: SKU
+            zh_Hans: SKU
+          llm_description: ''
+          max: null
+          min: null
+          name: SKU
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          SKU: ''
+          intent: ''
+          query: ''
+          time_window: ''
+          warehouse: ''
+        provider_id: 019a345e-9dc1-7444-9f6b-03f6ed2a46b8
+        provider_name: 需求预测对比报告V2.0
+        provider_type: workflow
+        selected: false
+        title: 需求预测对比报告V2.0
+        tool_configurations: {}
+        tool_description: ''
+        tool_label: 需求预测对比报告V2.0
+        tool_name: forcast_compare_report
+        tool_node_version: '2'
+        tool_parameters:
+          SKU:
+            type: mixed
+            value: '{{#qc.structured_output.sku#}}'
+          intent:
+            type: mixed
+            value: '{{#qc.structured_output.intent#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+          time_window:
+            type: mixed
+            value: '{{#qc.structured_output.time_window#}}'
+          warehouse:
+            type: mixed
+            value: '{{#qc.structured_output.warehouse#}}'
+        type: tool
+      height: 52
+      id: '1761891022464'
+      position:
+        x: 1295.0453332729671
+        y: 447.23143459281147
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 447.23143459281147
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: query
+            ja_JP: query
+            pt_BR: query
+            zh_Hans: query
+          llm_description: ''
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: intent
+            ja_JP: intent
+            pt_BR: intent
+            zh_Hans: intent
+          llm_description: ''
+          max: null
+          min: null
+          name: intent
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: time_window
+            ja_JP: time_window
+            pt_BR: time_window
+            zh_Hans: time_window
+          llm_description: ''
+          max: null
+          min: null
+          name: time_window
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: SKU
+            ja_JP: SKU
+            pt_BR: SKU
+            zh_Hans: SKU
+          llm_description: ''
+          max: null
+          min: null
+          name: SKU
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: warehouse_in_physical_name
+            ja_JP: warehouse_in_physical_name
+            pt_BR: warehouse_in_physical_name
+            zh_Hans: warehouse_in_physical_name
+          llm_description: ''
+          max: null
+          min: null
+          name: warehouse_in_physical_name
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          SKU: ''
+          intent: ''
+          query: ''
+          time_window: ''
+          warehouse_in_physical_name: ''
+        provider_id: 019a33a5-129b-740c-a0c7-693a7c47a7f1
+        provider_name: 调拨计划工作流v1.0
+        provider_type: workflow
+        selected: false
+        title: 调拨计划工作流v1.0
+        tool_configurations: {}
+        tool_description: ''
+        tool_label: 调拨计划工作流v1.0
+        tool_name: mart_transfer_plan
+        tool_node_version: '2'
+        tool_parameters:
+          SKU:
+            type: mixed
+            value: '{{#qc.structured_output.sku#}}'
+          intent:
+            type: mixed
+            value: '{{#qc.structured_output.intent#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+          time_window:
+            type: mixed
+            value: '{{#qc.structured_output.time_window#}}'
+          warehouse_in_physical_name:
+            type: mixed
+            value: '{{#qc.structured_output.warehouse#}}'
+        type: tool
+      height: 52
+      id: '1761891053466'
+      position:
+        x: 1295.0453332729671
+        y: 538.2314345928114
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 538.2314345928114
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: query
+            ja_JP: query
+            pt_BR: query
+            zh_Hans: query
+          llm_description: ''
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: intent
+            ja_JP: intent
+            pt_BR: intent
+            zh_Hans: intent
+          llm_description: ''
+          max: null
+          min: null
+          name: intent
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: time_window
+            ja_JP: time_window
+            pt_BR: time_window
+            zh_Hans: time_window
+          llm_description: ''
+          max: null
+          min: null
+          name: time_window
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: SKU
+            ja_JP: SKU
+            pt_BR: SKU
+            zh_Hans: SKU
+          llm_description: ''
+          max: null
+          min: null
+          name: SKU
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: warehouse_in_physical_name
+            ja_JP: warehouse_in_physical_name
+            pt_BR: warehouse_in_physical_name
+            zh_Hans: warehouse_in_physical_name
+          llm_description: ''
+          max: null
+          min: null
+          name: warehouse_in_physical_name
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          SKU: ''
+          intent: ''
+          query: ''
+          time_window: ''
+          warehouse_in_physical_name: ''
+        provider_id: 019a33a1-e379-73ba-abb6-9408c3b6d1cb
+        provider_name: 补货计划工作流v1.0
+        provider_type: workflow
+        selected: false
+        title: 补货计划工作流v1.0
+        tool_configurations: {}
+        tool_description: ''
+        tool_label: 补货计划工作流v1.0
+        tool_name: mart_replenishment_plan
+        tool_node_version: '2'
+        tool_parameters:
+          SKU:
+            type: mixed
+            value: '{{#qc.structured_output.sku#}}'
+          intent:
+            type: mixed
+            value: '{{#qc.structured_output.intent#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+          time_window:
+            type: mixed
+            value: '{{#qc.structured_output.time_window#}}'
+          warehouse_in_physical_name:
+            type: mixed
+            value: '{{#qc.structured_output.warehouse#}}'
+        type: tool
+      height: 52
+      id: '1761891115998'
+      position:
+        x: 1295.0453332729671
+        y: 720.2314345928114
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 720.2314345928114
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef main(arg1=None, arg2=None, arg3=None, arg4=None,\
+          \ arg5=None) -> dict:\n    args = [arg1, arg2, arg3, arg4, arg5]\n    result_dict\
+          \ = {f'arg{i+1}': arg for i, arg in enumerate(args) if arg is not None}\n\
+          \    result_str = json.dumps(result_dict, ensure_ascii=False)\n    return\
+          \ {'result': result_str}"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 合并参数
+        type: code
+        variables:
+        - value_selector:
+          - '1762157856136'
+          - text
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1761891115998'
+          - text
+          value_type: string
+          variable: arg2
+        - value_selector:
+          - '1761891053466'
+          - text
+          value_type: string
+          variable: arg3
+        - value_selector:
+          - '1761891022464'
+          - text
+          value_type: string
+          variable: arg4
+        - value_selector:
+          - '1762400131414'
+          - text
+          value_type: string
+          variable: arg5
+      height: 52
+      id: '1761891166982'
+      position:
+        x: 1659.7557604816327
+        y: 606.134246118365
+      positionAbsolute:
+        x: 1659.7557604816327
+        y: 606.134246118365
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: query
+            ja_JP: query
+            pt_BR: query
+            zh_Hans: query
+          llm_description: ''
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: time_window
+            ja_JP: time_window
+            pt_BR: time_window
+            zh_Hans: time_window
+          llm_description: ''
+          max: null
+          min: null
+          name: time_window
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: intent
+            ja_JP: intent
+            pt_BR: intent
+            zh_Hans: intent
+          llm_description: ''
+          max: null
+          min: null
+          name: intent
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: warehouse
+            ja_JP: warehouse
+            pt_BR: warehouse
+            zh_Hans: warehouse
+          llm_description: ''
+          max: null
+          min: null
+          name: warehouse
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          intent: ''
+          query: ''
+          time_window: ''
+          warehouse: ''
+        provider_id: 019a3444-3381-74d9-b5fc-c9180477b019
+        provider_name: 报告_KPI调拨计划工作流V2.0
+        provider_type: workflow
+        selected: false
+        title: 报告_KPI调拨计划工作流V2.0
+        tool_configurations: {}
+        tool_description: ''
+        tool_label: 报告_KPI调拨计划工作流V2.0
+        tool_name: kpi_report
+        tool_node_version: '2'
+        tool_parameters:
+          intent:
+            type: mixed
+            value: '{{#qc.structured_output.intent#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+          time_window:
+            type: mixed
+            value: '{{#qc.structured_output.time_window#}}'
+          warehouse:
+            type: mixed
+            value: '{{#qc.structured_output.warehouse#}}'
+        type: tool
+      height: 52
+      id: '1762157856136'
+      position:
+        x: 1295.0453332729671
+        y: 811.2314345928114
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 811.2314345928114
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: query
+            ja_JP: query
+            pt_BR: query
+            zh_Hans: query
+          llm_description: ''
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: intent
+            ja_JP: intent
+            pt_BR: intent
+            zh_Hans: intent
+          llm_description: ''
+          max: null
+          min: null
+          name: intent
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: time_window
+            ja_JP: time_window
+            pt_BR: time_window
+            zh_Hans: time_window
+          llm_description: ''
+          max: null
+          min: null
+          name: time_window
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: granularity
+            ja_JP: granularity
+            pt_BR: granularity
+            zh_Hans: granularity
+          llm_description: ''
+          max: null
+          min: null
+          name: granularity
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: warehouse
+            ja_JP: warehouse
+            pt_BR: warehouse
+            zh_Hans: warehouse
+          llm_description: ''
+          max: null
+          min: null
+          name: warehouse
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: SKU
+            ja_JP: SKU
+            pt_BR: SKU
+            zh_Hans: SKU
+          llm_description: ''
+          max: null
+          min: null
+          name: SKU
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: algorithms
+            ja_JP: algorithms
+            pt_BR: algorithms
+            zh_Hans: algorithms
+          llm_description: ''
+          max: null
+          min: null
+          name: algorithms
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          SKU: ''
+          algorithms: ''
+          granularity: ''
+          intent: ''
+          query: ''
+          time_window: ''
+          warehouse: ''
+        provider_id: 5e7d9e17-e162-4114-afc0-420fc0588f28
+        provider_name: 需求预测工作流v1.0
+        provider_type: workflow
+        selected: false
+        title: 需求预测工作流v1.0
+        tool_configurations: {}
+        tool_description: ''
+        tool_label: 需求预测工作流v1.0
+        tool_name: FOR_DRP
+        tool_node_version: '2'
+        tool_parameters:
+          SKU:
+            type: mixed
+            value: '{{#qc.structured_output.sku#}}'
+          algorithms:
+            type: mixed
+            value: '{{#qc.structured_output.algorithms#}}'
+          granularity:
+            type: mixed
+            value: '{{#qc.structured_output.granularity#}}'
+          intent:
+            type: mixed
+            value: '{{#qc.structured_output.intent#}}'
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+          time_window:
+            type: mixed
+            value: '{{#qc.structured_output.time_window#}}'
+          warehouse:
+            type: mixed
+            value: '{{#qc.structured_output.warehouse#}}'
+        type: tool
+      height: 52
+      id: '1762400131414'
+      position:
+        x: 1295.0453332729671
+        y: 620.5461529605582
+      positionAbsolute:
+        x: 1295.0453332729671
+        y: 620.5461529605582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: '%Y-%m-%d %H:%M:%S'
+          form: form
+          human_description:
+            en_US: Time format in strftime standard.
+            ja_JP: Time format in strftime standard.
+            pt_BR: Time format in strftime standard.
+            zh_Hans: strftime 标准的时间格式。
+          label:
+            en_US: Format
+            ja_JP: Format
+            pt_BR: Format
+            zh_Hans: 格式
+          llm_description: null
+          max: null
+          min: null
+          name: format
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: UTC
+          form: form
+          human_description:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          label:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          llm_description: null
+          max: null
+          min: null
+          name: timezone
+          options:
+          - icon: null
+            label:
+              en_US: UTC
+              ja_JP: UTC
+              pt_BR: UTC
+              zh_Hans: UTC
+            value: UTC
+          - icon: null
+            label:
+              en_US: America/New_York
+              ja_JP: America/New_York
+              pt_BR: America/New_York
+              zh_Hans: 美洲/纽约
+            value: America/New_York
+          - icon: null
+            label:
+              en_US: America/Los_Angeles
+              ja_JP: America/Los_Angeles
+              pt_BR: America/Los_Angeles
+              zh_Hans: 美洲/洛杉矶
+            value: America/Los_Angeles
+          - icon: null
+            label:
+              en_US: America/Chicago
+              ja_JP: America/Chicago
+              pt_BR: America/Chicago
+              zh_Hans: 美洲/芝加哥
+            value: America/Chicago
+          - icon: null
+            label:
+              en_US: America/Sao_Paulo
+              ja_JP: America/Sao_Paulo
+              pt_BR: América/São Paulo
+              zh_Hans: 美洲/圣保罗
+            value: America/Sao_Paulo
+          - icon: null
+            label:
+              en_US: Asia/Shanghai
+              ja_JP: Asia/Shanghai
+              pt_BR: Asia/Shanghai
+              zh_Hans: 亚洲/上海
+            value: Asia/Shanghai
+          - icon: null
+            label:
+              en_US: Asia/Ho_Chi_Minh
+              ja_JP: Asia/Ho_Chi_Minh
+              pt_BR: Ásia/Ho Chi Minh
+              zh_Hans: 亚洲/胡志明市
+            value: Asia/Ho_Chi_Minh
+          - icon: null
+            label:
+              en_US: Asia/Tokyo
+              ja_JP: Asia/Tokyo
+              pt_BR: Asia/Tokyo
+              zh_Hans: 亚洲/东京
+            value: Asia/Tokyo
+          - icon: null
+            label:
+              en_US: Asia/Dubai
+              ja_JP: Asia/Dubai
+              pt_BR: Asia/Dubai
+              zh_Hans: 亚洲/迪拜
+            value: Asia/Dubai
+          - icon: null
+            label:
+              en_US: Asia/Kolkata
+              ja_JP: Asia/Kolkata
+              pt_BR: Asia/Kolkata
+              zh_Hans: 亚洲/加尔各答
+            value: Asia/Kolkata
+          - icon: null
+            label:
+              en_US: Asia/Seoul
+              ja_JP: Asia/Seoul
+              pt_BR: Asia/Seoul
+              zh_Hans: 亚洲/首尔
+            value: Asia/Seoul
+          - icon: null
+            label:
+              en_US: Asia/Singapore
+              ja_JP: Asia/Singapore
+              pt_BR: Asia/Singapore
+              zh_Hans: 亚洲/新加坡
+            value: Asia/Singapore
+          - icon: null
+            label:
+              en_US: Europe/London
+              ja_JP: Europe/London
+              pt_BR: Europe/London
+              zh_Hans: 欧洲/伦敦
+            value: Europe/London
+          - icon: null
+            label:
+              en_US: Europe/Berlin
+              ja_JP: Europe/Berlin
+              pt_BR: Europe/Berlin
+              zh_Hans: 欧洲/柏林
+            value: Europe/Berlin
+          - icon: null
+            label:
+              en_US: Europe/Moscow
+              ja_JP: Europe/Moscow
+              pt_BR: Europe/Moscow
+              zh_Hans: 欧洲/莫斯科
+            value: Europe/Moscow
+          - icon: null
+            label:
+              en_US: Australia/Sydney
+              ja_JP: Australia/Sydney
+              pt_BR: Australia/Sydney
+              zh_Hans: 澳大利亚/悉尼
+            value: Australia/Sydney
+          - icon: null
+            label:
+              en_US: Pacific/Auckland
+              ja_JP: Pacific/Auckland
+              pt_BR: Pacific/Auckland
+              zh_Hans: 太平洋/奥克兰
+            value: Pacific/Auckland
+          - icon: null
+            label:
+              en_US: Africa/Cairo
+              ja_JP: Africa/Cairo
+              pt_BR: Africa/Cairo
+              zh_Hans: 非洲/开罗
+            value: Africa/Cairo
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          format: ''
+          timezone: ''
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: 获取当前时间
+        tool_configurations:
+          format:
+            type: mixed
+            value: '%Y-%m-%d %H:%M:%S'
+          timezone:
+            type: constant
+            value: UTC
+        tool_description: 一个用于获取当前时间的工具。
+        tool_label: 获取当前时间
+        tool_name: current_time
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 114
+      id: '1762858793142'
+      position:
+        x: 6.464694151782737
+        y: 286.0921966052166
+      positionAbsolute:
+        x: 6.464694151782737
+        y: 286.0921966052166
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 95.96234655891931
+      y: 47.98483383119401
+      zoom: 0.5550935658424704
+  rag_pipeline_variables: []

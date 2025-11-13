@@ -1,0 +1,377 @@
+用例ID,模块,子场景,业务描述,输入,输入JSON,tools工具,输出JSON,展示JSON,展示字段/指标,校验点,,,,,,,,,,
+INT-201,意图识别,预测对比报告意图识别,仅时间窗，生成7月预测对比报告,帮我生成7月的预测对比报告,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 粒度=周（week，默认）
+[MUST] 汇总维度=物理仓
+[SHOULD] 指标=WMAPE（默认）",,,,,,,,,,
+INT-202,意图识别,预测对比报告意图识别,单SKU，7月预测对比,看看 A001 在 7月的预测对比,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""sku"": ""A001"", ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-201,预测对比报告,生成预测对比报告,仅时间窗，生成7月预测对比报告,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[SHOULD] 指标=WMAPE（默认）",,,,,,,,,,
+RPT-202,预测对比报告,生成预测对比报告,单SKU，7月预测对比,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""sku"": ""A001"", ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-203,预测对比报告,生成预测对比报告,单仓，7月预测对比,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-204,预测对比报告,生成预测对比报告,仓别名映射，7月预测对比,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-205,预测对比报告,生成预测对比报告,导出CSV，7月预测对比,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-206,预测对比报告,生成预测对比报告,用户输入模型（算法）对比，7月,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""algorithms"": [""MA"", ""ETS"", ""Croston""], ""metric"": ""WMAPE""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 算法集合={MA, ETS, Croston}
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+RPT-207,预测对比报告,生成预测对比报告,多指标展示，7月预测对比,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE"", ""metrics"": [""WMAPE"", ""MASE""]}","工具名称：duckdb_query
+详细描述：查询需求预测明细并计算误差（WMAPE/MASE），按维度与粒度聚合生成对比报告",报告结果：摘要+明细,预测对比报告展示输出.json,最优算法；wMAPE；P50 WAPE；P90 WAPE；覆盖样本；算法；总行数；SKU数；仓库数,"[MUST] 输入为标准JSON（可解析）且 intent=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 指标集合包含={WMAPE, MASE}
+[SHOULD] 主排序指标=WMAPE（若下游需要排序）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-203,意图识别,预测对比报告意图识别,单仓，7月预测对比,看看 北京仓 7月的预测对比,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-204,意图识别,预测对比报告意图识别,仓别名映射，7月预测对比,看看 帝都仓 7月的预测对比,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-205,意图识别,预测对比报告意图识别,导出CSV，7月预测对比,把这份 7月 的预测对比报告导成 CSV 给我,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-206,意图识别,预测对比报告意图识别,用户输入模型（算法）对比，7月,用 MA、ETS、Croston 对比一下 7月 的表现,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""algorithms"": [""MA"", ""ETS"", ""Croston""], ""metric"": ""WMAPE""}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 算法集合={MA, ETS, Croston}
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-207,意图识别,预测对比报告意图识别,多指标展示，7月预测对比,7月的预测对比，WMAPE 和 MASE 都带上,,,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE"", ""metrics"": [""WMAPE"", ""MASE""]}",,,"[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 指标集合包含={WMAPE, MASE}
+[SHOULD] 主排序指标=WMAPE（若下游需要排序）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-301,意图识别,需求预测意图识别,生成下周需求预测,帮我生成下周的需求预测,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-301,需求预测,生成需求预测,生成下周需求预测,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-302,需求预测,生成需求预测,查询成都仓下周需求预测明细,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-303,需求预测,生成需求预测,查询A001下周需求预测明细,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""sku"": ""A001"", ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-304,需求预测,生成需求预测,查询A001、成都仓下周需求预测明细,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-305,需求预测,生成需求预测,查询北京/成都仓下周需求预测明细,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse_list"": [""北京仓"", ""成都仓""], ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓集合={北京仓, 成都仓}
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-306,需求预测,生成需求预测,别名映射→标准仓，下周预测明细,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""granularity"": ""week""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+FCST-307,需求预测,生成需求预测,修改下周预测（A001×成都仓=8000）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""operation_type"": ""update"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""value"": 8000}","工具名称：duckdb_query
+详细描述：更新需求预测记录并返回更新后的周粒度明细",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[MUST] 新值=8000",,,,,,,,,,
+FCST-308,需求预测,生成需求预测,导出CSV，下周需求预测,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week"", ""export_format"": ""csv""}","工具名称：duckdb_query
+详细描述：查询需求预测明细并返回周粒度记录",需求预测表：明细记录,需求预测明细展示输出.json,周次；开始时间；结束时间；SKU编码；SKU名称；归属组织；预计发货物理仓；需求预测；预测方法；预测误差绝对值；预测误差；预测误差标准差（σ_PP）；跨月周标记,"[MUST] 输入为标准JSON（可解析）且 intent=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-302,意图识别,需求预测意图识别,查询成都仓下周需求预测明细,帮我查询成都仓下周需求预测明细,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-303,意图识别,需求预测意图识别,查询A001下周需求预测明细,帮我查询A001下周需求预测明细,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""sku"": ""A001"", ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-304,意图识别,需求预测意图识别,查询A001、成都仓下周需求预测明细,帮我查询A001、成都仓下周需求预测明细,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-305,意图识别,需求预测意图识别,查询北京/成都仓下周需求预测明细,帮我查询北京/成都仓下周需求预测明细,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse_list"": [""北京仓"", ""成都仓""], ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓集合={北京仓, 成都仓}
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-306,意图识别,需求预测意图识别,别名映射→标准仓，下周预测明细,帮我查询帝都仓下周需求预测明细,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""granularity"": ""week""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-307,意图识别,需求预测意图识别,修改下周预测（A001×成都仓=8000）,帮我把A001、成都仓下周需求预测修改为8000,,,"解析结果JSON: {""intent"": ""需求预测"", ""operation_type"": ""update"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""value"": 8000}",,,"[MUST] 意图=需求预测
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[MUST] 新值=8000",,,,,,,,,,
+INT-308,意图识别,需求预测意图识别,导出CSV，下周需求预测,帮我生成下周需求预测，我需要导出CSV,,,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week"", ""export_format"": ""csv""}",,,"[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）",,,,,,,,,,
+INT-401,意图识别,补货计划意图识别,生成本周补货计划,帮我生成本周的补货计划,,,"解析结果JSON: {""intent"": ""补货计划"", ""time_window"": ""this_week""}",,,"[MUST] 意图=补货计划
+[MUST] 时间窗=本周（this_week）",,,,,,,,,,
+INT-402,意图识别,补货计划意图识别,查询北京仓今日补货计划,看看今天北京仓的补货计划,,,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓""}",,,"[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓",,,,,,,,,,
+INT-403,意图识别,补货计划意图识别,查询北京/成都今日补货计划,看看今天北京/成都的补货计划,,,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse_list"": [""北京仓"", ""成都仓""]}",,,"[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓集合={北京仓, 成都仓}",,,,,,,,,,
+INT-404,意图识别,补货计划意图识别,查询A001今日补货计划,看看今天A001的补货计划,,,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""sku"": ""A001""}",,,"[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] SKU=A001",,,,,,,,,,
+INT-405,意图识别,补货计划意图识别,别名映射→标准仓，今日补货计划,看看今天帝都仓的补货计划,,,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓""}",,,"[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓（别名""帝都仓""映射）",,,,,,,,,,
+INT-406,意图识别,补货计划意图识别,修改今日补货数量（A001=500）,把A001今天的补货数量改为500,,,"解析结果JSON: {""intent"": ""补货计划"", ""operation_type"": ""update"", ""inspection_date"": ""today"", ""sku"": ""A001"", ""value"": 500}",,,"[MUST] 意图=补货计划
+[MUST] 操作类型=修改（update）
+[MUST] 巡检日期=today
+[MUST] SKU=A001
+[MUST] 新值=500",,,,,,,,,,
+INT-407,意图识别,补货计划意图识别,导出CSV，今日补货计划,把今天的补货计划导成CSV给我,,,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""export_format"": ""csv""}",,,"[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 导出格式=csv",,,,,,,,,,
+REPL-401,补货计划,生成补货计划,生成本周补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""time_window"": ""this_week""}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日粒度补货明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 时间窗=本周（this_week）",,,,,,,,,,
+REPL-402,补货计划,生成补货计划,查询北京仓今日补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓""}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日粒度补货明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓",,,,,,,,,,
+REPL-403,补货计划,生成补货计划,查询北京/成都今日补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse_list"": [""北京仓"", ""成都仓""]}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓集合={北京仓, 成都仓}",,,,,,,,,,
+REPL-404,补货计划,生成补货计划,查询A001今日补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""sku"": ""A001""}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日粒度补货明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 巡检日期=today
+[MUST] SKU=A001",,,,,,,,,,
+REPL-405,补货计划,生成补货计划,别名映射→标准仓，今日补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓""}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日粒度补货明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓（别名""帝都仓""映射）",,,,,,,,,,
+REPL-406,补货计划,生成补货计划,修改今日补货数量（A001=500）,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""operation_type"": ""update"", ""inspection_date"": ""today"", ""sku"": ""A001"", ""value"": 500}","工具名称：duckdb_query
+详细描述：更新补货计划并返回日粒度明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 操作类型=修改（update）
+[MUST] 巡检日期=today
+[MUST] SKU=A001
+[MUST] 新值=500",,,,,,,,,,
+REPL-407,补货计划,生成补货计划,导出CSV，今日补货计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""export_format"": ""csv""}","工具名称：duckdb_query
+详细描述：结合库存、在途与 ROP（日）计算补货，输出日粒度补货明细",补货计划表：日明细,补货计划展示输出.json,建议补货量（取整后）；理论缺口；缺口覆盖率；触发行数；物理仓；触发SKU数；理论缺口(件)；建议补货量(件)；覆盖率；在途库存(件)；库存水位(件),"[MUST] 输入为标准JSON（可解析）且 intent=补货计划
+[MUST] 巡检日期=today
+[MUST] 导出格式=csv",,,,,,,,,,
+INT-501,意图识别,调拨计划意图识别,生成本周调拨计划,帮我生成本周的调拨计划,,,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week""}",,,"[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）",,,,,,,,,,
+INT-502,意图识别,调拨计划意图识别,查询今日调拨计划,今天的调拨计划是什么,,,"解析结果JSON: {""intent"": ""调拨计划"", ""inspection_date"": ""today""}",,,"[MUST] 意图=调拨计划
+[MUST] 巡检日期=today",,,,,,,,,,
+INT-503,意图识别,调拨计划意图识别,查询本周北京仓调拨计划,生成本周北京仓的调拨计划,,,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓""}",,,"[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓",,,,,,,,,,
+INT-504,意图识别,调拨计划意图识别,查询本周A001/A002调拨计划,只做 A001 和 A002 的本周调拨,,,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""sku_list"": [""A001"", ""A002""]}",,,"[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] SKU集合={A001, A002}",,,,,,,,,,
+INT-505,意图识别,调拨计划意图识别,查询本周北京/成都调拨计划,生成本周北京/成都的调拨计划,,,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse_list"": [""北京仓"", ""成都仓""]}",,,"[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓集合={北京仓, 成都仓}",,,,,,,,,,
+INT-506,意图识别,调拨计划意图识别,修改本周调拨数量（北京仓×A001=300）,把北京仓本周A001的调拨数量改为300,,,"解析结果JSON: {""intent"": ""调拨计划"", ""operation_type"": ""update"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓"", ""sku"": ""A001"", ""value"": 300}",,,"[MUST] 意图=调拨计划
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓
+[MUST] SKU=A001
+[MUST] 新值=300",,,,,,,,,,
+INT-507,意图识别,调拨计划意图识别,导出CSV，本周调拨计划,把本周的调拨计划导成 CSV 给我,,,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""export_format"": ""csv""}",,,"[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 导出格式=csv",,,,,,,,,,
+INT-601,意图识别,KPI报告意图识别,生成上月KPI报告（按仓）,请生成上月的KPI报告,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metrics"": ""default""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-602,意图识别,KPI报告意图识别,单仓：上月KPI报告（北京仓）,看看 北京仓 上月的 KPI 报告,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metrics"": ""default""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-603,意图识别,KPI报告意图识别,仓别名映射：帝都仓→北京仓（上月KPI报告）,看看 帝都仓 上月的 KPI 报告,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metrics"": ""default""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-604,意图识别,KPI报告意图识别,导出CSV：上月KPI报告,把上月的 KPI 报告导成 CSV 给我,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metrics"": ""default""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-605,意图识别,KPI报告意图识别,查询本地订单满足率（上月，按仓）,上月本地履约率怎么样？按仓看,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""local_fulfillment_rate""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=本地订单满足率（local_fulfillment_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-606,意图识别,KPI报告意图识别,查询拆单率（上月，按仓）,上月拆单率是多少？按仓看,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_rate""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单率（split_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-607,意图识别,KPI报告意图识别,查询旧批次拆单率（上月，按仓）,上月旧批次拆单率怎么样？按仓看,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""old_batch_split_ratio""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=旧批次拆单率（old_batch_split_ratio）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-608,意图识别,KPI报告意图识别,查询物流运费成本（上月，订单运费，按仓）,上月订单运费是多少？按仓看,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""order_shipping_cost""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=订单运费（order_shipping_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+INT-609,意图识别,KPI报告意图识别,查询物流总运费（上月，汇总）,上月物流总运费是多少,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""total_cost""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=总运费（total_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）",,,,,,,,,,
+INT-610,意图识别,KPI报告意图识别,查询调拨总运费（上月，汇总）,上月调拨总运费是多少,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""transfer_cost""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=调拨运费（transfer_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）",,,,,,,,,,
+INT-611,意图识别,KPI报告意图识别,查询上月拆单增量成本（按仓）,上月拆单增量成本是多少？按仓看,,,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_extra_cost""}",,,"[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单增量成本（split_extra_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-601,KPI报告,生成KPI报告,生成上月KPI报告（按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metrics"": ""default""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（本地履约率、拆单率、旧批次拆单占比、物流成本等），按 月×仓 汇总生成报告",报告结果：摘要+明细,KPI报告展示输出.json,本地履约率；拆单率；旧批次拆单占比；总运费；订单运费；调拨运费；加权单位物流成本；拆单额外成本,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-602,KPI报告,生成KPI报告,单仓：上月KPI报告（北京仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metrics"": ""default""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（本地履约率、拆单率、旧批次拆单占比、物流成本等），按 月×仓 汇总生成报告",报告结果：摘要+明细,KPI报告展示输出.json,本地履约率；拆单率；旧批次拆单占比；总运费；订单运费；调拨运费；加权单位物流成本；拆单额外成本,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-603,KPI报告,生成KPI报告,仓别名映射：帝都仓→北京仓（上月KPI报告）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metrics"": ""default""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（本地履约率、拆单率、旧批次拆单占比、物流成本等），按 月×仓 汇总生成报告",报告结果：摘要+明细,KPI报告展示输出.json,本地履约率；拆单率；旧批次拆单占比；总运费；订单运费；调拨运费；加权单位物流成本；拆单额外成本,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-604,KPI报告,生成KPI报告,导出CSV：上月KPI报告,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metrics"": ""default""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（本地履约率、拆单率、旧批次拆单占比、物流成本等），按 月×仓 汇总生成报告",报告结果：摘要+明细,KPI报告展示输出.json,本地履约率；拆单率；旧批次拆单占比；总运费；订单运费；调拨运费；加权单位物流成本；拆单额外成本,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-605,KPI报告,生成KPI报告,查询本地订单满足率（上月，按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""local_fulfillment_rate""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（本地履约率），按 月×仓 汇总",报告结果：摘要+明细,KPI报告展示输出.json,本地履约率；订单量；仓；趋势/环比,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=本地订单满足率（local_fulfillment_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-606,KPI报告,生成KPI报告,查询拆单率（上月，按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_rate""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（拆单率），按 月×仓 汇总",报告结果：摘要+明细,KPI报告展示输出.json,拆单率；订单量；仓；趋势/环比,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单率（split_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-607,KPI报告,生成KPI报告,查询旧批次拆单率（上月，按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""old_batch_split_ratio""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（旧批次拆单占比），按 月×仓 汇总",报告结果：摘要+明细,KPI报告展示输出.json,旧批次拆单占比；订单量；仓；趋势/环比,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=旧批次拆单率（old_batch_split_ratio）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-608,KPI报告,生成KPI报告,查询物流运费成本（上月，订单运费，按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""order_shipping_cost""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（订单运费），按 月×仓 汇总",报告结果：摘要+明细,KPI报告展示输出.json,订单运费；仓；趋势/环比；单位物流成本（如适用）,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=订单运费（order_shipping_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+KPI-609,KPI报告,生成KPI报告,查询物流总运费（上月，汇总）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""total_cost""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（总运费），按 月 汇总（总体）",报告结果：摘要+明细,KPI报告展示输出.json,总运费；趋势/环比；单位物流成本（如适用）,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=总运费（total_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）",,,,,,,,,,
+KPI-610,KPI报告,生成KPI报告,查询调拨总运费（上月，汇总）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""transfer_cost""}","工具名称：duckdb_query
+详细描述：聚合KPI指标（调拨运费），按 月 汇总（总体）",报告结果：摘要+明细,KPI报告展示输出.json,调拨运费；趋势/环比；单位物流成本（如适用）,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=调拨运费（transfer_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）",,,,,,,,,,
+KPI-611,KPI报告,生成KPI报告,查询上月拆单增量成本（按仓）,标准入参（承接意图识别解析结果）,"请求JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_extra_cost""}","工具名称：duckdb_query
+详细描述：估算拆单相较不拆单基准的额外成本（可按订单运费差额口径），按 月×仓 汇总",报告结果：摘要+明细,KPI报告展示输出.json,拆单额外成本；拆单率；订单运费；仓；趋势/环比,"[MUST] 输入为标准JSON（可解析）且 intent=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单增量成本（split_extra_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓",,,,,,,,,,
+ALLOC-501,调拨计划,生成调拨计划,生成本周调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week""}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 时间窗=本周（this_week）",,,,,,,,,,
+ALLOC-502,调拨计划,生成调拨计划,查询今日调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""inspection_date"": ""today""}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 巡检日期=today",,,,,,,,,,
+ALLOC-503,调拨计划,生成调拨计划,查询本周北京仓调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓""}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓",,,,,,,,,,
+ALLOC-504,调拨计划,生成调拨计划,查询本周A001/A002调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""sku_list"": [""A001"", ""A002""]}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] SKU集合={A001, A002}",,,,,,,,,,
+ALLOC-505,调拨计划,生成调拨计划,查询本周北京/成都调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse_list"": [""北京仓"", ""成都仓""]}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓集合={北京仓, 成都仓}",,,,,,,,,,
+ALLOC-506,调拨计划,生成调拨计划,修改本周调拨数量（北京仓×A001=300）,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""operation_type"": ""update"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓"", ""sku"": ""A001"", ""value"": 300}","工具名称：duckdb_query
+详细描述：更新调拨建议单并返回行明细",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓
+[MUST] SKU=A001
+[MUST] 新值=300",,,,,,,,,,
+ALLOC-507,调拨计划,生成调拨计划,导出CSV，本周调拨计划,标准入参（承接意图识别解析结果),"请求JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""export_format"": ""csv""}","工具名称：duckdb_query
+详细描述：依据补货缺口与可用批次池/止拨规则，生成调拨建议单（SKU×批次×调出/入）",调拨建议单表：行明细,调拨计划展示输出.json,建议调拨量；覆盖率；缺口行数；运输体积；缺口件数；物理仓；SKU数量；调拨数量；缺口/覆盖率；运输体积(m³)；运输重量(kg)；总体积；预估重量；线路可用,"[MUST] 输入为标准JSON（可解析）且 intent=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 导出格式=csv",,,,,,,,,,

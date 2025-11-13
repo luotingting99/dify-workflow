@@ -1,0 +1,39 @@
+流程ID,源用例ID,源模块,目标用例ID,目标模块,依赖类型,触发条件/说明,阶段
+# 调拨计划：常见链路（意图识别 → 调拨计划）
+F-ALLOC-WEEKLY,INT-004,意图识别,ALLOC-001,调拨计划,MUST,intent=调拨计划 AND time_window=this_week,S0→S1
+F-ALLOC-TODAY,INT-005,意图识别,ALLOC-002,调拨计划,MUST,intent=调拨计划 AND (time_window=today OR inspection_date=today),S0→S1
+F-ALLOC-WAREHOUSE-SINGLE,INT-008,意图识别,ALLOC-001,调拨计划,SHOULD,intent=调拨计划 AND warehouse=北京仓 AND time_window=this_week,S0→S1
+F-ALLOC-MULTI-WAREHOUSE,INT-011,意图识别,ALLOC-001,调拨计划,SHOULD,intent=调拨计划 AND warehouse_list in {北京仓, 成都仓},S0→S1
+F-ALLOC-NO-IN-TRANSIT,INT-012,意图识别,ALLOC-001,调拨计划,SHOULD,intent=调拨计划 AND include_in_transit=false,S0→S1
+F-ALLOC-K-LIMIT,INT-013,意图识别,ALLOC-005,调拨计划,MUST,intent=调拨计划 AND max_destinations_per_batch=2,S0→S1
+F-ALLOC-MIN-SPLIT,INT-014,意图识别,ALLOC-005,调拨计划,SHOULD,intent=调拨计划 AND min_split_cases=3,S0→S1
+F-ALLOC-MULTI-SKU,INT-015,意图识别,ALLOC-008,调拨计划,MUST,intent=调拨计划 AND sku_list={A001,A002} AND time_window=this_week,S0→S1
+F-ALLOC-SKU-WH-SINGLE,INT-001,意图识别,ALLOC-001,调拨计划,SHOULD,intent=调拨计划 AND warehouse=成都仓 AND sku=A001 AND time_window=this_week,S0→S1
+
+# 需求预测：常见链路（意图识别 → 需求预测）
+F-FCST-NEXT-MONTH-BJ-ALLSKU,INT-034,意图识别,FCST-005,需求预测,MUST,intent=需求预测 AND warehouse=北京仓 AND time_window=next_month AND sku=all AND granularity=week,S0→S1
+F-FCST-MULTI-SKU-WH,INT-036,意图识别,FCST-004,需求预测,MUST,intent=需求预测 AND time_window=2025-07 AND warehouse_list in {成都仓,昆山仓} AND sku_list in {A001,A003} AND granularity=week,S0→S1
+F-FCST-ALLSKU-ZHUHAI,INT-037,意图识别,FCST-005,需求预测,MUST,intent=需求预测 AND warehouse=珠海仓 AND time_window=2025-07 AND sku=all AND granularity=week,S0→S1
+F-FCST-DEFAULT-METHOD,INT-038,意图识别,FCST-008,需求预测,SHOULD,intent=需求预测 AND warehouse=北京仓 AND sku=A002 AND time_window=2025-07 AND granularity=week,S0→S1
+F-FCST-CROSS-MONTH-WEEK,INT-040,意图识别,FCST-007,需求预测,MUST,intent=需求预测 AND time_range=2025-07-29~2025-08-04 AND split_by_month=true AND cross_month_flag=true,S0→S1
+
+# 预测对比报告：常见链路（意图识别 → 预测对比报告/需求预测-报告子场景）
+F-RPT-COMP-3M-A001-BJ,INT-017,意图识别,FCST-018,需求预测,MUST,intent=预测对比报告 AND time_window=近3个月 AND algorithms in {MA,ETS,Croston} AND metric=WMAPE,S0→S1
+F-RPT-COMP-2025-07-A002-CD,INT-021,意图识别,FCST-018,需求预测,MUST,intent=预测对比报告 AND time_window=2025-07 AND warehouse=成都仓 AND sku=A002 AND granularity=week AND sort_by=wMAPE,S0→S1
+F-RPT-COMP-2024Q4-AGG-WH,INT-018,意图识别,FCST-018,需求预测,SHOULD,intent=预测对比报告 AND time_window=2024Q4 AND aggregation_dimension=物理仓,S0→S1
+F-RPT-COMP-2025-07-CD-MAEC,INT-019,意图识别,FCST-018,需求预测,SHOULD,intent=预测对比报告 AND time_window=2025-07 AND warehouse=成都仓 AND granularity=week AND algorithms in {MA,ETS,Croston},S0→S1
+F-RPT-COMP-2025-07-BJ-ZH,INT-020,意图识别,FCST-018,需求预测,SHOULD,intent=预测对比报告 AND time_window=2025-07 AND warehouse_list in {珠海仓,北京仓} AND granularity=week AND algorithms in {MA,ETS},S0→S1
+F-RPT-COMP-ALIAS-BJ,INT-022,意图识别,FCST-018,需求预测,SHOULD,intent=预测对比报告 AND time_window=2025-07 AND warehouse_alias=帝都仓 AND algorithms_include contains Croston,S0→S1
+
+# 活动调整预测：常见链路（意图识别 → 需求预测（应用活动调整））
+# 注：当前CSV未明确列出“活动调整预测”的目标用例ID（需求预测侧应用活动调整的具体FCST-xxx）。
+# 先以模块级指向表达，目标用例ID留空以便后续落地对接。
+F-ACT-UPLIFT-30,INT-025,意图识别,,需求预测,MUST,intent=活动调整预测 AND activity_window=2025-07-10~2025-07-20 AND warehouse=成都仓 AND sku=A001 AND adjustment_method=+30% AND adjustment_type=relative,S0→S1
+F-ACT-ABS-400-DAY,INT-026,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-12~2025-07-14 AND warehouse=all AND sku=A002 AND adjustment_method=+400/day AND adjustment_type=absolute,S0→S1
+F-ACT-UP-20,INT-027,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-10~2025-07-12 AND warehouse=成都仓 AND sku=A002 AND adjustment_method=+20% AND apply_mode=覆盖窗口,S0→S1
+F-ACT-MULTI-WH-15,INT-028,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-W2 AND warehouse_list in {北京仓,珠海仓} AND sku=all AND adjustment_method=+15%,S0→S1
+F-ACT-DOWN-10-LB-P10,INT-029,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-20 AND warehouse=昆山仓 AND sku=A003 AND adjustment_method=-10% AND lower_bound=P10,S0→S1
+F-ACT-REVERT,INT-030,意图识别,,需求预测,MUST,intent=活动调整预测 AND operation_type=revert AND original_activity_window=2025-07-10~2025-07-12 AND original_warehouse=成都仓 AND original_sku=A002,S0→S1
+F-ACT-CONFLICT-MAX,INT-031,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-15~2025-07-16 AND warehouse=北京仓 AND sku=A001 AND conflict_strategy=max,S0→S1
+F-ACT-ORG-CHANNEL,INT-032,意图识别,,需求预测,SHOULD,intent=活动调整预测 AND activity_window=2025-07-W3 AND warehouse=成都仓 AND organization=BC AND channel=电商 AND adjustment_method=+25%,S0→S1
+

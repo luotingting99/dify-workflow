@@ -1,0 +1,6722 @@
+场景分类,业务场景,输入,期望输出
+预测对比报告,看看 A.A.001.AA0010021 在 6月的预测对比,"{
+  ""query"": ""看看 A.A.001.AA0010021 在 6月的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""6月"",
+  ""warehouses"": null,
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2024-11-11"",
+        ""end_date"": ""2025-06-23""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""6月"",
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+预测对比报告,看看 北京仓 6月的预测对比,"{
+  ""query"": ""看看 北京仓 6月的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""6月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2024-11-11"",
+        ""end_date"": ""2025-06-23""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""6月""
+    }
+  }
+}"
+预测对比报告,用 MA、ETS、Croston 对比一下 6月 的表现,"{
+  ""query"": ""用 MA、ETS、Croston 对比一下 6月 的表现"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""6月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2024-11-11"",
+        ""end_date"": ""2025-06-23""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""6月""
+    }
+  }
+}"
+预测对比报告,6月的预测对比，WMAPE 和 MASE 都带上,"{
+  ""query"": ""6月的预测对比，WMAPE 和 MASE 都带上"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""6月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2024-11-11"",
+        ""end_date"": ""2025-06-23""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""6月""
+    }
+  }
+}"
+需求预测,帮我查询成都仓2025年6月需求预测明细,"{
+  ""query"": ""帮我查询成都仓2025年6月需求预测明细"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""成都仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""成都仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""成都仓""
+      ]
+    }
+  }
+}"
+需求预测,帮我查询A.A.001.AA00100212025年6月需求预测明细,"{
+  ""query"": ""帮我查询A.A.001.AA00100212025年6月需求预测明细"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月""
+    }
+  }
+}"
+需求预测,帮我查询A.A.001.AA0010021、成都仓2025年6月需求预测明细,"{
+  ""query"": ""帮我查询A.A.001.AA0010021、成都仓2025年6月需求预测明细"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""成都仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""成都仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""成都仓""
+      ]
+    }
+  }
+}"
+需求预测,帮我查询北京/成都仓2025年6月需求预测明细,"{
+  ""query"": ""帮我查询北京/成都仓2025年6月需求预测明细"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""成都仓"",
+    ""北京仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""成都仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            },
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""成都仓"",
+        ""北京仓""
+      ]
+    }
+  }
+}"
+补货计划,2025年6月补货计划,"{
+  ""query"": ""2025年6月补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月""
+    }
+  }
+}"
+补货计划,看看2025年6月30日北京仓的补货计划,"{
+  ""query"": ""看看2025年6月30日北京仓的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月30日"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓""
+      ]
+    }
+  }
+}"
+补货计划,看看2025年6月30日北京/成都的补货计划,"{
+  ""query"": ""看看2025年6月30日北京/成都的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月30日"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        },
+        {
+          ""warehouse"": ""成都仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ]
+    }
+  }
+}"
+补货计划,看看2025年6月30日，A.A.001.AA0010021的补货计划,"{
+  ""query"": ""看看2025年6月30日，A.A.001.AA0010021的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月30日"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日""
+    }
+  }
+}"
+调拨计划,2025年6月30日的调拨计划是什么,"{
+  ""query"": ""2025年6月30日的调拨计划是什么"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""2025年6月30日""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日""
+    }
+  }
+}"
+调拨计划,只做 A.A.001.AA0010021 和 A.A.001.AA0010021A 的本周调拨,"{
+  ""query"": ""只做 A.A.001.AA0010021 和 A.A.001.AA0010021A 的本周调拨"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": ""本周"",
+  ""warehouses"": null,
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""本周""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""本周"",
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+KPI报告,看看 北京仓 上月的 KPI 报告,"{
+  ""query"": ""看看 北京仓 上月的 KPI 报告"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月"",
+      ""warehouses"": [
+        ""北京仓""
+      ]
+    }
+  }
+}"
+KPI报告,上月本地履约率怎么样？按仓看,"{
+  ""query"": ""上月本地履约率怎么样？按仓看"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null,
+  ""dimension"": ""warehouse""
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月拆单率是多少？按仓看,"{
+  ""query"": ""上月拆单率是多少？按仓看"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null,
+  ""dimension"": ""warehouse""
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月旧批次拆单率怎么样？按仓看,"{
+  ""query"": ""上月旧批次拆单率怎么样？按仓看"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null,
+  ""dimension"": ""warehouse""
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月订单运费是多少？按仓看,"{
+  ""query"": ""上月订单运费是多少？按仓看"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null,
+  ""dimension"": ""warehouse""
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月物流总运费是多少,"{
+  ""query"": ""上月物流总运费是多少"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月调拨总运费是多少,"{
+  ""query"": ""上月调拨总运费是多少"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,上月拆单增量成本是多少？按仓看,"{
+  ""query"": ""上月拆单增量成本是多少？按仓看"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""上月"",
+  ""warehouses"": null,
+  ""SKU"": null,
+  ""dimension"": ""warehouse""
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""上月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""上月""
+    }
+  }
+}"
+KPI报告,2025年4月KPI报告,"{
+  ""query"": ""2025年4月KPI报告"",
+  ""intent"": ""KPI报告"",
+  ""time_window"": ""2025年4月"",
+  ""warehouses"": null,
+  ""SKU"": null
+}","{
+  ""output"": {
+    ""contract_id"": ""kpi_report_view_v1"",
+    ""meta"": {
+      ""generated_at"": ""2024-01-15 14:30"",
+      ""period_type"": ""month"",
+      ""period_label"": ""2025年4月""
+    },
+    ""summary_cards"": [
+      {
+        ""id"": ""local_fulfillment_rate"",
+        ""title"": ""本地履约率"",
+        ""value"": 0.423,
+        ""display"": ""42.3%"",
+        ""wow_delta"": 0.012,
+        ""wow_display"": ""+1.2%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""split_rate"",
+        ""title"": ""拆单率"",
+        ""value"": 0.441,
+        ""display"": ""44.1%"",
+        ""wow_delta"": -0.005,
+        ""wow_display"": ""-0.5%"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""old_batch_split_ratio"",
+        ""title"": ""旧批次拆单占比"",
+        ""value"": 0.329,
+        ""display"": ""32.9%"",
+        ""wow_delta"": 0.021,
+        ""wow_display"": ""+2.1%"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""orders"",
+        ""title"": ""订单量"",
+        ""value"": 1284,
+        ""display"": ""1,284"",
+        ""wow_delta"": 0.0,
+        ""wow_display"": ""— 0.0%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""core_table"": {
+      ""headers"": [
+        ""指标"",
+        ""上周"",
+        ""环比"",
+        ""同期"",
+        ""趋势""
+      ],
+      ""rows"": [
+        {
+          ""indicator"": ""本地履约率"",
+          ""current_display"": ""42.3%"",
+          ""wow_display"": ""+1.2%"",
+          ""yoy_display"": ""+0.8%"",
+          ""trend"": ""up""
+        },
+        {
+          ""indicator"": ""拆单率"",
+          ""current_display"": ""44.1%"",
+          ""wow_display"": ""-0.5%"",
+          ""yoy_display"": ""-1.2%"",
+          ""trend"": ""down""
+        },
+        {
+          ""indicator"": ""旧批次拆单占比"",
+          ""current_display"": ""32.9%"",
+          ""wow_display"": ""+2.1%"",
+          ""yoy_display"": ""+3.8%"",
+          ""trend"": ""up""
+        }
+      ]
+    },
+    ""warehouse_highlights"": {
+      ""headers"": [
+        ""仓"",
+        ""本地履约率"",
+        ""拆单率"",
+        ""旧批次拆单占比"",
+        ""订单量""
+      ],
+      ""rows"": [
+        {
+          ""wh"": ""北京仓"",
+          ""local_fulfillment_rate"": ""45.6%"",
+          ""split_rate"": ""41.2%"",
+          ""old_batch_split_ratio"": ""26.3%"",
+          ""orders"": ""360""
+        },
+        {
+          ""wh"": ""昆山仓"",
+          ""local_fulfillment_rate"": ""44.2%"",
+          ""split_rate"": ""42.7%"",
+          ""old_batch_split_ratio"": ""29.1%"",
+          ""orders"": ""410""
+        },
+        {
+          ""wh"": ""成都仓"",
+          ""local_fulfillment_rate"": ""39.8%"",
+          ""split_rate"": ""46.9%"",
+          ""old_batch_split_ratio"": ""31.7%"",
+          ""orders"": ""290""
+        },
+        {
+          ""wh"": ""武汉仓"",
+          ""local_fulfillment_rate"": ""38.5%"",
+          ""split_rate"": ""47.3%"",
+          ""old_batch_split_ratio"": ""28.0%"",
+          ""orders"": ""224""
+        }
+      ]
+    },
+    ""transport_costs"": {
+      ""cards"": [
+        {
+          ""id"": ""total_cost"",
+          ""title"": ""总运费"",
+          ""value"": 1838646,
+          ""display"": ""¥1,838,646"",
+          ""wow_delta"": -0.047,
+          ""wow_display"": ""-4.7%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""order_shipping_cost"",
+          ""title"": ""订单运费"",
+          ""value"": 1449851,
+          ""display"": ""¥1,449,851"",
+          ""wow_delta"": -0.059,
+          ""wow_display"": ""-5.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""transfer_cost"",
+          ""title"": ""调拨运费"",
+          ""value"": 388795,
+          ""display"": ""¥388,795"",
+          ""wow_delta"": 0.0,
+          ""wow_display"": ""— 0.0%"",
+          ""trend"": ""flat""
+        },
+        {
+          ""id"": ""weighted_unit_logistics_cost"",
+          ""title"": ""加权单位物流成本"",
+          ""value"": 191.26,
+          ""unit"": ""元/m³"",
+          ""display"": ""¥191.26/m³"",
+          ""wow_delta"": -0.039,
+          ""wow_display"": ""-3.9%"",
+          ""trend"": ""down""
+        },
+        {
+          ""id"": ""split_extra_cost"",
+          ""title"": ""拆单额外成本"",
+          ""value"": 126480,
+          ""display"": ""¥126,480"",
+          ""wow_delta"": 0.023,
+          ""wow_display"": ""+2.3%"",
+          ""trend"": ""up""
+        }
+      ],
+      ""provincial_top10"": {
+        ""headers"": [
+          ""省份"",
+          ""单位物流成本（元/m³）"",
+          ""环比"",
+          ""同期"",
+          ""趋势""
+        ],
+        ""rows"": [
+          {
+            ""province"": ""新疆维吾尔自治区"",
+            ""unit_cost_display"": ""627.21"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+0.5%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""西藏自治区"",
+            ""unit_cost_display"": ""516.95"",
+            ""wow_display"": ""+0.6%"",
+            ""yoy_display"": ""+1.2%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""黑龙江省"",
+            ""unit_cost_display"": ""282.82"",
+            ""wow_display"": ""-0.9%"",
+            ""yoy_display"": ""-1.5%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""河南省"",
+            ""unit_cost_display"": ""260.44"",
+            ""wow_display"": ""+0.7%"",
+            ""yoy_display"": ""+1.1%"",
+            ""trend"": ""up""
+          },
+          {
+            ""province"": ""甘肃省"",
+            ""unit_cost_display"": ""260.48"",
+            ""wow_display"": ""-1.5%"",
+            ""yoy_display"": ""-3.0%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""云南省"",
+            ""unit_cost_display"": ""260.71"",
+            ""wow_display"": ""-0.3%"",
+            ""yoy_display"": ""-0.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""青海省"",
+            ""unit_cost_display"": ""247.19"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.2%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""吉林省"",
+            ""unit_cost_display"": ""242.42"",
+            ""wow_display"": ""-0.8%"",
+            ""yoy_display"": ""-1.1%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""海南省"",
+            ""unit_cost_display"": ""240.83"",
+            ""wow_display"": ""-1.3%"",
+            ""yoy_display"": ""-0.9%"",
+            ""trend"": ""down""
+          },
+          {
+            ""province"": ""宁夏回族自治区"",
+            ""unit_cost_display"": ""220.84"",
+            ""wow_display"": ""+0.5%"",
+            ""yoy_display"": ""+0.4%"",
+            ""trend"": ""up""
+          }
+        ]
+      }
+    },
+    ""insights"": [
+      ""旧批次拆单占比持续上升，6 月达到 38.1%，需关注批次管理策略"",
+      ""优化止拨策略，将止拨阈值调整为“周销+安全库存+提前期库存”"",
+      ""实施 FEFO 策略，所有批次参与调拨，按到期比例分配到各仓"",
+      ""建议建立 ABC/XYZ 分类裁剪策略，C 类商品优先裁剪""
+    ],
+    ""actions"": [
+      {
+        ""id"": ""download_report"",
+        ""label"": ""下载报告"",
+        ""type"": ""link"",
+        ""href"": ""#""
+      },
+      {
+        ""id"": ""recompute"",
+        ""label"": ""重新生成"",
+        ""type"": ""action""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年4月""
+    }
+  }
+}"
+预测对比报告,看看 北京仓 2025年6月 A.A.001.AA0010021 的预测对比,"{
+  ""query"": ""看看 北京仓 2025年6月 A.A.001.AA0010021 的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2025-06-01"",
+        ""end_date"": ""2025-06-30""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+预测对比报告,看看 北京仓/成都仓 2025年6月 A.A.001.AA0010021 的预测对比,"{
+  ""query"": ""看看 北京仓/成都仓 2025年6月 A.A.001.AA0010021 的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2025-06-01"",
+        ""end_date"": ""2025-06-30""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+预测对比报告,只看 北京仓 2025年6月 A.A.001.AA0010021 和 A.A.001.AA0010021A 的预测对比,"{
+  ""query"": ""只看 北京仓 2025年6月 A.A.001.AA0010021 和 A.A.001.AA0010021A 的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2025-06-01"",
+        ""end_date"": ""2025-06-30""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+预测对比报告,看看 北京仓/成都仓 2025年6月 A.A.001.AA0010021 与 A.A.001.AA0010021A 的预测对比,"{
+  ""query"": ""看看 北京仓/成都仓 2025年6月 A.A.001.AA0010021 与 A.A.001.AA0010021A 的预测对比"",
+  ""intent"": ""预测对比报告"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""meta"": {
+      ""title"": ""需求预测算法评测摘要（核心指标：wMAPE）"",
+      ""period"": {
+        ""start_date"": ""2025-06-01"",
+        ""end_date"": ""2025-06-30""
+      },
+      ""granularity"": ""week"",
+      ""sample"": {
+        ""total_rows"": 8300,
+        ""sku_count"": 90,
+        ""warehouse_count"": 5
+      },
+      ""generated_at"": ""2025-10-09""
+    },
+    ""summary"": {
+      ""best_model"": {
+        ""name"": ""MA8"",
+        ""wmape"": 62.04,
+        ""p50_wape"": 17.05,
+        ""p90_wape"": 54.65,
+        ""coverage_samples"": 1220
+      },
+      ""runner_up"": {
+        ""name"": ""MA7"",
+        ""delta_wmape_pct_point"": 0.1
+      },
+      ""overall_comment"": ""MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。"",
+      ""recommendations"": [
+        ""默认使用 MA8；"",
+        ""备选使用 MA7 以覆盖波动型 SKU；"",
+        ""对样本较少的 SKU/仓补齐近 52 周数据后再评估。""
+      ]
+    },
+    ""chart"": {
+      ""type"": ""bar_horizontal"",
+      ""metric"": ""wMAPE"",
+      ""items"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14
+        }
+      ],
+      ""tooltip_fields"": [
+        ""p50_wape"",
+        ""p90_wape"",
+        ""coverage_samples""
+      ]
+    },
+    ""detail_table"": {
+      ""columns"": [
+        ""算法"",
+        ""wMAPE"",
+        ""P50 WAPE"",
+        ""P90 WAPE"",
+        ""覆盖样本""
+      ],
+      ""rows"": [
+        {
+          ""algo"": ""MA8"",
+          ""wmape"": 62.04,
+          ""p50_wape"": 17.05,
+          ""p90_wape"": 54.65,
+          ""coverage_samples"": 1220
+        },
+        {
+          ""algo"": ""MA7"",
+          ""wmape"": 62.14,
+          ""p50_wape"": 18.28,
+          ""p90_wape"": 57.93,
+          ""coverage_samples"": 1260
+        }
+      ]
+    },
+    ""glossary"": [
+      {
+        ""term"": ""wMAPE（加权平均绝对百分比误差）"",
+        ""desc"": ""反映整体精度，越小越好。""
+      },
+      {
+        ""term"": ""P50 WAPE"",
+        ""desc"": ""样本误差的中位数，更看稳态表现。""
+      },
+      {
+        ""term"": ""P90 WAPE"",
+        ""desc"": ""90% 样本误差不超过的阈值，反映极端情况下的容错能力。""
+      },
+      {
+        ""term"": ""覆盖样本"",
+        ""desc"": ""参与评估的（SKU×仓×周）样本数，越大越稳健。""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+需求预测,看看2025年6月北京仓 A.A.001.AA0010021 的需求预测,"{
+  ""query"": ""看看2025年6月北京仓 A.A.001.AA0010021 的需求预测"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+需求预测,看看2025年6月北京仓/成都仓 A.A.001.AA0010021 的需求预测,"{
+  ""query"": ""看看2025年6月北京仓/成都仓 A.A.001.AA0010021 的需求预测"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            },
+            {
+              ""warehouse"": ""成都仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+需求预测,只看2025年6月北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的需求预测,"{
+  ""query"": ""只看2025年6月北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的需求预测"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+需求预测,看看2025年6月北京仓/成都仓 A.A.001.AA0010021 与 A.A.001.AA0010021A 的需求预测,"{
+  ""query"": ""看看2025年6月北京仓/成都仓 A.A.001.AA0010021 与 A.A.001.AA0010021A 的需求预测"",
+  ""intent"": ""需求预测"",
+  ""time_window"": ""2025年6月"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""contract_version"": ""ForecastDetail.display_v1"",
+    ""meta"": {
+      ""title"": ""需求预测"",
+      ""report_id"": ""fcst_2025_07"",
+      ""period"": {
+        ""from"": ""2025-06-01"",
+        ""to"": ""2025-06-30""
+      },
+      ""data_grain"": ""SKU × 物理仓 × 时间区间"",
+      ""generated_at"": ""2025-09-27T00:00:00+08:00"",
+      ""download"": {
+        ""label"": ""下载预测明细（CSV）"",
+        ""url"": ""fcst_detail_2025-07.csv""
+      }
+    },
+    ""sections"": [
+      {
+        ""id"": ""overview"",
+        ""title"": ""1. 概览"",
+        ""kpis"": [
+          {
+            ""name"": ""总预测量"",
+            ""value"": 1308279.32,
+            ""unit"": ""件""
+          },
+          {
+            ""name"": ""覆盖 SKU 数"",
+            ""value"": 90
+          },
+          {
+            ""name"": ""覆盖仓数"",
+            ""value"": 4
+          },
+          {
+            ""name"": ""记录行数"",
+            ""value"": 360
+          },
+          {
+            ""name"": ""日均预测量（等分法）"",
+            ""value"": 46724.26,
+            ""unit"": ""件/日""
+          }
+        ],
+        ""notes"": [
+          ""如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。""
+        ]
+      },
+      {
+        ""id"": ""warehouse_summary"",
+        ""title"": ""2. 仓维度汇总"",
+        ""chart"": {
+          ""type"": ""pie"",
+          ""subtitle"": ""各仓预测占比（7月总计 130.8 万）"",
+          ""series"": [
+            {
+              ""name"": ""北京仓"",
+              ""value"": 1144408.0,
+              ""share"": ""87.5%""
+            }
+          ]
+        },
+        ""table"": {
+          ""columns"": [
+            {
+              ""key"": ""warehouse"",
+              ""label"": ""物理仓""
+            },
+            {
+              ""key"": ""forecast"",
+              ""label"": ""预测量"",
+              ""format"": ""#,##0.00""
+            },
+            {
+              ""key"": ""share"",
+              ""label"": ""占比"",
+              ""format"": ""0.0%""
+            },
+            {
+              ""key"": ""sku_cnt"",
+              ""label"": ""覆盖 SKU 数""
+            }
+          ],
+          ""rows"": [
+            {
+              ""warehouse"": ""北京仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            },
+            {
+              ""warehouse"": ""成都仓"",
+              ""forecast"": 1144408.0,
+              ""share"": ""87.5%"",
+              ""sku_cnt"": 75
+            }
+          ]
+        },
+        ""insight"": ""北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。""
+      },
+      {
+        ""id"": ""methodology"",
+        ""title"": ""3. 方法与口径"",
+        ""items"": [
+          {
+            ""label"": ""预测算法"",
+            ""value"": ""hybrid_best_wmape"",
+            ""note"": ""根据历史 52 周自动选择 WMAPE 最优算法组合""
+          },
+          {
+            ""label"": ""精度区间（经验）"",
+            ""value"": ""WMAPE 15% ~ 25%""
+          },
+          {
+            ""label"": ""总量口径"",
+            ""value"": ""Σ（SKU × 仓 × 时间区间 的预测量）""
+          },
+          {
+            ""label"": ""占比口径"",
+            ""value"": ""分子 / 总预测量""
+          },
+          {
+            ""label"": ""时间周"",
+            ""value"": ""自然周（周一至周日），跨月建议按自然日拆分归属""
+          }
+        ]
+      }
+    ],
+    ""schema"": {
+      ""kpi_item"": {
+        ""name"": ""string"",
+        ""value"": ""number|string"",
+        ""unit"": ""string?""
+      },
+      ""pie_series_item"": {
+        ""name"": ""string"",
+        ""value"": ""number"",
+        ""share"": ""string?""
+      },
+      ""warehouse_row"": {
+        ""warehouse"": ""string"",
+        ""forecast"": ""number"",
+        ""share"": ""string"",
+        ""sku_cnt"": ""integer""
+      }
+    },
+    ""filters"": {
+      ""time_window"": ""2025年6月"",
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+补货计划,看看2025年6月30日北京仓 A.A.001.AA0010021 的补货计划,"{
+  ""query"": ""看看2025年6月30日北京仓 A.A.001.AA0010021 的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月30日"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+补货计划,看看2025年6月30日北京/成都 A.A.001.AA0010021 的补货计划,"{
+  ""query"": ""看看2025年6月30日北京/成都 A.A.001.AA0010021 的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""2025年6月30日"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        },
+        {
+          ""warehouse"": ""成都仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+补货计划,只看北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的补货计划,"{
+  ""query"": ""只看北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": null,
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""本周（日折减）"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+补货计划,看看北京/成都 A.A.001.AA0010021 与 A.A.001.AA0010021A 的补货计划,"{
+  ""query"": ""看看北京/成都 A.A.001.AA0010021 与 A.A.001.AA0010021A 的补货计划"",
+  ""intent"": ""补货计划"",
+  ""time_window"": null,
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""view"": ""replenishment_plan_v1"",
+    ""meta"": {
+      ""version"": ""v20250715_0900"",
+      ""generated_at"": ""2025-07-15 10:00:00"",
+      ""data_snapshot"": {
+        ""inventory_ver"": ""v250715"",
+        ""in_transit_ver"": ""v250715"",
+        ""param_ver"": ""v2.0""
+      }
+    },
+    ""cards"": [
+      {
+        ""key"": ""suggested_qty_rounded"",
+        ""title"": ""建议补货量（取整后）"",
+        ""value"": 12480,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""theoretical_gap"",
+        ""title"": ""理论缺口"",
+        ""value"": 14920,
+        ""unit"": ""件""
+      },
+      {
+        ""key"": ""coverage_rate"",
+        ""title"": ""缺口覆盖率"",
+        ""value"": ""83.7%"",
+        ""unit"": ""%""
+      },
+      {
+        ""key"": ""triggered_lines"",
+        ""title"": ""触发行数"",
+        ""value"": 326,
+        ""unit"": ""行""
+      }
+    ],
+    ""run_params"": {
+      ""time_scope"": ""本周（日折减）"",
+      ""include_in_transit"": true,
+      ""stop_allocation_policy"": ""apply"",
+      ""rounding_mode"": ""按箱""
+    },
+    ""warehouse_summary"": {
+      ""columns"": [
+        {
+          ""key"": ""warehouse"",
+          ""name"": ""物理仓""
+        },
+        {
+          ""key"": ""triggered_sku_cnt"",
+          ""name"": ""触发SKU数""
+        },
+        {
+          ""key"": ""gap_qty"",
+          ""name"": ""理论缺口(件)""
+        },
+        {
+          ""key"": ""suggested_qty"",
+          ""name"": ""建议补货量(件)""
+        },
+        {
+          ""key"": ""coverage_rate"",
+          ""name"": ""覆盖率""
+        },
+        {
+          ""key"": ""in_transit_qty"",
+          ""name"": ""在途库存(件)""
+        },
+        {
+          ""key"": ""stock_level_qty"",
+          ""name"": ""库存水位(件)""
+        }
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        },
+        {
+          ""warehouse"": ""成都仓"",
+          ""triggered_sku_cnt"": 86,
+          ""gap_qty"": 4520,
+          ""suggested_qty"": 3960,
+          ""coverage_rate"": ""87.6%"",
+          ""in_transit_qty"": 1240,
+          ""stock_level_qty"": 3180
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""key"": ""export_plan"",
+        ""label"": ""导出补货计划"",
+        ""formats"": [
+          ""CSV"",
+          ""XLSX""
+        ]
+      }
+    ],
+    ""filters"": {
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+调拨计划,看看2025年6月30日北京仓 A.A.001.AA0010021 的调拨计划,"{
+  ""query"": ""看看2025年6月30日北京仓 A.A.001.AA0010021 的调拨计划"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""2025年6月30日""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+调拨计划,看看2025年6月30日北京/成都 A.A.001.AA0010021 的调拨计划,"{
+  ""query"": ""看看2025年6月30日北京/成都 A.A.001.AA0010021 的调拨计划"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": ""2025年6月30日"",
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021""
+  ]
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""2025年6月30日""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        },
+        {
+          ""warehouse"": ""成都仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""time_window"": ""2025年6月30日"",
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021""
+      ]
+    }
+  }
+}"
+调拨计划,只看北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的调拨计划,"{
+  ""query"": ""只看北京仓 A.A.001.AA0010021 和 A.A.001.AA0010021A 的调拨计划"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": null,
+  ""warehouses"": [
+    ""北京仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""未来7天""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""warehouses"": [
+        ""北京仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"
+调拨计划,看看北京/成都 A.A.001.AA0010021 与 A.A.001.AA0010021A 的调拨计划,"{
+  ""query"": ""看看北京/成都 A.A.001.AA0010021 与 A.A.001.AA0010021A 的调拨计划"",
+  ""intent"": ""调拨计划"",
+  ""time_window"": null,
+  ""warehouses"": [
+    ""北京仓"",
+    ""成都仓""
+  ],
+  ""SKU"": [
+    ""A.A.001.AA0010021"",
+    ""A.A.001.AA0010021A""
+  ]
+}","{
+  ""output"": {
+    ""contract_id"": ""allocation_plan_view_v1"",
+    ""meta"": {
+      ""version"": ""v2024101401"",
+      ""computed_at"": ""2024-10-14 10:23:15"",
+      ""snapshot"": ""库存v231014 | 在途v231014 | 参数v2.3""
+    },
+    ""kpi_cards"": [
+      {
+        ""id"": ""suggest_qty"",
+        ""title"": ""建议调拨量"",
+        ""display"": ""8,806 件"",
+        ""sub"": ""↓12% 环比"",
+        ""trend"": ""down""
+      },
+      {
+        ""id"": ""coverage_rate"",
+        ""title"": ""覆盖率"",
+        ""display"": ""87.5%"",
+        ""sub"": ""已解决缺口"",
+        ""trend"": ""up""
+      },
+      {
+        ""id"": ""shortage_rows"",
+        ""title"": ""缺口行数"",
+        ""display"": ""12 条"",
+        ""sub"": ""需人工处理"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""transport_m3"",
+        ""title"": ""运输体积"",
+        ""display"": ""174.8 m³"",
+        ""sub"": ""约 3.5 车次"",
+        ""trend"": ""flat""
+      },
+      {
+        ""id"": ""shortage_qty"",
+        ""title"": ""缺口件数"",
+        ""display"": ""156 件"",
+        ""sub"": ""占比 1.8%"",
+        ""trend"": ""flat""
+      }
+    ],
+    ""params_panel"": {
+      ""title"": ""运行参数配置"",
+      ""collapsed"": false,
+      ""items"": [
+        {
+          ""label"": ""时间窗"",
+          ""value"": ""未来7天""
+        },
+        {
+          ""label"": ""口径"",
+          ""value"": ""本月""
+        },
+        {
+          ""label"": ""计入在途"",
+          ""value"": ""是""
+        },
+        {
+          ""label"": ""止拨策略"",
+          ""value"": ""apply""
+        },
+        {
+          ""label"": ""取整口径"",
+          ""value"": ""按箱""
+        },
+        {
+          ""label"": ""K限制"",
+          ""value"": ""0.8""
+        },
+        {
+          ""label"": ""最小拆分"",
+          ""value"": ""6箱""
+        }
+      ],
+      ""primary_action"": {
+        ""id"": ""recalc"",
+        ""label"": ""修改参数并重新计算""
+      }
+    },
+    ""tabs"": [
+      {
+        ""id"": ""summary"",
+        ""label"": ""汇总"",
+        ""active"": true
+      },
+      {
+        ""id"": ""shortage"",
+        ""label"": ""缺口清单(12)"",
+        ""active"": false
+      }
+    ],
+    ""summary_table"": {
+      ""title"": ""RDC仓调拨计划汇总"",
+      ""headers"": [
+        ""物理仓"",
+        ""SKU数量"",
+        ""调拨数量"",
+        ""缺口/覆盖率"",
+        ""运输体积(m³)"",
+        ""运输重量(kg)""
+      ],
+      ""rows"": [
+        {
+          ""warehouse"": ""北京仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        },
+        {
+          ""warehouse"": ""成都仓"",
+          ""sku_count"": ""156"",
+          ""alloc_qty"": ""2,340"",
+          ""shortage_and_coverage"": [
+            ""缺口：2,675"",
+            ""覆盖：87.5%""
+          ],
+          ""volume_m3"": ""45.2"",
+          ""weight_kg"": ""982""
+        }
+      ]
+    },
+    ""transport_check"": {
+      ""title"": ""运输可行性预检"",
+      ""items"": [
+        {
+          ""label"": ""总体积"",
+          ""value"": ""174.8 m³"",
+          ""status"": ""ok"",
+          ""note"": ""未超托""
+        },
+        {
+          ""label"": ""预估重量"",
+          ""value"": ""3.2 吨"",
+          ""status"": ""ok"",
+          ""note"": ""未超载""
+        },
+        {
+          ""label"": ""线路可用"",
+          ""value"": ""可用"",
+          ""status"": ""ok"",
+          ""note"": ""所有线路可用""
+        }
+      ]
+    },
+    ""actions"": [
+      {
+        ""id"": ""export_replen_plan"",
+        ""label"": ""导出补货计划""
+      },
+      {
+        ""id"": ""export_allocation_note"",
+        ""label"": ""导出调拨建议说明""
+      },
+      {
+        ""id"": ""export_shortage_list"",
+        ""label"": ""导出缺口清单""
+      }
+    ],
+    ""filters"": {
+      ""warehouses"": [
+        ""北京仓"",
+        ""成都仓""
+      ],
+      ""SKU"": [
+        ""A.A.001.AA0010021"",
+        ""A.A.001.AA0010021A""
+      ]
+    }
+  }
+}"

@@ -1,0 +1,49 @@
+{
+    "view": "replenishment_plan_v1",
+    "meta": {
+      "version": "v20250715_0900",
+      "generated_at": "2025-07-15 10:00:00",
+      "data_snapshot": {
+        "inventory_ver": "v250715",
+        "in_transit_ver": "v250715",
+        "param_ver": "v2.0"
+      }
+    },
+    "cards": [
+      { "key": "suggested_qty_rounded", "title": "建议补货量（取整后）", "value": 12480, "unit": "件" },
+      { "key": "theoretical_gap", "title": "理论缺口", "value": 14920, "unit": "件" },
+      { "key": "coverage_rate", "title": "缺口覆盖率", "value": "83.7%", "unit": "%" },
+      { "key": "triggered_lines", "title": "触发行数", "value": 326, "unit": "行" }
+    ],
+    "run_params": {
+      "time_scope": "本周（日折减）",
+      "include_in_transit": true,
+      "stop_allocation_policy": "apply",
+      "rounding_mode": "按箱"
+    },
+    "warehouse_summary": {
+      "columns": [
+        { "key": "warehouse", "name": "物理仓" },
+        { "key": "triggered_sku_cnt", "name": "触发SKU数" },
+        { "key": "gap_qty", "name": "理论缺口(件)" },
+        { "key": "suggested_qty", "name": "建议补货量(件)" },
+        { "key": "coverage_rate", "name": "覆盖率" },
+        { "key": "in_transit_qty", "name": "在途库存(件)" },
+        { "key": "stock_level_qty", "name": "库存水位(件)" }
+      ],
+      "rows": [
+        {
+          "warehouse": "北京仓",
+          "triggered_sku_cnt": 86,
+          "gap_qty": 4520,
+          "suggested_qty": 3960,
+          "coverage_rate": "87.6%",
+          "in_transit_qty": 1240,
+          "stock_level_qty": 3180
+        }
+      ]
+    },
+    "actions": [
+      { "key": "export_plan", "label": "导出补货计划", "formats": ["CSV", "XLSX"] }
+    ]
+  }

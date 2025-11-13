@@ -1,0 +1,78 @@
+{
+    "contract_version": "ForecastDetail.display_v1",
+    "meta": {
+      "title": "需求预测",
+      "report_id": "fcst_2025_07",
+      "period": { "from": "2025-07-01", "to": "2025-07-28" },
+      "data_grain": "SKU × 物理仓 × 时间区间",
+      "generated_at": "2025-09-27T00:00:00+08:00",
+      "download": {
+        "label": "下载预测明细（CSV）",
+        "url": "fcst_detail_2025-07.csv"
+      }
+    },
+  
+    "sections": [
+      {
+        "id": "overview",
+        "title": "1. 概览",
+        "kpis": [
+          { "name": "总预测量", "value": 1308279.32, "unit": "件" },
+          { "name": "覆盖 SKU 数", "value": 90 },
+          { "name": "覆盖仓数", "value": 4 },
+          { "name": "记录行数", "value": 360 },
+          { "name": "日均预测量（等分法）", "value": 46724.26, "unit": "件/日" }
+        ],
+        "notes": [
+          "如需周/日维度，可将区间数量按等分或历史日权重拆分到日，再汇总到周（保持口径一致）。"
+        ]
+      },
+  
+      {
+        "id": "warehouse_summary",
+        "title": "2. 仓维度汇总",
+        "chart": {
+          "type": "pie",
+          "subtitle": "各仓预测占比（7月总计 130.8 万）",
+          "series": [
+            { "name": "北京仓", "value": 1144408.00, "share": "87.5%" }
+          ]
+        },
+        "table": {
+          "columns": [
+            { "key": "warehouse", "label": "物理仓" },
+            { "key": "forecast", "label": "预测量", "format": "#,##0.00" },
+            { "key": "share", "label": "占比", "format": "0.0%" },
+            { "key": "sku_cnt", "label": "覆盖 SKU 数" }
+          ],
+          "rows": [
+            { "warehouse": "北京仓", "forecast": 1144408.00, "share": "87.5%", "sku_cnt": 75 }
+          ]
+        },
+        "insight": "北京仓承担 87.5% 的预测量，覆盖 83% 的 SKU，为主要承载仓。"
+      },
+  
+      {
+        "id": "methodology",
+        "title": "3. 方法与口径",
+        "items": [
+          { "label": "预测算法", "value": "hybrid_best_wmape", "note": "根据历史 52 周自动选择 WMAPE 最优算法组合" },
+          { "label": "精度区间（经验）", "value": "WMAPE 15% ~ 25%" },
+          { "label": "总量口径", "value": "Σ（SKU × 仓 × 时间区间 的预测量）" },
+          { "label": "占比口径", "value": "分子 / 总预测量" },
+          { "label": "时间周", "value": "自然周（周一至周日），跨月建议按自然日拆分归属" }
+        ]
+      }
+    ],
+  
+    "schema": {
+      "kpi_item": { "name": "string", "value": "number|string", "unit": "string?" },
+      "pie_series_item": { "name": "string", "value": "number", "share": "string?" },
+      "warehouse_row": {
+        "warehouse": "string",
+        "forecast": "number",
+        "share": "string",
+        "sku_cnt": "integer"
+      }
+    }
+  }

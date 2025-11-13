@@ -1,0 +1,357 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 预测对比报告工作流V1.0
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1762300000000-source-1762300001000-target
+      source: '1762300000000'
+      sourceHandle: source
+      target: '1762300001000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: end
+      id: 1762300001000-source-1762300002000-target
+      source: '1762300001000'
+      sourceHandle: source
+      target: '1762300002000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: query
+          max_length: 1024
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+        - default: ''
+          hint: ''
+          label: intent
+          max_length: 64
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: intent
+        - default: ''
+          hint: ''
+          label: time_window
+          max_length: 128
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: time_window
+        - default: ''
+          hint: ''
+          label: granularity
+          max_length: 32
+          options: []
+          placeholder: week|month
+          required: false
+          type: text-input
+          variable: granularity
+        - default: ''
+          hint: ''
+          label: warehouse
+          max_length: 64
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: warehouse
+        - default: ''
+          hint: ''
+          label: SKU
+          max_length: 128
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: SKU
+        - default: ''
+          hint: 逗号分隔算法，如 MA,ETS,Croston
+          label: algorithms
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: algorithms
+        - default: ''
+          hint: 默认 wMAPE
+          label: metric
+          max_length: 32
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: metric
+        - default: ''
+          hint: 默认按 wMAPE 排序
+          label: sort_by
+          max_length: 32
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: sort_by
+      height: 220
+      id: '1762300000000'
+      position:
+        x: 80
+        y: 280
+      positionAbsolute:
+        x: 80
+        y: 280
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 260
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: |
+              Role（角色）
+              - 你是“预测对比报告生成器”。职责：只读查询 DuckDB（mart_forecast_enriched）并输出规范化的预测算法评测 JSON 视图。
+
+              Task（任务）
+              - 根据开始节点参数生成“需求预测算法评测摘要（核心指标：wMAPE）”。仅返回 JSON，不输出任何解释/SQL/Markdown。
+
+              Core Principles（核心原则）
+              - 只读：仅使用 duckdb_query；禁止 DDL/DML。
+              - 确定性：口径稳定，同参同结果；分母为 0 的占比与增速记 0。
+              - DuckDB 规范：遵循 https://duckdb.org/docs/sql/introduction
+                • 字符串连接 ||；CAST/TRY_CAST 类型转换；日期/时间常量：DATE 'YYYY-MM-DD' / TIMESTAMP 'YYYY-MM-DD HH:MM:SS'；布尔 TRUE/FALSE。
+                • 允许 COUNT(DISTINCT ...)、窗口/聚合函数；避免 NVL/DECODE/TO_CHAR 等方言函数。
+
+              Inputs（输入）
+              - 必填：intent（=“预测对比报告”）、time_window、query
+              - 选填：granularity（默认 week）、warehouse、SKU、algorithms（逗号或数组）、metric（默认 wMAPE）、sort_by（默认 wMAPE）
+
+              Time Window（时间窗）
+              - 支持 last_week/last_month/this_month/last_7_days/last_30_days 与自定义区间（YYYY-MM-DD ~ YYYY-MM-DD/to/至）。
+              - 周粒度：按 forecast_week_start_date/forecast_week_end_date 过滤（左闭右开）。
+
+              Data Source（数据来源）
+              - mart_forecast_enriched（需求预测增强表，F2 视图）
+
+              Schemas（表与字段）
+              - forecast_week_start_date DATE：预测周开始日期
+              - forecast_week_end_date DATE：预测周结束日期
+              - product_long_code VARCHAR：SKU编码
+              - product_name VARCHAR：SKU名称
+              - expected_physical_warehouse VARCHAR：预计发货物理仓
+              - expected_wh_sales_qty DECIMAL：预计发货仓销售量（历史实际）
+              - forecast_qty DECIMAL：需求预测数量
+              - algorithm_used VARCHAR：预测方法/算法
+              - abs_forecast_error DECIMAL：预测误差绝对值
+              - forecast_error DECIMAL：预测误差（forecast - actual）
+              - sigma_pp DECIMAL：保护期标准差
+              - is_cross_month_week BOOLEAN：跨月周标记
+              - scenario_id VARCHAR：场景（如 'REAL'）
+
+              Metrics（指标计算）
+              - 单样本 WAPE_i = 100 * ABS(forecast_qty - expected_wh_sales_qty) / NULLIF(expected_wh_sales_qty,0)
+              - 算法聚合：
+                • wMAPE = 100 * SUM(ABS(forecast_qty - expected_wh_sales_qty)) / NULLIF(SUM(expected_wh_sales_qty),0)
+                • P50 WAPE = PERCENTILE_CONT(0.5) OVER(算法分组) 应用于单样本 WAPE_i（或用中位数聚合）
+                • P90 WAPE = PERCENTILE_CONT(0.9) OVER(算法分组)
+                • coverage_samples = 参与评估的样本条数（行数）
+              - 维度过滤：可按 warehouse / SKU / algorithms 过滤；场景优先 scenario_id='REAL'。
+
+              Summary（摘要组装）
+              - 选出 wMAPE 最优算法作为 best_model，输出 {name, wmape, p50_wape, p90_wape, coverage_samples}
+              - runner_up：wMAPE 次优算法，输出 {name, delta_wmape_pct_point = 次优.wmape - 最优.wmape}
+              - overall_comment 与 recommendations：基于相对差异与覆盖样本自动生成 3~5 条建议（不要外显推理）。
+
+              Chart（图表）
+              - type: bar_horizontal；metric: "wMAPE"；items：按 wMAPE 升序列出各算法 {algo, wmape}；tooltip_fields：p50_wape/p90_wape/coverage_samples。
+
+              Detail Table（明细表）
+              - columns: ["算法","wMAPE","P50 WAPE","P90 WAPE","覆盖样本"]
+              - rows: 各算法一行，数值保留两位小数。
+
+              Glossary（术语表）
+              - wMAPE：加权平均绝对百分比误差，越小越好。
+              - P50 WAPE：样本误差的中位数，更看稳态表现。
+              - P90 WAPE：90% 样本误差不超过阈值，反映极端容错。
+              - 覆盖样本：参与评估的（SKU×仓×周）样本数，越大越稳健。
+
+              Formatting（格式化）
+              - 数值保留两位小数；日期按 YYYY-MM-DD；generated_at 使用 Asia/Shanghai 当天日期；不返回 CSV 导出。
+
+              Output Spec（输出规范）
+              - 严格返回如下 JSON 结构：
+                {
+                  "meta": {
+                    "title": "需求预测算法评测摘要（核心指标：wMAPE）",
+                    "period": { "start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD" },
+                    "granularity": "week|month",
+                    "sample": { "total_rows": <int>, "sku_count": <int>, "warehouse_count": <int> },
+                    "generated_at": "YYYY-MM-DD"
+                  },
+                  "summary": {
+                    "best_model": {"name":"MA","wmape":<num>,"p50_wape":<num>,"p90_wape":<num>,"coverage_samples":<int>},
+                    "runner_up": {"name":"ETS","delta_wmape_pct_point":<num>},
+                    "overall_comment": "...",
+                    "recommendations": ["..."]
+                  },
+                  "chart": {"type":"bar_horizontal","metric":"wMAPE","items":[{"algo":"MA","wmape":<num>}],"tooltip_fields":["p50_wape","p90_wape","coverage_samples"]},
+                  "detail_table": {"columns":["算法","wMAPE","P50 WAPE","P90 WAPE","覆盖样本"],"rows":[{"algo":"MA","wmape":<num>,"p50_wape":<num>,"p90_wape":<num>,"coverage_samples":<int>}]},
+                  "glossary": [{"term":"wMAPE（加权平均绝对百分比误差）","desc":"反映整体精度，越小越好。"}]
+                }
+
+              CoT（隐藏式推理）
+              - 内部流程：解析→时间窗映射→SQL 取数→聚合与分位数→排序与选择→格式化→输出；不要外显推理或 SQL。
+        model:
+          type: constant
+          value:
+            completion_params: {}
+            mode: chat
+            model: deepseek-chat
+            model_type: llm
+            provider: langgenius/deepseek/deepseek
+            type: model-selector
+        query:
+          type: constant
+          value: |
+            {
+              "intent": "{{#1762300000000.intent#}}",
+              "time_window": "{{#1762300000000.time_window#}}",
+              "granularity": "{{#1762300000000.granularity#}}",
+              "warehouse": "{{#1762300000000.warehouse#}}",
+              "SKU": "{{#1762300000000.SKU#}}",
+              "algorithms": "{{#1762300000000.algorithms#}}",
+              "metric": "{{#1762300000000.metric#}}",
+              "sort_by": "{{#1762300000000.sort_by#}}",
+              "query": "{{#1762300000000.query#}}"
+            }
+        tools:
+          type: constant
+          value:
+          - enabled: true
+            extra:
+              description: |
+                执行 DuckDB 查询，并以 JSON 形式返回结果行。
+
+                - sql: 待执行的 SQL 文本。
+                - db_path: 可选的 .duckdb 文件路径；缺省时会在常见位置自动查找。
+                - limit: 可选的行数限制。
+                返回值: {db, columns, rows, rowcount, duration_ms}
+            parameters:
+              db_path:
+                auto: 1
+                value: null
+              limit:
+                auto: 1
+                value: null
+              sql:
+                auto: 1
+                value: null
+            provider_name: orchestrax-mcp
+            provider_show_name: AI调拨MCP
+            schemas:
+            - form: llm
+              label:
+                zh_Hans: sql
+              name: sql
+              required: true
+              type: string
+            - form: llm
+              label:
+                zh_Hans: db_path
+              name: db_path
+              required: false
+              type: string
+            - form: llm
+              label:
+                zh_Hans: limit
+              name: limit
+              required: false
+              type: string
+            settings: {}
+            tool_description: |
+              执行 DuckDB 查询，并以 JSON 形式返回结果行。
+
+              - sql: 待执行的 SQL 文本。
+              - db_path: 可选的 .duckdb 文件路径；缺省时会在常见位置自动查找。
+              - limit: 可选的行数限制。
+              返回值: {db, columns, rows, rowcount, duration_ms}
+            tool_label: duckdb_query
+            tool_name: duckdb_query
+            type: mcp
+      height: 196
+      id: '1762300001000'
+      position:
+        x: 380
+        y: 280
+      positionAbsolute:
+        x: 380
+        y: 280
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 260
+    - data:
+        selected: false
+        title: 结束
+        type: end
+        outputs:
+        - value_selector:
+          - '1762300001000'
+          - text
+          value_type: string
+          variable: output
+      height: 88
+      id: '1762300002000'
+      position:
+        x: 680
+        y: 280
+      positionAbsolute:
+        x: 680
+        y: 280
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 240
+    viewport:
+      x: 80
+      y: 120
+      zoom: 0.9
+  rag_pipeline_variables: []

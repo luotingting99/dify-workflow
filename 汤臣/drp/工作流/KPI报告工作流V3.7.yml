@@ -1,0 +1,865 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: KPI报告工作流V3.7-uat
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1761813418553-source-1761813421469-target
+      source: '1761813418553'
+      sourceHandle: source
+      target: '1761813421469'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: code
+      id: 1761813421469-source-1761813430000-target
+      source: '1761813421469'
+      sourceHandle: source
+      target: '1761813430000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1761813430000-source-1761813424398-target
+      source: '1761813430000'
+      sourceHandle: source
+      target: '1761813424398'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: query
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: query
+        - default: ''
+          hint: ''
+          label: time_window
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: time_window
+        - default: ''
+          hint: ''
+          label: intent
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: intent
+        - default: ''
+          hint: ''
+          label: warehouse
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: warehouse
+      height: 166
+      id: '1761813418553'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: "❗❗❗执行规则❗❗❗\n1. 调用duckdb_query工具执行SQL\n2. 工具返回结果后，立即结束（不要有任何额外输出）\n\
+              3. 禁止返回Final Answer\n4. 禁止生成总结或说明文字\n5. 你的唯一任务就是：执行SQL → 结束\n\n# Role\n\
+              KPI报告SQL查询器，使用duckdb_query工具执行SQL并返回原始数据。\n\n# Task\n输入: query, time_window,\
+              \ intent, warehouse(可选)\n输出: 原始SQL查询结果（由后续Code节点格式化）\n要求: 准确、高效(1次查询)、仅返回原始数据\n\
+              \n❗❗❗关键约束：\n- 执行SQL后立即停止，不要继续思考\n- 不要生成Final Answer（浪费token）\n- 不要输出任何总结或说明（后续节点会处理）\n\
+              - 原始数据会自动传递给Code节点\n\n---\n\n# Instructions\n\n## 核心原则\n1. 安全只读: 仅SELECT，禁止DDL/DML\n\
+              2. 一次获取: CTE+JOIN一次查询本期/上期/同期\n3. NULL安全: COALESCE+NULLIF处理空值除零\n4.\
+              \ DuckDB方言: DATE字面量，||连接，CAST转换\n5. 禁止LIMIT: 不使用LIMIT语句\n6. 原始数据: 返回数据库原始值，不做格式化\n\
+              \n## 处理流程（仅1个步骤）\n\n**步骤1（唯一步骤）**: 使用duckdb_query工具执行一次性SQL查询，获取所有数据\n\
+              - 解析time_window: base_date, prev_date, yoy_date\n- 检查warehouse是否为占位符\n\
+              - 使用UNION ALL合并3类数据：\n  1. 履约指标（data_type='fulfillment'）\n  2. 成本业务类型（data_type='cost_business'）\n\
+              \  3. 省份成本（data_type='cost_province'）\n- 一次SQL查询返回所有需要的数据\n- 使用下方的\"\
+              一次性SQL模板\"\n- 执行完SQL查询后立即自动结束\n\n❗❗❗强制约束：\n1. 只执行1次duckdb_query工具调用\n\
+              2. 查询完成后立即自动结束，不输出Final Answer\n3. 不进行任何数据格式化（由后续Code节点完成）\n\n## 仓库过滤规则（重要！）\n\
+              warehouse为以下任一情况时视为\"未指定\"，SQL中不添加仓库过滤：\n- 空值、NULL、空字符串\n- \"N/A\"、\"\
+              null\"、\"undefined\"（不区分大小写）\n- 以\"qc.\"开头（如qc.structured_output.warehouse）\n\
+              - 以\"qs.\"开头\n- 包含\"structured_output\"\n\n❗只有warehouse是真实仓库名时，才在SQL\
+              \ WHERE中添加仓库过滤条件\n\n## 关键约束\n1. 优先month_start_date=DATE，避免ym='字符串'\n\
+              2. SQL必须包含period和data_type字段\n3. 如查询结果无yoy数据，返回空行即可\n4. 禁止使用LIMIT语句\n\
+              5. 只执行1次工具调用\n6. 查询完成后立即结束，不输出Final Answer\n\n---\n\n# Tables & Schemas\n\
+              \n## 履约指标表\n可用表: \n- 月度: mart_kpi_fill_rate_monthly_wh, mart_kpi_old_batch_monthly_wh\n\
+              - 周度: mart_kpi_fill_rate_weekly_wh_province, mart_kpi_old_batch_weekly_wh_province\n\
+              \n字段(月度fill_rate): month_start_date(DATE,主键), ym(INT,202504), physical_warehouse(VARCHAR),\
+              \ warehouse_code(VARCHAR), scenario_id(VARCHAR), total_orders_expected(INT),\
+              \ local_orders_fulfilled(INT), total_orders_cross_split(INT), local_fill_rate(DECIMAL)\n\
+              \n字段(月度old_batch): month_start_date(DATE,主键), physical_warehouse(VARCHAR),\
+              \ warehouse_code(VARCHAR), scenario_id(VARCHAR), orders_with_shipment(INT),\
+              \ old_batch_cross_split_orders(INT), old_batch_rate_of_shipped(DECIMAL)\n\
+              \n字段(周度): forecast_week_start_date(DATE,主键), forecast_week_end_date,\
+              \ forecast_week, physical_warehouse, warehouse_code, province, scenario_id,\
+              \ total_orders_expected, local_orders_fulfilled, orders_with_shipment...\n\
+              \n联表键: month_start_date + warehouse_code + scenario_id (周度用forecast_week_start_date)\n\
+              \n## 成本表\n### 物流运费物理明细表\n表名: mart_logistics_freight_detail（物流运费物理明细）\n\n核心字段: \n- 时间:\
+              \ posting_date(DATE记账日期), billing_date(DATE计费日期), shipment_date(DATE发货日期)\n\
+              - 业务: business_type(TEXT业务类型:订单/调拨), related_business_no(TEXT关联业务单号),\
+              \ wms_outbound_no(TEXT出库单号)\n- 仓库: physical_warehouse(TEXT物理仓), physical_warehouse_out(TEXT出库物理仓),\
+              \ warehouse_out(TEXT调出仓), warehouse_in(TEXT调入仓)\n- 地区: province(TEXT省份),\
+              \ region(TEXT区域), district(TEXT区/县)\n- 数量: bottle_qty(BIGINT瓶数), case_qty(BIGINT箱数),\
+              \ volume_m3(DOUBLE体积m³), weight_kg(DOUBLE重量KG)\n- 成本: freight_total_amount(DOUBLE运费合计),\
+              \ freight_amount(DOUBLE基础运费), delivery_fee(DOUBLE配送费), unloading_fee(DOUBLE卸货费),\
+              \ special_fee(DOUBLE特殊费用)\n- 其他: logistics_company(TEXT物流公司), carrier_mode(TEXT承运方式),\
+              \ charge_type(TEXT计费方式)\n\n时间字段选择: \n- 月度报告: 按billing_date或posting_date分组（优先billing_date）\n\
+              - 周度报告: 按shipment_date分组\n\n### 拆单额外成本明细表\n表名: mart_split_order_extra_cost_detail（拆单额外成本逐单明细）\n\
+              \n核心字段:\n- 时间: posting_month(DATE月份,主键之一)\n- 地区: province(TEXT省份),\
+              \ province_code(TEXT省份编码)\n- 仓库: target_warehouse(TEXT目标仓,主键之一), physical_warehouse_out(TEXT实际出库仓)\n\
+              - 业务: business_type(TEXT业务类型), related_business_no(TEXT关联业务单号,主键之一),\
+              \ wms_outbound_no(TEXT出库单号)\n- 数量: volume_m3(DOUBLE体积m³), weight_kg(DOUBLE重量KG),\
+              \ bottle_qty(BIGINT瓶数)\n- 成本明细:\n  - actual_freight_amount(DOUBLE实际运费):\
+              \ 实际发生的运费\n  - current_transfer_freight(DOUBLE当前调拨运费): 从调出仓调入到目标仓的运费\n\
+              \  - target_direct_simulated_freight(DOUBLE目标仓直发模拟运费): 如果从目标仓直接发货的模拟运费\n\
+              \  - target_transfer_simulated_freight(DOUBLE目标仓调拨模拟运费): 如果先调入目标仓再发货的模拟运费\n\
+              \  - split_order_extra_cost(DOUBLE拆单额外成本): **核心指标**，逐单核算的额外成本（已含完整计算逻辑）\n\
+              - 其他: logistics_company(TEXT物流公司), carrier_mode(TEXT承运方式)\n\n**重要口径说明**:\n\
+              - `split_order_extra_cost` 是已完成逐单核算的最终值\n- 按月汇总时直接 SUM(split_order_extra_cost)\
+              \ 即可\n- 时间过滤: 按 posting_month 字段（DATE类型）\n- 聚合维度: 可按 province、target_warehouse、business_type\
+              \ 等维度聚合\n\n---\n\n# SQL Guidelines\n\n## DuckDB规范\n\
+              - 日期: DATE '2025-04-01', TIMESTAMP '2025-04-01 10:00:00'\n- 字符串: 使用\
+              \ ||\n- 类型: CAST(x AS type)\n- 避免: NVL/DECODE/TO_CHAR\n- 禁止: LIMIT语句（尤其配合ORDER\
+              \ BY聚合函数）\n\n## 一次性SQL模板（全部数据，月度-全仓）\n\n❗❗❗使用此模板，一次查询获取所有数据：\n\n```sql\n\
+              WITH \ntime_params AS (\n  SELECT \n    DATE '2025-04-01' AS base_date,\n\
+              \    DATE '2025-04-01' - INTERVAL 1 MONTH AS prev_date,\n    DATE '2025-04-01'\
+              \ - INTERVAL 1 YEAR AS yoy_date,\n    DATE '2025-04-01' AS base_month,\n\
+              \    DATE '2025-04-01' - INTERVAL 1 MONTH AS prev_month,\n    DATE '2025-04-01'\
+              \ - INTERVAL 1 YEAR AS yoy_month\n),\n\n-- Part 1: 履约指标\nfulfillment_data\
+              \ AS (\n  SELECT \n    CASE \n      WHEN fr.month_start_date = tp.base_date\
+              \ THEN 'current'\n      WHEN fr.month_start_date = tp.prev_date THEN\
+              \ 'previous'\n      WHEN fr.month_start_date = tp.yoy_date THEN 'yoy'\n\
+              \    END AS period,\n    fr.physical_warehouse,\n    SUM(fr.total_orders_expected)\
+              \ AS total_expected,\n    SUM(fr.local_orders_fulfilled) AS local_fulfilled,\n\
+              \    SUM(fr.total_orders_cross_split) AS cross_split,\n    SUM(COALESCE(ob.orders_with_shipment,\
+              \ 0)) AS orders,\n    SUM(COALESCE(ob.old_batch_cross_split_orders,\
+              \ 0)) AS old_batch_split,\n    ROUND(SUM(fr.local_orders_fulfilled)*1.0/NULLIF(SUM(fr.total_orders_expected),0),\
+              \ 4) AS local_rate,\n    ROUND(SUM(fr.total_orders_cross_split)*1.0/NULLIF(SUM(fr.total_orders_expected),0),\
+              \ 4) AS split_rate,\n    ROUND(SUM(COALESCE(ob.old_batch_cross_split_orders,0))*1.0/NULLIF(SUM(fr.total_orders_cross_split),0),\
+              \ 4) AS old_ratio\n  FROM mart_kpi_fill_rate_monthly_wh fr\n  CROSS\
+              \ JOIN time_params tp\n  LEFT JOIN mart_kpi_old_batch_monthly_wh ob\
+              \ \n    ON fr.month_start_date = ob.month_start_date\n    AND fr.warehouse_code\
+              \ = ob.warehouse_code\n    AND fr.scenario_id = ob.scenario_id\n  WHERE\
+              \ fr.month_start_date IN (tp.base_date, tp.prev_date, tp.yoy_date)\n\
+              \    -- 如果warehouse为真实仓库名，添加：AND (fr.physical_warehouse = '华东仓' OR fr.warehouse_code\
+              \ = '华东仓')\n  GROUP BY fr.month_start_date, fr.physical_warehouse, tp.base_date,\
+              \ tp.prev_date, tp.yoy_date\n),\nfulfillment_final AS (\n  SELECT \n\
+              \    'fulfillment' AS data_type,\n    period,\n    physical_warehouse,\n\
+              \    CAST(NULL AS VARCHAR) AS province,\n    CAST(NULL AS VARCHAR) AS\
+              \ biz_type,\n    total_expected,\n    local_fulfilled,\n    cross_split,\n\
+              \    orders,\n    old_batch_split,\n    local_rate,\n    split_rate,\n\
+              \    old_ratio,\n    CAST(NULL AS DOUBLE) AS total_freight,\n    CAST(NULL\
+              \ AS DOUBLE) AS total_volume,\n    CAST(NULL AS DOUBLE) AS unit_cost\n\
+              \  FROM fulfillment_data\n),\n\n-- Part 2: 成本业务类型\ncost_business AS\
+              \ (\n  SELECT \n    'cost_business' AS data_type,\n    CASE \n     \
+              \ WHEN DATE_TRUNC('month', billing_date) = tp.base_month THEN 'current'\n\
+              \      WHEN DATE_TRUNC('month', billing_date) = tp.prev_month THEN 'previous'\n\
+              \      WHEN DATE_TRUNC('month', billing_date) = tp.yoy_month THEN 'yoy'\n\
+              \    END AS period,\n    CAST(NULL AS VARCHAR) AS physical_warehouse,\n\
+              \    CAST(NULL AS VARCHAR) AS province,\n    CASE \n      WHEN business_type\
+              \ LIKE '%订单%' THEN '订单'\n      WHEN business_type LIKE '%调拨%' THEN '调拨'\n\
+              \      ELSE '其他'\n    END AS biz_type,\n    CAST(NULL AS BIGINT) AS\
+              \ total_expected,\n    CAST(NULL AS BIGINT) AS local_fulfilled,\n  \
+              \  CAST(NULL AS BIGINT) AS cross_split,\n    CAST(NULL AS BIGINT) AS\
+              \ orders,\n    CAST(NULL AS BIGINT) AS old_batch_split,\n    CAST(NULL\
+              \ AS DOUBLE) AS local_rate,\n    CAST(NULL AS DOUBLE) AS split_rate,\n\
+              \    CAST(NULL AS DOUBLE) AS old_ratio,\n    SUM(COALESCE(freight_total_amount,\
+              \ 0)) AS total_freight,\n    SUM(COALESCE(volume_m3, 0)) AS total_volume,\n\
+              \    ROUND(SUM(COALESCE(freight_total_amount, 0))*1.0/NULLIF(SUM(COALESCE(volume_m3,\
+              \ 0)), 0), 2) AS unit_cost\n  FROM mart_logistics_freight_detail, time_params\
+              \ tp\n  WHERE DATE_TRUNC('month', billing_date) IN (tp.base_month, tp.prev_month,\
+              \ tp.yoy_month)\n  GROUP BY DATE_TRUNC('month', billing_date), biz_type,\
+              \ tp.base_month, tp.prev_month, tp.yoy_month\n),\n\n-- Part 3: 省份成本\n\
+              cost_province AS (\n  SELECT \n    'cost_province' AS data_type,\n \
+              \   CASE \n      WHEN DATE_TRUNC('month', billing_date) = tp.base_month\
+              \ THEN 'current'\n      WHEN DATE_TRUNC('month', billing_date) = tp.prev_month\
+              \ THEN 'previous'\n      WHEN DATE_TRUNC('month', billing_date) = tp.yoy_month\
+              \ THEN 'yoy'\n    END AS period,\n    CAST(NULL AS VARCHAR) AS physical_warehouse,\n\
+              \    province,\n    CAST(NULL AS VARCHAR) AS biz_type,\n    CAST(NULL\
+              \ AS BIGINT) AS total_expected,\n    CAST(NULL AS BIGINT) AS local_fulfilled,\n\
+              \    CAST(NULL AS BIGINT) AS cross_split,\n    CAST(NULL AS BIGINT)\
+              \ AS orders,\n    CAST(NULL AS BIGINT) AS old_batch_split,\n    CAST(NULL\
+              \ AS DOUBLE) AS local_rate,\n    CAST(NULL AS DOUBLE) AS split_rate,\n\
+              \    CAST(NULL AS DOUBLE) AS old_ratio,\n    SUM(COALESCE(freight_total_amount,\
+              \ 0)) AS total_freight,\n    SUM(COALESCE(volume_m3, 0)) AS total_volume,\n\
+              \    ROUND(SUM(COALESCE(freight_total_amount, 0))*1.0/NULLIF(SUM(COALESCE(volume_m3,\
+              \ 0)), 0), 2) AS unit_cost\n  FROM mart_logistics_freight_detail, time_params\
+              \ tp\n  WHERE DATE_TRUNC('month', billing_date) IN (tp.base_month, tp.prev_month,\
+              \ tp.yoy_month)\n    AND province IS NOT NULL\n  GROUP BY DATE_TRUNC('month',\
+              \ billing_date), province, tp.base_month, tp.prev_month, tp.yoy_month\n\
+              )\n\n-- ⚠️ Part 4-6: 拆单额外成本（暂时注释，等表创建后启用）\n-- 目前使用估算口径作为兜底\n/*\n\
+              -- Part 4: 拆单额外成本（总览）\nsplit_extra_overall AS (\n  SELECT \n    'split_extra_overall'\
+              \ AS data_type,\n    CASE \n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.base_month THEN 'current'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.prev_month THEN 'previous'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.yoy_month THEN 'yoy'\n    END AS period,\n    CAST(NULL AS VARCHAR)\
+              \ AS physical_warehouse,\n    CAST(NULL AS VARCHAR) AS province,\n    CAST(NULL\
+              \ AS VARCHAR) AS biz_type,\n    CAST(NULL AS BIGINT) AS total_expected,\n\
+              \    CAST(NULL AS BIGINT) AS local_fulfilled,\n    CAST(NULL AS BIGINT)\
+              \ AS cross_split,\n    CAST(NULL AS BIGINT) AS orders,\n    CAST(NULL AS\
+              \ BIGINT) AS old_batch_split,\n    CAST(NULL AS DOUBLE) AS local_rate,\n\
+              \    CAST(NULL AS DOUBLE) AS split_rate,\n    CAST(NULL AS DOUBLE) AS old_ratio,\n\
+              \    SUM(COALESCE(split_order_extra_cost, 0)) AS total_freight,\n    CAST(NULL\
+              \ AS DOUBLE) AS total_volume,\n    CAST(NULL AS DOUBLE) AS unit_cost\n \
+              \ FROM mart_split_order_extra_cost_detail, time_params tp\n  WHERE DATE_TRUNC('month',\
+              \ posting_month) IN (tp.base_month, tp.prev_month, tp.yoy_month)\n  GROUP\
+              \ BY DATE_TRUNC('month', posting_month), tp.base_month, tp.prev_month, tp.yoy_month\n\
+              ),\n\n-- Part 5: 拆单额外成本（按仓）\nsplit_extra_wh AS (\n  SELECT \n    'split_extra_wh'\
+              \ AS data_type,\n    CASE \n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.base_month THEN 'current'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.prev_month THEN 'previous'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.yoy_month THEN 'yoy'\n    END AS period,\n    target_warehouse AS\
+              \ physical_warehouse,\n    CAST(NULL AS VARCHAR) AS province,\n    CAST(NULL\
+              \ AS VARCHAR) AS biz_type,\n    CAST(NULL AS BIGINT) AS total_expected,\n\
+              \    CAST(NULL AS BIGINT) AS local_fulfilled,\n    CAST(NULL AS BIGINT)\
+              \ AS cross_split,\n    CAST(NULL AS BIGINT) AS orders,\n    CAST(NULL AS\
+              \ BIGINT) AS old_batch_split,\n    CAST(NULL AS DOUBLE) AS local_rate,\n\
+              \    CAST(NULL AS DOUBLE) AS split_rate,\n    CAST(NULL AS DOUBLE) AS old_ratio,\n\
+              \    SUM(COALESCE(split_order_extra_cost, 0)) AS total_freight,\n    CAST(NULL\
+              \ AS DOUBLE) AS total_volume,\n    CAST(NULL AS DOUBLE) AS unit_cost\n \
+              \ FROM mart_split_order_extra_cost_detail, time_params tp\n  WHERE DATE_TRUNC('month',\
+              \ posting_month) IN (tp.base_month, tp.prev_month, tp.yoy_month)\n    AND\
+              \ target_warehouse IS NOT NULL\n  GROUP BY DATE_TRUNC('month', posting_month),\
+              \ target_warehouse, tp.base_month, tp.prev_month, tp.yoy_month\n),\n\n--\
+              \ Part 6: 拆单额外成本（按省）\nsplit_extra_province AS (\n  SELECT \n    'split_extra_province'\
+              \ AS data_type,\n    CASE \n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.base_month THEN 'current'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.prev_month THEN 'previous'\n      WHEN DATE_TRUNC('month', posting_month)\
+              \ = tp.yoy_month THEN 'yoy'\n    END AS period,\n    CAST(NULL AS VARCHAR)\
+              \ AS physical_warehouse,\n    province,\n    CAST(NULL AS VARCHAR) AS biz_type,\n\
+              \    CAST(NULL AS BIGINT) AS total_expected,\n    CAST(NULL AS BIGINT) AS\
+              \ local_fulfilled,\n    CAST(NULL AS BIGINT) AS cross_split,\n    CAST(NULL\
+              \ AS BIGINT) AS orders,\n    CAST(NULL AS BIGINT) AS old_batch_split,\n \
+              \   CAST(NULL AS DOUBLE) AS local_rate,\n    CAST(NULL AS DOUBLE) AS split_rate,\n\
+              \    CAST(NULL AS DOUBLE) AS old_ratio,\n    SUM(COALESCE(split_order_extra_cost,\
+              \ 0)) AS total_freight,\n    CAST(NULL AS DOUBLE) AS total_volume,\n   \
+              \ CAST(NULL AS DOUBLE) AS unit_cost\n  FROM mart_split_order_extra_cost_detail,\
+              \ time_params tp\n  WHERE DATE_TRUNC('month', posting_month) IN (tp.base_month,\
+              \ tp.prev_month, tp.yoy_month)\n    AND province IS NOT NULL\n  GROUP BY\
+              \ DATE_TRUNC('month', posting_month), province, tp.base_month, tp.prev_month,\
+              \ tp.yoy_month\n)\n*/\n\n-- 合并所有数据\nSELECT * FROM fulfillment_final\n\
+              UNION ALL\nSELECT * FROM cost_business\nUNION ALL\nSELECT * FROM cost_province\n\
+              -- 等表创建后，取消下面3行的注释\n-- UNION ALL\n-- SELECT * FROM split_extra_overall\n\
+              -- UNION ALL\n-- SELECT * FROM split_extra_wh\n-- UNION ALL\n-- SELECT *\
+              \ FROM split_extra_province\nORDER BY data_type, period;\n```\n\n**仓库过滤说明**：\n- 如果`warehouse`是真实仓库名（非占位符），在fulfillment_data的WHERE子句中添加：\n\
+              \  `AND (fr.physical_warehouse = '华东仓' OR fr.warehouse_code = '华东仓')`\n\
+              - 成本数据不按仓库过滤（业务需求）\n\n              **数据结构说明**（当前版本）：\n- `data_type='fulfillment'`: 履约指标行，`physical_warehouse`有值，`province/biz_type/total_freight/total_volume/unit_cost`为NULL\n\
+              - `data_type='cost_business'`: 成本业务类型行，`biz_type`有值，`physical_warehouse/province/total_expected/.../old_ratio`为NULL\n\
+              - `data_type='cost_province'`: 省份成本行，`province`有值，`physical_warehouse/biz_type/total_expected/.../old_ratio`为NULL\n\
+              \n**数据结构说明**（等表创建后）：\n- `data_type='split_extra_overall'`: 拆单额外成本总览，`total_freight`存放总拆单额外成本，其他维度字段为NULL\n\
+              - `data_type='split_extra_wh'`: 拆单额外成本按仓，`physical_warehouse`和`total_freight`有值，其他维度字段为NULL\n\
+              - `data_type='split_extra_province'`: 拆单额外成本按省，`province`和`total_freight`有值，其他维度字段为NULL\n\
+              \n**返回示例**：\n- 当前版本：查询返回约80-100行原始数据（3类数据）\n- 表创建后：查询返回约100-150行原始数据（6类数据）\n\
+              - 所有数据包含 current/previous/yoy 三期\n---\n\
+              \n# Metrics\n\n## 履约指标\n| 指标 | 公式 | 来源 |\n|------|------|------|\n|\
+              \ local_fulfillment_rate | SUM(local_fulfilled)/NULLIF(SUM(total_expected),0)\
+              \ | fill_rate |\n| split_rate | SUM(cross_split)/NULLIF(SUM(total_expected),0)\
+              \ | fill_rate |\n| old_batch_split_ratio | SUM(old_batch_split)/NULLIF(SUM(cross_split),0)\
+              \ | old_batch |\n| orders | SUM(orders_with_shipment) | old_batch |\n\
+              \n## 成本指标\n| 指标 | 公式 | 说明 |\n|------|------|------|\n| total_cost |\
+              \ SUM(freight_total_amount) | 总运费（所有业务类型） |\n| order_shipping_cost |\
+              \ SUM(freight_total_amount WHERE biz_type='订单') | 订单运费（'经销订单'等） |\n\
+              | transfer_cost | SUM(freight_total_amount WHERE biz_type='调拨') | 调拨运费（'普通调拨'等）\
+              \ |\n| weighted_unit_logistics_cost | SUM(freight_total_amount)/NULLIF(SUM(volume_m3),0)\
+              \ | 加权单位物流成本（元/m³） |\n| split_extra_cost | SUM(split_order_extra_cost)\
+              \ FROM mart_split_order_extra_cost_detail | 拆单额外成本（真实口径）|\n| split_extra_cost_fallback\
+              \ | (cross_split/total_expected)*total_cost | 拆单额外成本（估算口径，仅在真实口径缺失时使用）\
+              \ |\n| provincial_unit_cost | SUM(freight_total_amount)/NULLIF(SUM(volume_m3),0)\
+              \ BY province | 省份单位物流成本 |\n\n❗biz_type归一化规则：\n- LIKE '%订单%' → '订单'（匹配'经销订单'等）\n\
+              - LIKE '%调拨%' → '调拨'（匹配'普通调拨'等）\n- 其他 → '其他'\n\n环比: wow_delta = 本期 -\
+              \ 上期; trend = \"up\"(>0), \"flat\"(=0), \"down\"(<0)\n\n---\n\n# Examples\n\
+              \n## 完整执行流程示例（重要！）\n\n**用户输入**: query=\"2025年4月KPI报告\", time_window=\"\
+              2025-04\", warehouse=\"\"\n\n**✅ 正确执行流程**（1次迭代，6477 tokens）：\n```\n\
+              Iteration 1:\n  - Thought: 需要执行SQL查询\n  - Action: 调用duckdb_query\n \
+              \ - Observation: 获取73行数据\n  → 立即结束（不输出任何内容）\n```\n\n**❌ 错误执行流程**（2次迭代，22185\
+              \ tokens - 浪费242%！）：\n```\nIteration 1:\n  - Thought: 需要执行SQL查询\n  -\
+              \ Action: 调用duckdb_query\n  - Observation: 获取73行数据\n\nIteration 2: ←\
+              \ 这一轮完全浪费！\n  - Thought: 数据已获取\n  - Action: Final Answer \"我已完成查询...\"\
+              \ ← 15708 tokens浪费\n```\n\n**数据传递机制**：\n- Iteration 1的observation会自动在agent_output[0]['data']['observation']中\n\
+              - Code节点会提取这个observation并解析JSON\n- 你不需要做任何额外输出，数据会自动传递！\n\n❗关键约束：\n\
+              - 只执行1次工具调用\n- 工具返回后立即停止\n- 不要Final Answer（浪费70%+ tokens）\n- observation自动传递给Code节点\n\
+              \n---\n\n## 其他示例\n\n示例1: warehouse为空或占位符\n- 输入: warehouse=\"\" 或 \"\
+              qc.structured_output.warehouse\"\n- 处理: 识别为未指定，SQL中不过滤仓库\n- 查询: 返回所有仓库数据，warehouse_highlights返回Top5\n\
+              \n示例2: warehouse为真实仓库\n- 输入: warehouse=\"华东仓\"\n- 处理: 在SQL WHERE中添加过滤条件\n\
+              - 查询: 仅返回华东仓数据，成本也仅限该仓\n\n示例3: 无yoy数据\n- 查询结果: 仅有current和previous，无yoy行\n\
+              - 处理: 正常返回，Code节点会处理缺失数据\n\n---\n\n# Output Format\n\n❗❗❗严禁以下行为（浪费token和时间）：\n\
+              \n**工具调用完成后**：\n✅ 正确做法：立即结束，什么都不输出\n❌ 错误做法：返回Final Answer总结数据\n❌ 错误做法：输出\"\
+              数据已准备就绪\"等说明文字\n❌ 错误做法：继续思考下一步\n\n\U0001F4A1 原理：工具返回的observation会自动传递给Code节点，你不需要做任何额外处理！\n\
+              \n**原始数据格式**：\n- 返回rows数组，每行包含：data_type, period, physical_warehouse,\
+              \ province, biz_type等字段\n- 数值保持原始类型（DECIMAL/DOUBLE/BIGINT）\n- 百分比以小数形式返回（如0.423表示42.3%）\n\
+              - NULL值保持NULL\n\n**由Code节点负责**（不是你的工作）：\n- 按data_type分类数据\n- 按period分组（current/previous/yoy）\n\
+              - 计算环比/同比\n- 格式化显示（百分比、千分位、货币符号）\n- 生成Top5/Top10排序\n- 构建完整JSON\n- 生成业务洞察\n"
+          maximum_iterations:
+            type: constant
+            value: 2
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: deepseek-chat
+              model_type: llm
+              provider: langgenius/deepseek/deepseek
+              type: model-selector
+          query:
+            type: constant
+            value: '## 用户输入：{{#1761813418553.query#}}
+
+              ## 意图：{{#1761813418553.intent#}}
+
+              ## 时间区间：{{#1761813418553.time_window#}}
+
+              ## 物理仓：{{#1761813418553.warehouse#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: "\n        执行 DuckDB 查询，并以 JSON 形式返回结果行。\n\n        -\
+                  \ sql: 待执行的 SQL 文本。\n        - db_path: 可选的 .duckdb 文件路径；缺省时会在常见位置自动查找。\n\
+                  \        - limit: 可选的行数限制，在 SQL 未指定 LIMIT 且该参数不为 None 时生效。\n   \
+                  \     返回值: {db, columns, rows, rowcount, duration_ms}\n        "
+              parameters:
+                db_path:
+                  auto: 1
+                  value: null
+                limit:
+                  auto: 1
+                  value: null
+                sql:
+                  auto: 1
+                  value: null
+              provider_name: orchestrax-mcp
+              provider_show_name: AI调拨MCP
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: sql
+                  ja_JP: sql
+                  pt_BR: sql
+                  zh_Hans: sql
+                llm_description: ''
+                max: null
+                min: null
+                name: sql
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: db_path
+                  ja_JP: db_path
+                  pt_BR: db_path
+                  zh_Hans: db_path
+                llm_description: ''
+                max: null
+                min: null
+                name: db_path
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: limit
+                  ja_JP: limit
+                  pt_BR: limit
+                  zh_Hans: limit
+                llm_description: ''
+                max: null
+                min: null
+                name: limit
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              settings: {}
+              tool_description: "\n        执行 DuckDB 查询，并以 JSON 形式返回结果行。\n\n     \
+                \   - sql: 待执行的 SQL 文本。\n        - db_path: 可选的 .duckdb 文件路径；缺省时会在常见位置自动查找。\n\
+                \        - limit: 可选的行数限制，在 SQL 未指定 LIMIT 且该参数不为 None 时生效。\n     \
+                \   返回值: {db, columns, rows, rowcount, duration_ms}\n        "
+              tool_label: duckdb_query
+              tool_name: duckdb_query
+              type: mcp
+        agent_strategy_label: ReAct
+        agent_strategy_name: ReAct
+        agent_strategy_provider_name: langgenius/agent/agent
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: {}
+        plugin_unique_identifier: langgenius/agent:0.0.25@3507a9a417ea8d76e5de6b2803953ca891851b6b336fafe1315471782711730f
+        selected: false
+        title: Agent
+        tool_node_version: '2'
+        type: agent
+      height: 196
+      id: '1761813421469'
+      position:
+        x: 382
+        y: 282
+      positionAbsolute:
+        x: 382
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nfrom datetime import datetime\nfrom typing import Dict,\
+          \ List, Any, Optional\n\ndef main(time_window: str, warehouse: str, agent_output:\
+          \ list) -> dict:\n    \"\"\"\n    从Agent输出中提取KPI数据并格式化为业务JSON\n    \"\"\"\
+          \n    # 提取第一轮查询结果\n    if not agent_output or len(agent_output) < 1:\n \
+          \       return {\"result\": {\"error\": \"Agent未返回数据\"}}\n    \n    # 调试：先检查agent_output的结构\n\
+          \    try:\n        # 检查第一个元素的类型\n        first_item = agent_output[0]\n\
+          \        \n        # 如果第一个元素是list，说明结构不对\n        if isinstance(first_item,\
+          \ list):\n            return {\"result\": {\n                \"error\":\
+          \ \"agent_output结构错误：第一个元素是list\",\n                \"debug_info\": {\n\
+          \                    \"agent_output_length\": len(agent_output),\n     \
+          \               \"agent_output_structure\": str([type(item).__name__ for\
+          \ item in agent_output]),\n                    \"first_item_length\": len(first_item)\
+          \ if hasattr(first_item, '__len__') else 'no_len',\n                   \
+          \ \"first_item_preview\": str(first_item)[:500] if first_item else 'empty'\n\
+          \                }\n            }}\n        \n        # 正常流程：第一个元素应该是dict\n\
+          \        round1 = first_item\n        round1_data = round1.get('data', {})\n\
+          \        observation_str = round1_data.get('observation', '')\n        round1_status\
+          \ = round1.get('status', 'unknown')\n        round1_error = round1.get('error',\
+          \ '')\n        \n        # 调试：如果observation为空，返回详细错误信息\n        if not observation_str:\n\
+          \            return {\"result\": {\n                \"error\": \"observation为空\"\
+          ,\n                \"debug_info\": {\n                    \"agent_output_length\"\
+          : len(agent_output),\n                    \"round1_status\": round1_status,\n\
+          \                    \"round1_error\": round1_error,\n                 \
+          \   \"round1_keys\": list(round1.keys()) if isinstance(round1, dict) else\
+          \ \"not_dict\",\n                    \"data_keys\": list(round1_data.keys())\
+          \ if isinstance(round1_data, dict) else \"no_data\",\n                 \
+          \   \"observation_type\": str(type(observation_str)),\n                \
+          \    \"observation_repr\": repr(observation_str),\n                    \"\
+          action_name\": round1_data.get('action_name', 'N/A'),\n                \
+          \    \"thought\": round1_data.get('thought', 'N/A')[:200] if round1_data.get('thought')\
+          \ else 'N/A',\n                    \"all_rounds\": [{\"status\": r.get('status')\
+          \ if isinstance(r, dict) else str(type(r)), \"error\": r.get('error') if\
+          \ isinstance(r, dict) else 'not_dict', \"has_observation\": bool(r.get('data',\
+          \ {}).get('observation')) if isinstance(r, dict) else False} for r in agent_output]\n\
+          \                }\n            }}\n        \n        # 处理observation字符串（可能有不同格式）\n\
+          \        obs_json_str = observation_str\n        \n        # 移除可能的前缀\n \
+          \       if obs_json_str.startswith('tool response: '):\n            obs_json_str\
+          \ = obs_json_str[len('tool response: '):]\n        \n        # 移除末尾的句点\n\
+          \        obs_json_str = obs_json_str.rstrip('.')\n        \n        # 尝试解析JSON\n\
+          \        if not obs_json_str or not obs_json_str.strip():\n            return\
+          \ {\"result\": {\n                \"error\": \"处理后的JSON字符串为空\",\n      \
+          \          \"debug_info\": {\n                    \"original_observation\"\
+          : observation_str[:200] if len(observation_str) > 200 else observation_str\n\
+          \                }\n            }}\n        \n        obs_data = json.loads(obs_json_str)\n\
+          \        \n    except json.JSONDecodeError as e:\n        return {\"result\"\
+          : {\n            \"error\": f\"JSON解析失败: {str(e)}\",\n            \"debug_info\"\
+          : {\n                \"observation_preview\": observation_str[:500] if len(observation_str)\
+          \ > 500 else observation_str,\n                \"json_string_preview\":\
+          \ obs_json_str[:500] if len(obs_json_str) > 500 else obs_json_str\n    \
+          \        }\n        }}\n    except Exception as e:\n        import traceback\n\
+          \        return {\"result\": {\n            \"error\": f\"未知错误: {str(e)}\"\
+          ,\n            \"debug_info\": {\n                \"agent_output_type\"\
+          : str(type(agent_output)),\n                \"agent_output_length\": len(agent_output)\
+          \ if hasattr(agent_output, '__len__') else 'no_len',\n                \"\
+          traceback\": traceback.format_exc(),\n                \"agent_output_preview\"\
+          : str(agent_output)[:1000] if agent_output else 'empty'\n            }\n\
+          \        }}\n    \n    rows = obs_data.get('rows', [])\n    \n    # 按data_type分类数据\n\
+          \    fulfillment_rows = [r for r in rows if r.get('data_type') == 'fulfillment']\n\
+          \    cost_business_rows = [r for r in rows if r.get('data_type') == 'cost_business']\n\
+          \    cost_province_rows = [r for r in rows if r.get('data_type') == 'cost_province']\n\
+          \    \n    # 按period分组\n    def group_by_period(rows: List[Dict]) -> Dict[str,\
+          \ List[Dict]]:\n        grouped = {'current': [], 'previous': [], 'yoy':\
+          \ []}\n        for row in rows:\n            period = row.get('period')\n\
+          \            if period in grouped:\n                grouped[period].append(row)\n\
+          \        return grouped\n    \n    fulfillment_grouped = group_by_period(fulfillment_rows)\n\
+          \    cost_business_grouped = group_by_period(cost_business_rows)\n    cost_province_grouped\
+          \ = group_by_period(cost_province_rows)\n    \n    # 格式化函数\n    def format_number(num,\
+          \ decimals=2):\n        if num is None:\n            return \"N/A\"\n  \
+          \      return f\"{num:,.{decimals}f}\"\n    \n    def format_percent(num,\
+          \ decimals=1):\n        if num is None:\n            return \"N/A\"\n  \
+          \      return f\"{num*100:.{decimals}f}%\"\n    \n    def format_currency(num):\n\
+          \        if num is None:\n            return \"N/A\"\n        return f\"\
+          ¥{num:,.0f}\"\n    \n    def calc_wow(current, previous):\n        if current\
+          \ is None or previous is None or previous == 0:\n            return 0.0,\
+          \ \"— 0.0%\", \"flat\"\n        delta = (current - previous) / previous\n\
+          \        display = f\"{'+' if delta > 0 else ''}{delta*100:.1f}%\"\n   \
+          \     trend = \"up\" if delta > 0 else (\"down\" if delta < 0 else \"flat\"\
+          )\n        return delta, display, trend\n    \n    # 计算履约KPI\n    def sum_metric(rows,\
+          \ field):\n        return sum(r.get(field, 0) or 0 for r in rows)\n    \n\
+          \    # 当前期履约指标\n    curr_fulf = fulfillment_grouped['current']\n    prev_fulf\
+          \ = fulfillment_grouped['previous']\n    yoy_fulf = fulfillment_grouped['yoy']\n\
+          \    \n    curr_total_exp = sum_metric(curr_fulf, 'total_expected')\n  \
+          \  curr_local_ful = sum_metric(curr_fulf, 'local_fulfilled')\n    curr_cross_split\
+          \ = sum_metric(curr_fulf, 'cross_split')\n    curr_orders = sum_metric(curr_fulf,\
+          \ 'orders')\n    curr_old_batch = sum_metric(curr_fulf, 'old_batch_split')\n\
+          \    \n    prev_total_exp = sum_metric(prev_fulf, 'total_expected')\n  \
+          \  prev_local_ful = sum_metric(prev_fulf, 'local_fulfilled')\n    prev_cross_split\
+          \ = sum_metric(prev_fulf, 'cross_split')\n    prev_orders = sum_metric(prev_fulf,\
+          \ 'orders')\n    prev_old_batch = sum_metric(prev_fulf, 'old_batch_split')\n\
+          \    \n    yoy_total_exp = sum_metric(yoy_fulf, 'total_expected')\n    yoy_local_ful\
+          \ = sum_metric(yoy_fulf, 'local_fulfilled')\n    yoy_cross_split = sum_metric(yoy_fulf,\
+          \ 'cross_split')\n    yoy_old_batch = sum_metric(yoy_fulf, 'old_batch_split')\n\
+          \    \n    # 计算比率\n    curr_local_rate = curr_local_ful / curr_total_exp\
+          \ if curr_total_exp > 0 else 0\n    curr_split_rate = curr_cross_split /\
+          \ curr_total_exp if curr_total_exp > 0 else 0\n    curr_old_ratio = curr_old_batch\
+          \ / curr_cross_split if curr_cross_split > 0 else 0\n    \n    prev_local_rate\
+          \ = prev_local_ful / prev_total_exp if prev_total_exp > 0 else 0\n    prev_split_rate\
+          \ = prev_cross_split / prev_total_exp if prev_total_exp > 0 else 0\n   \
+          \ prev_old_ratio = prev_old_batch / prev_cross_split if prev_cross_split\
+          \ > 0 else 0\n    \n    yoy_local_rate = yoy_local_ful / yoy_total_exp if\
+          \ yoy_total_exp > 0 else 0\n    yoy_split_rate = yoy_cross_split / yoy_total_exp\
+          \ if yoy_total_exp > 0 else 0\n    yoy_old_ratio = yoy_old_batch / yoy_cross_split\
+          \ if yoy_cross_split > 0 else 0\n    \n    # 计算环比\n    local_rate_wow_delta,\
+          \ local_rate_wow_display, local_rate_trend = calc_wow(curr_local_rate, prev_local_rate)\n\
+          \    split_rate_wow_delta, split_rate_wow_display, split_rate_trend = calc_wow(curr_split_rate,\
+          \ prev_split_rate)\n    old_ratio_wow_delta, old_ratio_wow_display, old_ratio_trend\
+          \ = calc_wow(curr_old_ratio, prev_old_ratio)\n    orders_wow_delta, orders_wow_display,\
+          \ orders_trend = calc_wow(curr_orders, prev_orders)\n    \n    # 计算同比\n\
+          \    local_rate_yoy_delta = curr_local_rate - yoy_local_rate if yoy_local_rate\
+          \ > 0 else 0\n    local_rate_yoy_display = f\"{'+' if local_rate_yoy_delta\
+          \ > 0 else ''}{local_rate_yoy_delta*100:.1f}%\" if yoy_local_rate > 0 else\
+          \ \"N/A\"\n    \n    split_rate_yoy_delta = curr_split_rate - yoy_split_rate\
+          \ if yoy_split_rate else 0\n    split_rate_yoy_display = f\"{'+' if split_rate_yoy_delta\
+          \ > 0 else ''}{split_rate_yoy_delta*100:.1f}%\" if yoy_split_rate else \"\
+          N/A\"\n    \n    old_ratio_yoy_delta = curr_old_ratio - yoy_old_ratio if\
+          \ yoy_old_ratio else 0\n    old_ratio_yoy_display = f\"{'+' if old_ratio_yoy_delta\
+          \ > 0 else ''}{old_ratio_yoy_delta*100:.1f}%\" if yoy_old_ratio else \"\
+          N/A\"\n    \n    # 构建summary_cards\n    summary_cards = [\n        {\n \
+          \           \"id\": \"local_fulfillment_rate\",\n            \"title\":\
+          \ \"本地履约率\",\n            \"value\": round(curr_local_rate, 4),\n      \
+          \      \"display\": format_percent(curr_local_rate),\n            \"wow_delta\"\
+          : round(local_rate_wow_delta, 4),\n            \"wow_display\": local_rate_wow_display,\n\
+          \            \"trend\": local_rate_trend\n        },\n        {\n      \
+          \      \"id\": \"split_rate\",\n            \"title\": \"拆单率\",\n      \
+          \      \"value\": round(curr_split_rate, 4),\n            \"display\": format_percent(curr_split_rate),\n\
+          \            \"wow_delta\": round(split_rate_wow_delta, 4),\n          \
+          \  \"wow_display\": split_rate_wow_display,\n            \"trend\": split_rate_trend\n\
+          \        },\n        {\n            \"id\": \"old_batch_split_ratio\",\n\
+          \            \"title\": \"旧批次拆单占比\",\n            \"value\": round(curr_old_ratio,\
+          \ 4),\n            \"display\": format_percent(curr_old_ratio),\n      \
+          \      \"wow_delta\": round(old_ratio_wow_delta, 4),\n            \"wow_display\"\
+          : old_ratio_wow_display,\n            \"trend\": old_ratio_trend\n     \
+          \   },\n        {\n            \"id\": \"orders\",\n            \"title\"\
+          : \"订单量\",\n            \"value\": int(curr_orders),\n            \"display\"\
+          : format_number(curr_orders, 0),\n            \"wow_delta\": round(orders_wow_delta,\
+          \ 4),\n            \"wow_display\": orders_wow_display,\n            \"\
+          trend\": orders_trend\n        }\n    ]\n    \n    # 构建core_table\n    core_table\
+          \ = {\n        \"headers\": [\"指标\", \"本期\", \"环比\", \"同期\", \"趋势\"],\n\
+          \        \"rows\": [\n            {\n                \"indicator\": \"本地履约率\"\
+          ,\n                \"current_display\": format_percent(curr_local_rate),\n\
+          \                \"wow_display\": local_rate_wow_display,\n            \
+          \    \"yoy_display\": local_rate_yoy_display,\n                \"trend\"\
+          : local_rate_trend\n            },\n            {\n                \"indicator\"\
+          : \"拆单率\",\n                \"current_display\": format_percent(curr_split_rate),\n\
+          \                \"wow_display\": split_rate_wow_display,\n            \
+          \    \"yoy_display\": split_rate_yoy_display,\n                \"trend\"\
+          : split_rate_trend\n            },\n            {\n                \"indicator\"\
+          : \"旧批次拆单占比\",\n                \"current_display\": format_percent(curr_old_ratio),\n\
+          \                \"wow_display\": old_ratio_wow_display,\n             \
+          \   \"yoy_display\": old_ratio_yoy_display,\n                \"trend\":\
+          \ old_ratio_trend\n            }\n        ]\n    }\n    \n    # 构建warehouse_highlights（Top5）\n\
+          \    wh_data = []\n    for row in curr_fulf:\n        wh = row.get('physical_warehouse')\n\
+          \        if not wh:\n            continue\n        total_exp = row.get('total_expected',\
+          \ 0) or 0\n        local_ful = row.get('local_fulfilled', 0) or 0\n    \
+          \    cross_split = row.get('cross_split', 0) or 0\n        orders = row.get('orders',\
+          \ 0) or 0\n        old_batch = row.get('old_batch_split', 0) or 0\n    \
+          \    \n        local_rate = local_ful / total_exp if total_exp > 0 else\
+          \ 0\n        split_rate = cross_split / total_exp if total_exp > 0 else\
+          \ 0\n        old_ratio = old_batch / cross_split if cross_split > 0 else\
+          \ 0\n        \n        wh_data.append({\n            \"wh\": wh,\n     \
+          \       \"local_fulfillment_rate\": format_percent(local_rate),\n      \
+          \      \"split_rate\": format_percent(split_rate),\n            \"old_batch_split_ratio\"\
+          : format_percent(old_ratio),\n            \"orders\": format_number(orders,\
+          \ 0),\n            \"_sort_key\": orders  # 用于排序\n        })\n    \n   \
+          \ # Top5排序\n    wh_data.sort(key=lambda x: x.get('_sort_key', 0), reverse=True)\n\
+          \    top5_wh = wh_data[:5]\n    for wh in top5_wh:\n        wh.pop('_sort_key',\
+          \ None)\n    \n    warehouse_highlights = {\n        \"headers\": [\"仓\"\
+          , \"本地履约率\", \"拆单率\", \"旧批次拆单占比\", \"订单量\"],\n        \"rows\": top5_wh\n\
+          \    }\n    \n    # 计算成本指标\n    curr_cost_biz = cost_business_grouped['current']\n\
+          \    prev_cost_biz = cost_business_grouped['previous']\n    \n    def sum_cost(rows,\
+          \ biz_type=None):\n        filtered = rows\n        if biz_type:\n     \
+          \       filtered = [r for r in rows if r.get('biz_type') == biz_type]\n\
+          \        total_freight = sum(r.get('total_freight', 0) or 0 for r in filtered)\n\
+          \        total_volume = sum(r.get('total_volume', 0) or 0 for r in filtered)\n\
+          \        unit_cost = total_freight / total_volume if total_volume > 0 else\
+          \ 0\n        return total_freight, total_volume, unit_cost\n    \n    curr_total_cost,\
+          \ curr_total_vol, curr_unit_cost = sum_cost(curr_cost_biz)\n    curr_order_cost,\
+          \ _, _ = sum_cost(curr_cost_biz, '订单')\n    curr_transfer_cost, _, _ = sum_cost(curr_cost_biz,\
+          \ '调拨')\n    \n    prev_total_cost, prev_total_vol, prev_unit_cost = sum_cost(prev_cost_biz)\n\
+          \    prev_order_cost, _, _ = sum_cost(prev_cost_biz, '订单')\n    prev_transfer_cost,\
+          \ _, _ = sum_cost(prev_cost_biz, '调拨')\n    \n    # 拆单额外成本（估算口径）\n    curr_split_extra_cost\
+          \ = (curr_cross_split / curr_total_exp * curr_total_cost) if curr_total_exp\
+          \ > 0 else 0\n    prev_split_extra_cost = (prev_cross_split / prev_total_exp\
+          \ * prev_total_cost) if prev_total_exp > 0 else 0\n    \n    # 环比\n    total_cost_wow = calc_wow(curr_total_cost,\
+          \ prev_total_cost)\n    order_cost_wow = calc_wow(curr_order_cost, prev_order_cost)\n\
+          \    transfer_cost_wow = calc_wow(curr_transfer_cost, prev_transfer_cost)\n\
+          \    unit_cost_wow = calc_wow(curr_unit_cost, prev_unit_cost)\n    split_extra_cost_wow\
+          \ = calc_wow(curr_split_extra_cost, prev_split_extra_cost)\n\
+          \    \n    # 构建transport_costs\n    transport_costs = {\n        \"cards\"\
+          : [\n            {\n                \"id\": \"total_cost\",\n          \
+          \      \"title\": \"总运费\",\n                \"value\": round(curr_total_cost,\
+          \ 2),\n                \"display\": format_currency(curr_total_cost),\n\
+          \                \"wow_delta\": round(total_cost_wow[0], 4),\n         \
+          \       \"wow_display\": total_cost_wow[1],\n                \"trend\":\
+          \ total_cost_wow[2]\n            },\n            {\n                \"id\"\
+          : \"order_shipping_cost\",\n                \"title\": \"订单运费\",\n     \
+          \           \"value\": round(curr_order_cost, 2),\n                \"display\"\
+          : format_currency(curr_order_cost),\n                \"wow_delta\": round(order_cost_wow[0],\
+          \ 4),\n                \"wow_display\": order_cost_wow[1],\n           \
+          \     \"trend\": order_cost_wow[2]\n            },\n            {\n    \
+          \            \"id\": \"transfer_cost\",\n                \"title\": \"调拨运费\"\
+          ,\n                \"value\": round(curr_transfer_cost, 2),\n          \
+          \      \"display\": format_currency(curr_transfer_cost),\n             \
+          \   \"wow_delta\": round(transfer_cost_wow[0], 4),\n                \"wow_display\"\
+          : transfer_cost_wow[1],\n                \"trend\": transfer_cost_wow[2]\n\
+          \            },\n            {\n                \"id\": \"weighted_unit_logistics_cost\"\
+          ,\n                \"title\": \"加权单位物流成本\",\n                \"value\":\
+          \ round(curr_unit_cost, 2),\n                \"unit\": \"元/m³\",\n     \
+          \           \"display\": f\"¥{curr_unit_cost:.2f}/m³\",\n              \
+          \  \"wow_delta\": round(unit_cost_wow[0], 4),\n                \"wow_display\"\
+          : unit_cost_wow[1],\n                \"trend\": unit_cost_wow[2]\n     \
+          \       },\n            {\n                \"id\": \"split_extra_cost\"\
+          ,\n                \"title\": \"拆单额外成本\",\n                \"value\": round(curr_split_extra_cost,\
+          \ 2),\n                \"display\": format_currency(curr_split_extra_cost),\n\
+          \                \"wow_delta\": round(split_extra_cost_wow[0], 4),\n   \
+          \             \"wow_display\": split_extra_cost_wow[1],\n              \
+          \  \"trend\": split_extra_cost_wow[2]\n            }\n        ]\n    }\n\
+          \    \n    # 省份Top10\n    curr_prov = cost_province_grouped['current']\n\
+          \    prev_prov = cost_province_grouped['previous']\n    yoy_prov = cost_province_grouped['yoy']\n\
+          \    \n    # 构建省份字典\n    prov_dict = {}\n    for row in curr_prov:\n   \
+          \     province = row.get('province')\n        if not province:\n       \
+          \     continue\n        total_freight = row.get('total_freight', 0) or 0\n\
+          \        total_volume = row.get('total_volume', 0) or 0\n        unit_cost\
+          \ = total_freight / total_volume if total_volume > 0 else 0\n        prov_dict[province]\
+          \ = {'curr': unit_cost, 'prev': 0, 'yoy': 0}\n    \n    for row in prev_prov:\n\
+          \        province = row.get('province')\n        if not province:\n    \
+          \        continue\n        total_freight = row.get('total_freight', 0) or\
+          \ 0\n        total_volume = row.get('total_volume', 0) or 0\n        unit_cost\
+          \ = total_freight / total_volume if total_volume > 0 else 0\n        if\
+          \ province in prov_dict:\n            prov_dict[province]['prev'] = unit_cost\n\
+          \        else:\n            prov_dict[province] = {'curr': 0, 'prev': unit_cost,\
+          \ 'yoy': 0}\n    \n    for row in yoy_prov:\n        province = row.get('province')\n\
+          \        if not province:\n            continue\n        total_freight =\
+          \ row.get('total_freight', 0) or 0\n        total_volume = row.get('total_volume',\
+          \ 0) or 0\n        unit_cost = total_freight / total_volume if total_volume\
+          \ > 0 else 0\n        if province in prov_dict:\n            prov_dict[province]['yoy']\
+          \ = unit_cost\n        else:\n            prov_dict[province] = {'curr':\
+          \ 0, 'prev': 0, 'yoy': unit_cost}\n    \n    # 构建省份行\n    prov_rows = []\n\
+          \    for province, data in prov_dict.items():\n        curr_uc = data['curr']\n\
+          \        prev_uc = data['prev']\n        yoy_uc = data['yoy']\n        \n\
+          \        wow_delta, wow_display, trend = calc_wow(curr_uc, prev_uc)\n  \
+          \      yoy_delta = curr_uc - yoy_uc if yoy_uc > 0 else 0\n        yoy_display\
+          \ = f\"{'+' if yoy_delta > 0 else ''}{yoy_delta/yoy_uc*100:.1f}%\" if yoy_uc\
+          \ > 0 else \"N/A\"\n        \n        prov_rows.append({\n            \"\
+          province\": province,\n            \"unit_cost_display\": f\"{curr_uc:.2f}\"\
+          ,\n            \"wow_display\": wow_display,\n            \"yoy_display\"\
+          : yoy_display,\n            \"trend\": trend,\n            \"_sort_key\"\
+          : curr_uc\n        })\n    \n    # Top10排序\n    prov_rows.sort(key=lambda\
+          \ x: x.get('_sort_key', 0), reverse=True)\n    top10_prov = prov_rows[:10]\n\
+          \    for prov in top10_prov:\n        prov.pop('_sort_key', None)\n    \n\
+          \    transport_costs['provincial_top10'] = {\n        \"headers\": [\"省份\"\
+          , \"单位物流成本（元/m³）\", \"环比\", \"同期\", \"趋势\"],\n        \"rows\": top10_prov\n\
+          \    }\n    \n    # 生成insights\n    insights = []\n    if local_rate_trend\
+          \ == 'up':\n        insights.append(f\"本地履约率提升{local_rate_wow_display}，配送效率改善\"\
+          )\n    elif local_rate_trend == 'down':\n        insights.append(f\"本地履约率下降{local_rate_wow_display}，需关注库存配置\"\
+          )\n    \n    if split_rate_trend == 'up':\n        insights.append(f\"拆单率上升{split_rate_wow_display}，可能增加物流成本\"\
+          )\n    elif split_rate_trend == 'down':\n        insights.append(f\"拆单率下降{split_rate_wow_display}，库存优化见效\"\
+          )\n    \n    if old_ratio_trend == 'up':\n        insights.append(f\"旧批次拆单占比上升{old_ratio_wow_display}，需优化库存周转\"\
+          )\n    \n    if total_cost_wow[2] == 'down':\n        insights.append(f\"\
+          总运费下降{total_cost_wow[1]}，成本控制有效\")\n    \n    if not insights:\n       \
+          \ insights.append(\"整体指标平稳运行\")\n    \n    # 构建最终JSON\n    result = {\n\
+          \        \"contract_id\": \"kpi_report_view_v1\",\n        \"meta\": {\n\
+          \            \"generated_at\": datetime.now().strftime('%Y-%m-%d %H:%M'),\n\
+          \            \"period_type\": \"month\",\n            \"period_label\":\
+          \ time_window or \"本月\"\n        },\n        \"summary_cards\": summary_cards,\n\
+          \        \"core_table\": core_table,\n        \"warehouse_highlights\":\
+          \ warehouse_highlights,\n        \"transport_costs\": transport_costs,\n\
+          \        \"insights\": insights,\n        \"actions\": [\n            {\n\
+          \                \"id\": \"download_report\",\n                \"label\"\
+          : \"下载报告\",\n                \"type\": \"link\",\n                \"href\"\
+          : \"#\"\n            },\n            {\n                \"id\": \"recompute\"\
+          ,\n                \"label\": \"重新生成\",\n                \"type\": \"action\"\
+          \n            }\n        ]\n    }\n    \n    return {\"result\": result}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: 格式化输出
+        type: code
+        variables:
+        - value_selector:
+          - '1761813418553'
+          - time_window
+          variable: time_window
+        - value_selector:
+          - '1761813418553'
+          - warehouse
+          variable: warehouse
+        - value_selector:
+          - '1761813421469'
+          - json
+          variable: agent_output
+      height: 52
+      id: '1761813430000'
+      position:
+        x: 624
+        y: 282
+      positionAbsolute:
+        x: 624
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761813430000'
+          - result
+          value_type: object
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1761813424398'
+      position:
+        x: 966
+        y: 282
+      positionAbsolute:
+        x: 966
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -215.30658608756602
+      y: 211.87677362967202
+      zoom: 0.687494559418184
+  rag_pipeline_variables: []

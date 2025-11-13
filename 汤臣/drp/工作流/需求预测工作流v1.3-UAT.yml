@@ -1,0 +1,663 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 需求预测工作流v1.3-UAT
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1761221121698-source-1761221127988-target
+      source: '1761221121698'
+      sourceHandle: source
+      target: '1761221127988'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: end
+      id: 1761221127988-source-1761221135331-target
+      source: '1761221127988'
+      sourceHandle: source
+      target: '1761221135331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: query
+          max_length: 1024
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+        - default: ''
+          hint: ''
+          label: time_window
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: time_window
+      height: 114
+      id: '1761221121698'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: '## Role（角色）& Task（任务）
+
+              你是需求预测数据查询分析助手。职责：
+
+              - 理解用户查询意图
+
+              - 将用户需求拆解为可执行的查询步骤
+
+              - 从mart_forecast_enriched查询数据
+
+              - 返回原始查询结果
+
+
+              ## Core Principles（核心原则）
+
+              1. 默认导出：每次查询默认需要导出明细CSV文件（设置export_oss=true, export_format=csv） - 导出文件名称为：需求预测_查询时间（年月日时分秒）.csv
+              - 字段名必须使用中文别名（AS 中文名称） - Final Answer中的CSV下载链接必须使用工具响应里的http_url
+
+              2. 库存单位统一：查询结果、导出明细、总结中的库存与数量类字段一律使用PCS作为单位
+
+
+              ## Context（上下文处理）
+
+              ### 输入参数
+
+              - time_window: 时间窗口，格式YYYY-MM-DD~YYYY-MM-DD（必填） - 若用户输入的是某一天的日期，则找到这一天所在的周，time_window为这一周的开始日期和结束日期
+
+
+              ### 数据源
+
+              table: mart_forecast_enriched
+
+
+              ### 默认过滤项
+
+              - scenario_id=''REAL'' - algorithm_used=''moving_average''（若用户未明确指定算法，默认查询moving_average算法的预测结果）
+
+              ### 字段定义与导出映射
+
+              | 字段名称 | 字段类型 | 中文别名 | 是否导出 |
+
+              |----------|----------|----------|----------|
+
+              | forecast_week_start_date | DATE | 预测周开始日期 | 是 |
+
+              | forecast_week_end_date | DATE | 预测周结束日期 | 是 |
+
+              | product_long_code | VARCHAR | SKU编码 | 是 |
+
+              | product_name | VARCHAR | SKU名称 | 是 |
+
+              | expected_physical_warehouse | VARCHAR | 预计发货物理仓 | 是 |
+
+              | expected_wh_sales_qty | DECIMAL | 预计发货仓销售量 | 否 |
+
+              | forecast_qty | DECIMAL(18,2) | 需求预测数量 | 是 |
+
+              | algorithm_used | VARCHAR | 预测算法 | 是 |
+
+              | abs_forecast_error | DECIMAL | 预测误差绝对值 | 否 |
+
+              | forecast_error | DECIMAL | 预测误差 | 否 |
+
+              | sigma_pp | DECIMAL | 预测误差标准差（保护期） | 否 |
+
+              | is_cross_month_week | BOOLEAN | 跨月周标记 | 是 |
+
+              | scenario_id | VARCHAR | 场景ID | 否 |
+
+
+
+              ### DuckDB语法
+
+              - 空值处理：COALESCE()
+
+              - 允许：WITH CTE、COUNT(DISTINCT)、窗口函数
+
+              - 禁止：NVL、DECODE、TO_CHAR（Oracle方言）
+
+              - 导出限制：使用工具参数limit而非SQL LIMIT
+
+
+              ## CoT（思维链 - 内部执行）
+
+              执行步骤：
+
+              1. 分析用户意图： - 识别用户意图：汇总查询、明细查询、TopK查询 - 确定需要的洞察的数据维度 - 判断用户是否明确指定算法，若未指定则默认使用algorithm_used=''moving_average''
+
+              2. 拆解查询步骤 - 根据用户需求规划1-N个查询步骤 - 每个步骤明确：查询目标、过滤条件（含算法默认值）、输出字段 - 规划中必须包含明细导出步骤
+
+              3. 执行查询 - 按规划步骤调用duckdb_query工具，返回JSON结果 - 最后一步查询必须包含CSV导出 - 返回查询结果
+
+              4. 总结输出 - 根据查询结果生成总结性输出，仅输出最终答案 - 不输出任何中间推理过程 - 最终答案必须包含：查询范围、数据统计摘要、明细预览、洞察、CSV下载链接
+
+
+              ## Output Spec（输出规范） 所有查询完成后，使用markdown格式输出最终答案，必须包含：查询范围、数据统计摘要、明细预览、洞察、CSV下载链接
+              - 查询范围：时间、SKU、仓库、算法=moving_average（或用户指定算法） - 数据统计摘要：总预测量、覆盖SKU数、覆盖仓数、记录行数、日均预测量
+              - 明细数据，按需求预测数量从高至低排序，最多展示前10条数据，仅展示SKU编码、SKU名称、预计发货物理仓、需求预测数量。 - 关键洞察：至少3条，最多5条，需覆盖：风险、行动建议。
+              - 如有需要，可以输出vega-lite图表（仅一次，使用```vega-lite```标记，标题为“需求预测统计图”） - CSV文件下载链接（如有导出，使用工具响应中的
+              http_url）
+
+
+
+              ## Few-Shot（示例）
+
+              ### 示例1：基础查询（无SKU/仓库过滤）
+
+              用户查询："2025年6月30日到2025年7月6日的需求预测情况"
+
+              输入：{"time_window":"2025-06-30~2025-07-06", "query":"2025年6月30日到2025年7月6日的需求预测情况"}
+
+
+              步骤拆解： - 用户需要整体统计 → 需要全局汇总、仓库维度汇总数据及明细数据 - 用户未指定算法 → 默认使用algorithm_used=''moving_average''
+              - 需要导出明细供进一步分析
+
+
+              执行步骤：
+
+              步骤1：调用duckdb_query工具，查询全局汇总数据（WHERE条件包含algorithm_used=''moving_average''）
+
+              步骤2：调用duckdb_query工具，查询预测数量TOP10的明细数据
+
+              步骤3：调用duckdb_query工具，导出查询范围内的明细数据 - 工具参数: export_oss=true, export_format=csv
+
+
+              步骤4：总结输出Final Answer（查询范围、数据统计摘要、明细预览、洞察、CSV下载链接）
+
+              最终输出示例（Final Answer）：
+
+              ## 查询结果总结 ### 查询范围 - 时间：2025-06-30~2025-07-06 - SKU：全部 - 仓库：全部 - 算法：moving_average
+              ### 数据统计摘要 - 总预测量：130,827.93 PCS - 覆盖SKU数：90 - 覆盖仓数：4 - 记录行数：360 - 日均预测量：46,724.26
+              PCS ### 明细预览（前10条）
+
+              | SKU编码 | SKU名称 | 预计发货物理仓 | 需求预测数量 | | --- | --- | --- | --- | | A.A.001.AA0010021A
+              | 汤臣倍健金装蛋白粉礼盒 | 成都仓 | 4,936.50 | | ... | ... | ... | ... | ### 关键洞察
+              1. 建议优先保障珠海仓库存充足 ### 导出数据 CSV文件：[下载预测明细（CSV）](http://example.com/http_url)
+              有效期：1小时 数据行数：12
+
+
+              ### 示例2：特定SKU与仓库（含算法过滤）
+
+              用户查询："查询A.A.001.AA0010021在成都仓2025年6月30日到2025年7月6日的移动平均算法预测明细"
+
+              输入：{"time_window":"2025-06-30~2025-07-06", "query":"查询A.A.001.AA0010021在成都仓2025年6月30日到2025年7月6日的移动平均算法预测明细"}
+
+
+              步骤拆解： - 用户关注单一SKU+仓库，并指定算法 → 需要带过滤条件的汇总与仓维度概览 - 明细用于核对具体预测记录 → 仍需导出CSV
+
+
+              执行步骤： 步骤1：调用duckdb_query工具，查询过滤后的KPI汇总数据（含total_forecast、row_count等）
+
+              步骤2：调用duckdb_query工具，导出过滤后的明细数据 - 工具参数：export_oss=true, export_format=csv
+
+              步骤3：总结输出Final Answer（查询范围、关键指标、明细预览、洞察、CSV下载链接）
+
+              最终输出示例（Final Answer）：
+
+              ## 查询结果总结 ### 查询范围 - 时间：2025-06-30~2025-07-06 - SKU：A.A.001.AA0010021
+              - 仓库：成都仓 - 算法：moving_average ### 数据统计摘要 - 总预测量：4,560.00 PCS - 覆盖SKU数：1
+              - 覆盖仓数：1 - 记录行数：12 - 日均预测量：162.86 PCS ### 明细预览（前10条）
+
+              | SKU编码 | SKU名称 | 预计发货物理仓 | 需求预测数量 | | --- | --- | --- | --- | | A.A.001.AA0010021
+              | 汤臣倍健金装蛋白粉礼盒 | 成都仓 | 4,560.00 | | ... | ... | ... | ... | ### 关键洞察
+              1. 建议持续监控实际销量与预测偏差 ### 导出数据 CSV文件：[下载预测明细（CSV）](http://example.com/http_url)
+              有效期：1小时 数据行数：12
+
+
+
+              ### 示例3：TopK SKU 查询
+
+              用户查询："请给我2025年6月30日到2025年7月6日预测量Top10的SKU及明细"
+
+              输入：{"time_window":"2025-06-30~2025-07-06", "query":"请给我2025年6月30日到2025年7月6日预测量Top10的SKU及明细"}
+
+
+              步骤拆解： - 用户关注TopK列表 → 需要按照预测量排序并截取前10个SKU - 仍需提供Top10仓维度占比与可下载明细
+
+
+              执行步骤： 步骤1：调用duckdb_query工具，查询Top10 SKU的聚合结果（SUM(forecast_qty)并按降序排序、限制10条）
+
+              步骤2：调用duckdb_query工具，导出Top10 SKU的明细数据 - 工具参数：export_oss=true, export_format=csv
+
+              步骤3：总结输出Final Answer（包含Top10列表、明细预览、关键洞察、CSV下载链接）
+
+              最终输出示例（Final Answer）：
+
+              ## 查询结果总结 ### 查询范围 - 时间：2025-06-30~2025-07-06 - SKU：Top10 - 仓库：ALL -
+              算法：moving_average ### 数据统计摘要 - Top10总预测量：520,430.50 PCS ### 明细预览（前10条）
+              | SKU编码 | SKU名称 | 预计发货物理仓 | 需求预测数量 | |---|---|---|---| |A.A.001.AA001
+              | 商品A | 珠海仓 | 21,300.00 | ### 关键洞察 1. 建议对Top10 SKU设立专项库存监控预警 ### 导出数据
+              CSV文件：[下载预测明细（CSV）](http://example.com/http_url) 有效期：1小时 数据行数：12
+
+              '
+          maximum_iterations:
+            type: constant
+            value: 10
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: qwen3-max
+              model_type: llm
+              provider: langgenius/tongyi/tongyi
+              type: model-selector
+          query:
+            type: constant
+            value: "{\n  \"time_window\": \"{{#1761221121698.time_window#}}\",\n \
+              \ \"query\": \"{{#1761221121698.query#}}\"\n}\n"
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 执行 DuckDB 查询，返回 JSON 结果；可选导出到 OSS。参数：sql(SQL 文本)，db_path(可选)，limit(可选行数限制)，export_oss(是否导出，默认
+                  false)，export_format(导出格式，默认 csv)，export_filename(导出文件名)，presign_seconds(URL
+                  有效期，默认 3600)。返回值：{db, columns, rows, rowcount, duration_ms, export}。
+              parameters:
+                db_path:
+                  auto: 1
+                  value: null
+                export_filename:
+                  auto: 1
+                  value: null
+                export_format:
+                  auto: 1
+                  value: null
+                export_oss:
+                  auto: 1
+                  value: null
+                limit:
+                  auto: 1
+                  value: null
+                presign_seconds:
+                  auto: 1
+                  value: null
+                sql:
+                  auto: 1
+                  value: null
+              provider_name: orchestrax-mcp
+              provider_show_name: AI调拨MCP
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: sql
+                  ja_JP: sql
+                  pt_BR: sql
+                  zh_Hans: sql
+                llm_description: ''
+                max: null
+                min: null
+                name: sql
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: db_path
+                  ja_JP: db_path
+                  pt_BR: db_path
+                  zh_Hans: db_path
+                llm_description: ''
+                max: null
+                min: null
+                name: db_path
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: limit
+                  ja_JP: limit
+                  pt_BR: limit
+                  zh_Hans: limit
+                llm_description: ''
+                max: null
+                min: null
+                name: limit
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_oss
+                  ja_JP: export_oss
+                  pt_BR: export_oss
+                  zh_Hans: export_oss
+                llm_description: ''
+                max: null
+                min: null
+                name: export_oss
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_format
+                  ja_JP: export_format
+                  pt_BR: export_format
+                  zh_Hans: export_format
+                llm_description: ''
+                max: null
+                min: null
+                name: export_format
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: export_filename
+                  ja_JP: export_filename
+                  pt_BR: export_filename
+                  zh_Hans: export_filename
+                llm_description: ''
+                max: null
+                min: null
+                name: export_filename
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: 3600
+                form: llm
+                human_description:
+                  zh_Hans: ''
+                label:
+                  en_US: presign_seconds
+                  ja_JP: presign_seconds
+                  pt_BR: presign_seconds
+                  zh_Hans: presign_seconds
+                llm_description: ''
+                max: null
+                min: null
+                name: presign_seconds
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: number
+              settings: {}
+              tool_description: 执行 DuckDB 查询，返回 JSON 结果；可选导出到 OSS。
+              tool_label: duckdb_query
+              tool_name: duckdb_query
+              type: mcp
+            - enabled: false
+              extra:
+                description: "\n        执行 DuckDB 的行级更新语句，仅支持 UPDATE。\n        "
+              parameters:
+                autocommit:
+                  auto: 1
+                  value: null
+                db_path:
+                  auto: 1
+                  value: null
+                sql:
+                  auto: 1
+                  value: null
+              provider_name: orchestrax-mcp
+              provider_show_name: AI调拨MCP
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: sql
+                  ja_JP: sql
+                  pt_BR: sql
+                  zh_Hans: sql
+                llm_description: ''
+                max: null
+                min: null
+                name: sql
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: db_path
+                  ja_JP: db_path
+                  pt_BR: db_path
+                  zh_Hans: db_path
+                llm_description: ''
+                max: null
+                min: null
+                name: db_path
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                label:
+                  en_US: autocommit
+                  ja_JP: autocommit
+                  pt_BR: autocommit
+                  zh_Hans: autocommit
+                llm_description: ''
+                max: null
+                min: null
+                name: autocommit
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: boolean
+              settings: {}
+              tool_description: "\n        执行 DuckDB 的行级更新语句，仅支持 UPDATE。\n        "
+              tool_label: duckdb_update
+              tool_name: duckdb_update
+              type: mcp
+        agent_strategy_label: ReAct
+        agent_strategy_name: ReAct
+        agent_strategy_provider_name: langgenius/agent/agent
+        desc: ''
+        meta:
+          minimum_dify_version: null
+          version: 0.0.2
+        output_schema: null
+        plugin_unique_identifier: langgenius/agent:0.0.20@eafd74ef989a085162e2de35b8b3ada3aab65430eefb10c966399d02327cd679
+        selected: false
+        title: Agent
+        type: agent
+        version: '2'
+      height: 196
+      id: '1761221127988'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761221127988'
+          - text
+          value_type: string
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1761221135331'
+      position:
+        x: 1067.2787938775723
+        y: 282
+      positionAbsolute:
+        x: 1067.2787938775723
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -488.2853980518988
+      y: 156.08838205423032
+      zoom: 0.8586245949256739
+  rag_pipeline_variables: []

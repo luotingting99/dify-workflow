@@ -1,0 +1,51 @@
+{
+    "meta": {
+      "title": "需求预测算法评测摘要（核心指标：wMAPE）",
+      "period": { "start_date": "2024-11-11", "end_date": "2025-06-23" },
+      "granularity": "week",
+      "sample": { "total_rows": 8300, "sku_count": 90, "warehouse_count": 5 },
+      "generated_at": "2025-10-09"
+    },
+  
+    "summary": {
+      "best_model": {
+        "name": "MA8",
+        "wmape": 62.04,
+        "p50_wape": 17.05,
+        "p90_wape": 54.65,
+        "coverage_samples": 1220
+      },
+      "runner_up": { "name": "MA7", "delta_wmape_pct_point": 0.10 },
+      "overall_comment": "MA8 在整体精度上最优，MA7 紧随其后；两者在稳态与极端场景表现均优于其他算法，建议以 MA8 作为默认主模型。",
+      "recommendations": [
+        "默认使用 MA8；",
+        "备选使用 MA7 以覆盖波动型 SKU；",
+        "对样本较少的 SKU/仓补齐近 52 周数据后再评估。"
+      ]
+    },
+  
+    "chart": {
+      "type": "bar_horizontal",
+      "metric": "wMAPE",
+      "items": [
+        { "algo": "MA8", "wmape": 62.04 },
+        { "algo": "MA7", "wmape": 62.14 }
+      ],
+      "tooltip_fields": ["p50_wape", "p90_wape", "coverage_samples"]
+    },
+  
+    "detail_table": {
+      "columns": ["算法", "wMAPE", "P50 WAPE", "P90 WAPE", "覆盖样本"],
+      "rows": [
+        { "algo": "MA8", "wmape": 62.04, "p50_wape": 17.05, "p90_wape": 54.65, "coverage_samples": 1220 },
+        { "algo": "MA7", "wmape": 62.14, "p50_wape": 18.28, "p90_wape": 57.93, "coverage_samples": 1260 }
+      ]
+    },
+  
+    "glossary": [
+      { "term": "wMAPE（加权平均绝对百分比误差）", "desc": "反映整体精度，越小越好。" },
+      { "term": "P50 WAPE", "desc": "样本误差的中位数，更看稳态表现。" },
+      { "term": "P90 WAPE", "desc": "90% 样本误差不超过的阈值，反映极端情况下的容错能力。" },
+      { "term": "覆盖样本", "desc": "参与评估的（SKU×仓×周）样本数，越大越稳健。" }
+    ]
+  }

@@ -1,0 +1,520 @@
+用例ID,模块,子场景,业务描述,输入,期望输出,校验点
+INT-201,意图识别,预测对比报告意图识别,仅时间窗，生成7月预测对比报告,帮我生成7月的预测对比报告,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 粒度=周（week，默认）
+[MUST] 汇总维度=物理仓
+[SHOULD] 指标=WMAPE（默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-202,意图识别,预测对比报告意图识别,单SKU，7月预测对比,看看 A001 在 7月的预测对比,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""sku"": ""A001"", ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-203,意图识别,预测对比报告意图识别,单仓，7月预测对比,看看 北京仓 7月的预测对比,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-204,意图识别,预测对比报告意图识别,仓别名映射，7月预测对比,看看 帝都仓 7月的预测对比,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-205,意图识别,预测对比报告意图识别,导出CSV，7月预测对比,把这份 7月 的预测对比报告导成 CSV 给我,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-206,意图识别,预测对比报告意图识别,用户输入模型（算法）对比，7月,用 MA、ETS、Croston 对比一下 7月 的表现,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""algorithms"": [""MA"", ""ETS"", ""Croston""], ""metric"": ""WMAPE""}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 算法集合={MA, ETS, Croston}
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-207,意图识别,预测对比报告意图识别,多指标展示，7月预测对比,7月的预测对比，WMAPE 和 MASE 都带上,"解析结果JSON: {""intent"": ""预测对比报告"", ""time_window"": ""2025-07"", ""granularity"": ""week"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""WMAPE"", ""metrics"": [""WMAPE"", ""MASE""]}","[MUST] 意图=预测对比报告
+[MUST] 时间窗=2025-07
+[MUST] 指标集合包含={WMAPE, MASE}
+[SHOULD] 主排序指标=WMAPE（若下游需要排序）
+[SHOULD] 粒度=周（week，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-301,意图识别,需求预测意图识别,生成下周需求预测,帮我生成下周的需求预测,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-302,意图识别,需求预测意图识别,查询成都仓下周需求预测明细,帮我查询成都仓下周需求预测明细,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-303,意图识别,需求预测意图识别,查询A001下周需求预测明细,帮我查询A001下周需求预测明细,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""sku"": ""A001"", ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-304,意图识别,需求预测意图识别,查询A001、成都仓下周需求预测明细,帮我查询A001、成都仓下周需求预测明细,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-305,意图识别,需求预测意图识别,查询北京/成都仓下周需求预测明细,帮我查询北京/成都仓下周需求预测明细,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse_list"": [""北京仓"", ""成都仓""], ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓集合={北京仓, 成都仓}
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-306,意图识别,需求预测意图识别,别名映射→标准仓，下周预测明细,帮我查询帝都仓下周需求预测明细,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""granularity"": ""week""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-307,意图识别,需求预测意图识别,修改下周预测（A001×成都仓=8000）,帮我把A001、成都仓下周需求预测修改为8000,"解析结果JSON: {""intent"": ""需求预测"", ""operation_type"": ""update"", ""time_window"": ""next_week"", ""warehouse"": ""成都仓"", ""sku"": ""A001"", ""value"": 8000}","[MUST] 意图=需求预测
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=下周（next_week）
+[MUST] 仓=成都仓
+[MUST] SKU=A001
+[MUST] 新值=8000
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-308,意图识别,需求预测意图识别,导出CSV，下周需求预测,帮我生成下周需求预测，我需要导出CSV,"解析结果JSON: {""intent"": ""需求预测"", ""time_window"": ""next_week"", ""granularity"": ""week"", ""export_format"": ""csv""}","[MUST] 意图=需求预测
+[MUST] 时间窗=下周（next_week）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=周（week，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-401,意图识别,补货计划意图识别,生成本周补货计划,帮我生成本周的补货计划,"解析结果JSON: {""intent"": ""补货计划"", ""time_window"": ""this_week""}","[MUST] 意图=补货计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-402,意图识别,补货计划意图识别,查询北京仓今日补货计划,看看今天北京仓的补货计划,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓""}","[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-403,意图识别,补货计划意图识别,查询北京/成都今日补货计划,看看今天北京/成都的补货计划,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse_list"": [""北京仓"", ""成都仓""]}","[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓集合={北京仓, 成都仓}
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-404,意图识别,补货计划意图识别,查询A001今日补货计划,看看今天A001的补货计划,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""sku"": ""A001""}","[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] SKU=A001
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-405,意图识别,补货计划意图识别,别名映射→标准仓，今日补货计划,看看今天帝都仓的补货计划,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓""}","[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-406,意图识别,补货计划意图识别,修改今日补货数量（A001=500）,把A001今天的补货数量改为500,"解析结果JSON: {""intent"": ""补货计划"", ""operation_type"": ""update"", ""inspection_date"": ""today"", ""sku"": ""A001"", ""value"": 500}","[MUST] 意图=补货计划
+[MUST] 操作类型=修改（update）
+[MUST] 巡检日期=today
+[MUST] SKU=A001
+[MUST] 新值=500
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-407,意图识别,补货计划意图识别,导出CSV，今日补货计划,把今天的补货计划导成CSV给我,"解析结果JSON: {""intent"": ""补货计划"", ""inspection_date"": ""today"", ""export_format"": ""csv""}","[MUST] 意图=补货计划
+[MUST] 巡检日期=today
+[MUST] 导出格式=csv
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-501,意图识别,调拨计划意图识别,生成本周调拨计划,帮我生成本周的调拨计划,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week""}","[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-502,意图识别,调拨计划意图识别,查询今日调拨计划,今天的调拨计划是什么,"解析结果JSON: {""intent"": ""调拨计划"", ""inspection_date"": ""today""}","[MUST] 意图=调拨计划
+[MUST] 巡检日期=today
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-503,意图识别,调拨计划意图识别,查询本周北京仓调拨计划,生成本周北京仓的调拨计划,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓""}","[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-504,意图识别,调拨计划意图识别,查询本周A001/A002调拨计划,只做 A001 和 A002 的本周调拨,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""sku_list"": [""A001"", ""A002""]}","[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] SKU集合={A001, A002}
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-505,意图识别,调拨计划意图识别,查询本周北京/成都调拨计划,生成本周北京/成都的调拨计划,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""warehouse_list"": [""北京仓"", ""成都仓""]}","[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓集合={北京仓, 成都仓}
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-506,意图识别,调拨计划意图识别,修改本周调拨数量（北京仓×A001=300）,把北京仓本周A001的调拨数量改为300,"解析结果JSON: {""intent"": ""调拨计划"", ""operation_type"": ""update"", ""time_window"": ""this_week"", ""warehouse"": ""北京仓"", ""sku"": ""A001"", ""value"": 300}","[MUST] 意图=调拨计划
+[MUST] 操作类型=修改（update）
+[MUST] 时间窗=本周（this_week）
+[MUST] 仓=北京仓
+[MUST] SKU=A001
+[MUST] 新值=300
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-507,意图识别,调拨计划意图识别,导出CSV，本周调拨计划,把本周的调拨计划导成 CSV 给我,"解析结果JSON: {""intent"": ""调拨计划"", ""time_window"": ""this_week"", ""export_format"": ""csv""}","[MUST] 意图=调拨计划
+[MUST] 时间窗=本周（this_week）
+[MUST] 导出格式=csv
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-601,意图识别,KPI报告意图识别,生成上月KPI报告（按仓）,请生成上月的KPI报告,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metrics"": ""default""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-602,意图识别,KPI报告意图识别,单仓：上月KPI报告（北京仓）,看看 北京仓 上月的 KPI 报告,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""metrics"": ""default""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-603,意图识别,KPI报告意图识别,仓别名映射：帝都仓→北京仓（上月KPI报告）,看看 帝都仓 上月的 KPI 报告,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""warehouse"": ""北京仓"", ""warehouse_alias"": ""帝都仓"", ""metrics"": ""default""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 仓=北京仓（别名""帝都仓""映射）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-604,意图识别,KPI报告意图识别,导出CSV：上月KPI报告,把上月的 KPI 报告导成 CSV 给我,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""export_format"": ""csv"", ""metrics"": ""default""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 导出格式=csv
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-605,意图识别,KPI报告意图识别,查询本地订单满足率（上月，按仓）,上月本地履约率怎么样？按仓看,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""local_fulfillment_rate""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=本地订单满足率（local_fulfillment_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-606,意图识别,KPI报告意图识别,查询拆单率（上月，按仓）,上月拆单率是多少？按仓看,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_rate""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单率（split_rate）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-607,意图识别,KPI报告意图识别,查询旧批次拆单率（上月，按仓）,上月旧批次拆单率怎么样？按仓看,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""old_batch_split_ratio""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=旧批次拆单率（old_batch_split_ratio）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-608,意图识别,KPI报告意图识别,查询物流运费成本（上月，订单运费，按仓）,上月订单运费是多少？按仓看,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""order_shipping_cost""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=订单运费（order_shipping_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-609,意图识别,KPI报告意图识别,查询物流总运费（上月，汇总）,上月物流总运费是多少,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""total_cost""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=总运费（total_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-610,意图识别,KPI报告意图识别,查询调拨总运费（上月，汇总）,上月调拨总运费是多少,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""总体"", ""metric"": ""transfer_cost""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=调拨运费（transfer_cost）
+[MUST] 汇总维度=总体
+[SHOULD] 粒度=月（month，默认）
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-611,意图识别,KPI报告意图识别,查询上月拆单增量成本（按仓）,上月拆单增量成本是多少？按仓看,"解析结果JSON: {""intent"": ""KPI报告"", ""time_window"": ""last_month"", ""granularity"": ""month"", ""aggregation_dimension"": ""物理仓"", ""metric"": ""split_extra_cost""}","[MUST] 意图=KPI报告
+[MUST] 时间窗=上月（last_month）
+[MUST] 指标=拆单增量成本（split_extra_cost）
+[SHOULD] 粒度=月（month，默认）
+[SHOULD] 汇总维度=物理仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+,,,,,,"[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='false'
+[SHOULD] confidence_level=high"
+INT-901,意图识别,澄清场景-通用噪声/乱码,输入为噪声/乱码，需要澄清,111,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-902,意图识别,澄清场景-闲聊问候,仅闲聊/问候，需要澄清,你好,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-903,意图识别,澄清场景-仅意图词（预测对比）,仅有意图，缺少关键参数,预测对比,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：时间窗、仓或SKU
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-904,意图识别,澄清场景-仅意图词（调拨计划）,仅有意图，缺少关键参数,调拨计划,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：仓、SKU、时间窗
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-905,意图识别,澄清场景-仅意图词（需求预测）,仅有意图，缺少关键参数,需求预测,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：时间窗；可选：仓或SKU
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-906,意图识别,澄清场景-仅意图词（KPI报告）,仅有意图，缺少关键参数,KPI报告,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：时间窗；可选：指标/维度
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-907,意图识别,澄清场景-仅SKU,仅有SKU，缺少任务与其他参数,A001,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：任务、时间窗、仓
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-908,意图识别,澄清场景-仅仓,仅有仓名，缺少任务与其他参数,北京仓,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：任务、时间窗、SKU
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-909,意图识别,澄清场景-仅时间窗,仅有时间窗，缺少任务与其他参数,2025-07,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 指出缺失字段：任务；可选：仓或SKU
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-910,意图识别,澄清场景-多意图混合,多意图混合表达，需要澄清优先任务,先预测后调拨,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 提示先选择一个任务
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-911,意图识别,澄清场景-不合法时间窗,时间窗格式不合法,2025-13,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 提示时间窗格式需为YYYY-MM/本周/下周/上月等
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-912,意图识别,澄清场景-未识别仓别名,仓别名未映射,魔都仓,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 提示使用标准仓名或确认别名
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-913,意图识别,澄清场景-仅导出诉求,仅有导出诉求，缺少业务内容,导成CSV给我,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 说明需给出导出的内容与时间窗
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-914,意图识别,澄清场景-指代不明承接,仅有指代词或承接语,同上,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 提示需完整复述一条指令
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"
+INT-915,意图识别,澄清场景-需求模糊描述,需求描述模糊，需要明确任务与参数,来个表,不好意思，我还没完全明白你的意思。能否用一句话告诉我：要做什么？示例： • 预测对比 北京仓 2025-07 • 调拨计划 成都仓 A001 本周,"[MUST] 输出为通用澄清话术；[SHOULD] 提示需明确任务与关键参数
+[MUST] 存在字段={confidence, confidence_level, confidence_reason}
+[MUST] confidence_level∈{low, medium, high}
+[SHOULD] confidence∈[0,1]（保留两位小数）
+[SHOULD] confidence_reason为中文12~50字（结论性描述）
+[MUST] clarify_needed='true'
+[MUST] confidence_level∈{low, medium}"

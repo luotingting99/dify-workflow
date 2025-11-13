@@ -1,0 +1,66 @@
+{
+    "contract_id": "allocation_plan_view_v1",
+    "meta": {
+      "version": "v2024101401",
+      "computed_at": "2024-10-14 10:23:15",
+      "snapshot": "库存v231014 | 在途v231014 | 参数v2.3"
+    },
+  
+    "kpi_cards": [
+      { "id": "suggest_qty",   "title": "建议调拨量", "display": "8,806 件",  "sub": "↓12% 环比", "trend": "down" },
+      { "id": "coverage_rate", "title": "覆盖率",     "display": "87.5%",     "sub": "已解决缺口", "trend": "up"   },
+      { "id": "shortage_rows", "title": "缺口行数",   "display": "12 条",     "sub": "需人工处理", "trend": "flat" },
+      { "id": "transport_m3",  "title": "运输体积",   "display": "174.8 m³",  "sub": "约 3.5 车次", "trend": "flat" },
+      { "id": "shortage_qty",  "title": "缺口件数",   "display": "156 件",    "sub": "占比 1.8%",  "trend": "flat" }
+    ],
+  
+    "params_panel": {
+      "title": "运行参数配置",
+      "collapsed": false,
+      "items": [
+        { "label": "时间窗",     "value": "未来7天" },
+        { "label": "口径",       "value": "本月" },
+        { "label": "计入在途",   "value": "是" },
+        { "label": "止拨策略",   "value": "apply" },
+        { "label": "取整口径",   "value": "按箱" },
+        { "label": "K限制",      "value": "0.8" },
+        { "label": "最小拆分",   "value": "6箱" }
+      ],
+      "primary_action": { "id": "recalc", "label": "修改参数并重新计算" }
+    },
+  
+    "tabs": [
+      { "id": "summary", "label": "汇总",        "active": true },
+      { "id": "shortage","label": "缺口清单(12)","active": false }
+    ],
+  
+    "summary_table": {
+      "title": "RDC仓调拨计划汇总",
+      "headers": ["物理仓", "SKU数量", "调拨数量", "缺口/覆盖率", "运输体积(m³)", "运输重量(kg)"],
+      "rows": [
+        {
+          "warehouse": "北京仓",
+          "sku_count": "156",
+          "alloc_qty": "2,340",
+          "shortage_and_coverage": ["缺口：2,675", "覆盖：87.5%"],
+          "volume_m3": "45.2",
+          "weight_kg": "982"
+        }
+      ]
+    },
+  
+    "transport_check": {
+      "title": "运输可行性预检",
+      "items": [
+        { "label": "总体积",   "value": "174.8 m³", "status": "ok",   "note": "未超托" },
+        { "label": "预估重量", "value": "3.2 吨",   "status": "ok",   "note": "未超载" },
+        { "label": "线路可用", "value": "可用",     "status": "ok",   "note": "所有线路可用" }
+      ]
+    },
+  
+    "actions": [
+      { "id": "export_replen_plan",  "label": "导出补货计划" },
+      { "id": "export_allocation_note", "label": "导出调拨建议说明" },
+      { "id": "export_shortage_list","label": "导出缺口清单" }
+    ]
+  }
