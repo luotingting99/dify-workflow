@@ -3,7 +3,7 @@ app:
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: workflow
-  name: 补货计划工作流v1.5-UAT
+  name: 补货计划工作流v1.4-UAT
   use_icon_as_answer_icon: false
 dependencies: []
 kind: app
